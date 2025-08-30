@@ -3,7 +3,6 @@ console = Console()
 from enum import Enum
 from typing import Any, List, Optional
 
-
 class ExtendedEnum(Enum):
     @classmethod
     def values_list(cls: Any) -> List[Any]:

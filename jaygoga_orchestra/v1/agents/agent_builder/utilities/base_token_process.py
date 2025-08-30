@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from jaygoga_orchestra.v1.types.usage_metrics import UsageMetrics
 
-
 class TokenProcess:
     def __init__(self) -> None:
         self.total_tokens: int = 0

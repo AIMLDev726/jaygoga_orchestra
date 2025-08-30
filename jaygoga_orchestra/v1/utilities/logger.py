@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field, PrivateAttr
 
 from jaygoga_orchestra.v1.utilities.printer import Printer
 
-
 class Logger(BaseModel):
     verbose: bool = Field(default=False)
     _printer: Printer = PrivateAttr(default_factory=Printer)
@@ -17,6 +16,6 @@ class Logger(BaseModel):
             color = self.default_color
         if self.verbose:
             timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            self._printer.console.print(
+            self._printer.print(
                 f"\n[{timestamp}][{level.upper()}]: {message}", color=color
             )

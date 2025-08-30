@@ -6,7 +6,6 @@ from jaygoga_orchestra.v1.tools.cache_tools.cache_tools import CacheTools
 from jaygoga_orchestra.v1.tools.tool_calling import InstructorToolCalling, ToolCalling
 from jaygoga_orchestra.v1.agents.cache.cache_handler import CacheHandler
 
-
 class ToolsHandler:
     """Callback handler for tool usage.
 

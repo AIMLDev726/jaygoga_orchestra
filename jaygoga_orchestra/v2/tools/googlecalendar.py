@@ -25,7 +25,6 @@ except ImportError:
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
-
 def authenticate(func):
     """Decorator to ensure authentication before executing the method."""
 
@@ -41,7 +40,6 @@ def authenticate(func):
         return func(self, *args, **kwargs)
 
     return wrapper
-
 
 class GoogleCalendarTools(Toolkit):
     # Default scopes for Google Calendar API access

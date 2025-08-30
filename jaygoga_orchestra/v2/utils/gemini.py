@@ -16,7 +16,6 @@ try:
 except ImportError:
     raise ImportError("`google-genai` not installed. Please install it using `pip install google-genai`")
 
-
 def format_image_for_message(image: Image) -> Optional[Dict[str, Any]]:
     # Case 1: Image is a URL
     # Download the image from the URL and add it as base64 encoded data
@@ -66,7 +65,6 @@ def format_image_for_message(image: Image) -> Optional[Dict[str, Any]]:
     else:
         log_warning(f"Unknown image type: {type(image)}")
         return None
-
 
 def convert_schema(schema_dict: Dict[str, Any], root_schema: Optional[Dict[str, Any]] = None) -> Optional[Schema]:
     """
@@ -213,7 +211,6 @@ def convert_schema(schema_dict: Dict[str, Any], root_schema: Optional[Dict[str, 
             # If we get here with an empty type and no other handlers matched,
             # something is wrong with the schema
             return None
-
 
 def format_function_definitions(tools_list: List[Dict[str, Any]]) -> Optional[Tool]:
     function_declarations = []

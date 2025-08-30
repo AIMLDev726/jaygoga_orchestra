@@ -14,7 +14,6 @@ try:
 except Exception as e:
     log_error(f"Slack signin secret missing: {e}")
 
-
 def verify_slack_signature(body: bytes, timestamp: str, slack_signature: str) -> bool:
     if not SLACK_SIGNING_SECRET:
         raise HTTPException(status_code=500, detail="SLACK_SIGNING_SECRET is not set")

@@ -8,7 +8,6 @@ import httpx
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class WhatsAppTools(Toolkit):
     """WhatsApp Business API toolkit for sending messages."""
 

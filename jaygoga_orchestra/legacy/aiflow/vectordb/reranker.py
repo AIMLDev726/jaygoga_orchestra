@@ -13,7 +13,6 @@ from .base import SearchResult
 
 logger = logging.getLogger(__name__)
 
-
 class BaseReranker(ABC):
     """Abstract base class for rerankers."""
     
@@ -37,7 +36,6 @@ class BaseReranker(ABC):
             "model_name": self.model_name,
             "provider": self.__class__.__name__
         }
-
 
 class CohereReranker(BaseReranker):
     """Cohere reranking implementation."""
@@ -105,7 +103,6 @@ class CohereReranker(BaseReranker):
             # Return original results if reranking fails
             return results
 
-
 class HuggingFaceReranker(BaseReranker):
     """Hugging Face reranking implementation."""
     
@@ -171,7 +168,6 @@ class HuggingFaceReranker(BaseReranker):
             logger.error(f"Error reranking with Hugging Face: {e}")
             # Return original results if reranking fails
             return results
-
 
 class SimpleReranker(BaseReranker):
     """Simple rule-based reranker."""
@@ -252,7 +248,6 @@ class SimpleReranker(BaseReranker):
             logger.error(f"Error in simple reranking: {e}")
             return results
 
-
 class HybridReranker(BaseReranker):
     """Hybrid reranker that combines multiple reranking strategies."""
     
@@ -323,7 +318,6 @@ class HybridReranker(BaseReranker):
             logger.error(f"Error in hybrid reranking: {e}")
             return results
 
-
 class RerankerManager:
     """Manager for multiple rerankers."""
     
@@ -370,7 +364,6 @@ class RerankerManager:
             "total_rerankers": len(self.rerankers)
         }
 
-
 # Factory functions for easy reranker creation
 def create_cohere_reranker(
     model_name: str = "rerank-english-v3.0",
@@ -379,18 +372,15 @@ def create_cohere_reranker(
     """Create Cohere reranker."""
     return CohereReranker(model_name, api_key)
 
-
 def create_huggingface_reranker(
     model_name: str = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 ) -> HuggingFaceReranker:
     """Create Hugging Face reranker."""
     return HuggingFaceReranker(model_name)
 
-
 def create_simple_reranker() -> SimpleReranker:
     """Create simple rule-based reranker."""
     return SimpleReranker()
-
 
 def create_default_reranker_manager() -> RerankerManager:
     """Create reranker manager with common rerankers."""

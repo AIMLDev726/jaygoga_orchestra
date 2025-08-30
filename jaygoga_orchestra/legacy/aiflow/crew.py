@@ -175,7 +175,7 @@ class Squad:
         except Exception as e:
             self.execution_time = (datetime.now() - start_time).total_seconds()
             if self.verbose >= 1:
-                console.print(f"[red]❌ Squad execution failed: {e}[/red]")
+                print(f"[red]❌ Squad execution failed: {e}[/red]")
             raise e
         finally:
             self.is_running = False
@@ -183,7 +183,7 @@ class Squad:
     async def _execute_sequential(self) -> str:
         """Execute tasks sequentially."""
         if self.verbose >= 2:
-            console.print("[cyan]🔄 Executing tasks sequentially...[/cyan]")
+            print("[cyan]🔄 Executing tasks sequentially...[/cyan]")
         
         results = []
         context = ""
@@ -209,7 +209,7 @@ class Squad:
                     
             except Exception as e:
                 if self.verbose >= 1:
-                    console.print(f"[red]❌ Task {i+1} failed: {e}[/red]")
+                    print(f"[red]❌ Task {i+1} failed: {e}[/red]")
                 raise e
         
         # Return the last task's result as the final output
@@ -218,7 +218,7 @@ class Squad:
     async def _execute_parallel(self) -> str:
         """Execute tasks in parallel."""
         if self.verbose >= 2:
-            console.print("[cyan]🔄 Executing tasks in parallel...[/cyan]")
+            print("[cyan]🔄 Executing tasks in parallel...[/cyan]")
         
         # Create tasks for parallel execution
         async_tasks = []
@@ -233,7 +233,7 @@ class Squad:
         for i, result in enumerate(results):
             if isinstance(result, Exception):
                 if self.verbose >= 1:
-                    console.print(f"[red]❌ Task {i+1} failed: {result}[/red]")
+                    print(f"[red]❌ Task {i+1} failed: {result}[/red]")
                 raise result
             else:
                 successful_results.append(result)
@@ -246,7 +246,7 @@ class Squad:
     async def _execute_hierarchical(self) -> str:
         """Execute tasks hierarchically with manager oversight."""
         if self.verbose >= 2:
-            console.print("[cyan]🔄 Executing tasks hierarchically...[/cyan]")
+            print("[cyan]🔄 Executing tasks hierarchically...[/cyan]")
         
         # For now, fall back to sequential execution
         # TODO: Implement proper hierarchical execution with manager
@@ -254,7 +254,7 @@ class Squad:
     
     def _print_crew_start(self):
         """Print squad start message."""
-        console.print(Panel(
+        print(Panel(
             f"[bold cyan]🚀 Starting AIFlow Squad Execution[/bold cyan]\n\n"
             f"Agents: {len(self.agents)}\n"
             f"Tasks: {len(self.tasks)}\n"
@@ -265,7 +265,7 @@ class Squad:
     
     def _print_crew_completion(self):
         """Print squad completion message."""
-        console.print(Panel(
+        print(Panel(
             f"[bold green]✅ Squad Execution Complete![/bold green]\n\n"
             f"Execution time: {self.execution_time:.2f}s\n"
             f"Tasks completed: {len(self.tasks)}",
@@ -276,17 +276,17 @@ class Squad:
     def _print_task_start(self, task: Task, task_num: int):
         """Print task start message."""
         if self.verbose >= 2:
-            console.print(f"\n[yellow]📋 Task {task_num}: {task.description[:100]}...[/yellow]")
-            console.print(f"[dim]Agent: {task.agent.role}[/dim]")
+            print(f"\n[yellow]📋 Task {task_num}: {task.description[:100]}...[/yellow]")
+            print(f"[dim]Agent: {task.agent.role}[/dim]")
     
     def _print_task_completion(self, task: Task, result: str):
         """Print task completion message."""
         if self.verbose >= 2:
-            console.print(f"[green]✅ Task completed[/green]")
+            print(f"[green]✅ Task completed[/green]")
             if len(result) > 200:
-                console.print(f"[dim]Result: {result[:200]}...[/dim]")
+                print(f"[dim]Result: {result[:200]}...[/dim]")
             else:
-                console.print(f"[dim]Result: {result}[/dim]")
+                print(f"[dim]Result: {result}[/dim]")
     
     def _save_output_log(self, result: str):
         """Save output log to file."""
@@ -309,10 +309,10 @@ Process: {self.process.value}
                 f.write(log_content)
                 
             if self.verbose >= 1:
-                console.print(f"[cyan]📄 Output log saved to: {self.output_log_file}[/cyan]")
+                print(f"[cyan]📄 Output log saved to: {self.output_log_file}[/cyan]")
                 
         except Exception as e:
-            console.print(f"[yellow]⚠️ Could not save output log: {e}[/yellow]")
+            print(f"[yellow]⚠️ Could not save output log: {e}[/yellow]")
     
     def __str__(self):
         return f"Squad(agents={len(self.agents)}, tasks={len(self.tasks)}, process={self.process.value})"

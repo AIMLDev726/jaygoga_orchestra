@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.utils.log import log_warning
 from jaygoga_orchestra.v2.utils.openai import images_to_message
 
-
 def format_message(message: Message) -> Dict[str, Any]:
     """
     Format a message into the format expected by OpenAI.

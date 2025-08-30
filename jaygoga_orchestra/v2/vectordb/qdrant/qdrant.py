@@ -23,7 +23,6 @@ DEFAULT_DENSE_VECTOR_NAME = "dense"
 DEFAULT_SPARSE_VECTOR_NAME = "sparse"
 DEFAULT_SPARSE_MODEL = "Qdrant/bm25"
 
-
 class Qdrant(VectorDb):
     """Vector DB implementation powered by Qdrant - https://qdrant.tech/"""
 

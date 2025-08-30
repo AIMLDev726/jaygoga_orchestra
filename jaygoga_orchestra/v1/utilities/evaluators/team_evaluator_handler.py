@@ -11,15 +11,13 @@ from jaygoga_orchestra.v1.agent import Agent
 from jaygoga_orchestra.v1.llm import BaseLLM
 from jaygoga_orchestra.v1.task import Task
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
-from jaygoga_orchestra.v1.utilities.events import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.team_events import CrewTestResultEvent
-
 
 class TaskEvaluationPydanticOutput(BaseModel):
     quality: float = Field(
         description="A score from 1 to 10 evaluating on completion, quality, and overall performance from the task_description and task_expected_output to the actual Task Output."
     )
-
 
 class CrewEvaluator:
     """
@@ -157,8 +155,8 @@ class CrewEvaluator:
         )
 
         console = Console()
-        console.console.print("\n")
-        console.console.print(table)
+        print("\n")
+        print(table)
 
     def evaluate(self, task_output: TaskOutput):
         """Evaluates the performance of the agents in the squad based on the tasks they have performed."""
@@ -181,7 +179,7 @@ class CrewEvaluator:
         evaluation_result = evaluation_task.execute_sync()
 
         if isinstance(evaluation_result.pydantic, TaskEvaluationPydanticOutput):
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self.squad,
                 CrewTestResultEvent(
                     quality=evaluation_result.pydantic.quality,

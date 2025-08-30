@@ -7,7 +7,6 @@ Provides the foundation for all tools that agents can use.
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 
-
 class BaseTool(ABC):
     """
     Abstract base class for all AIFlow tools.

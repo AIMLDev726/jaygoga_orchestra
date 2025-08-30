@@ -5,12 +5,10 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
-
 class EvalType(str, Enum):
     ACCURACY = "accuracy"
     PERFORMANCE = "performance"
     RELIABILITY = "reliability"
-
 
 class EvalRunCreate(BaseModel):
     """Data sent to the API to create an evaluation run"""

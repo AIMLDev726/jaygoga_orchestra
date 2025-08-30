@@ -11,7 +11,6 @@ from .base_events import BaseEvent
 if TYPE_CHECKING:
     from jaygoga_orchestra.v1.agents.agent_builder.base_agent import BaseAgent
 
-
 class AgentExecutionStartedEvent(BaseEvent):
     """Event emitted when an agent starts executing a task"""
 
@@ -35,7 +34,6 @@ class AgentExecutionStartedEvent(BaseEvent):
             ):
                 self.fingerprint_metadata = self.agent.fingerprint.metadata
 
-
 class AgentExecutionCompletedEvent(BaseEvent):
     """Event emitted when an agent completes executing a task"""
 
@@ -55,7 +53,6 @@ class AgentExecutionCompletedEvent(BaseEvent):
                 and self.agent.fingerprint.metadata
             ):
                 self.fingerprint_metadata = self.agent.fingerprint.metadata
-
 
 class AgentExecutionErrorEvent(BaseEvent):
     """Event emitted when an agent encounters an error during execution"""
@@ -77,7 +74,6 @@ class AgentExecutionErrorEvent(BaseEvent):
             ):
                 self.fingerprint_metadata = self.agent.fingerprint.metadata
 
-
 # New event classes for LiteAgent
 class LiteAgentExecutionStartedEvent(BaseEvent):
     """Event emitted when a LiteAgent starts executing"""
@@ -89,7 +85,6 @@ class LiteAgentExecutionStartedEvent(BaseEvent):
 
     model_config = {"arbitrary_types_allowed": True}
 
-
 class LiteAgentExecutionCompletedEvent(BaseEvent):
     """Event emitted when a LiteAgent completes execution"""
 
@@ -97,14 +92,12 @@ class LiteAgentExecutionCompletedEvent(BaseEvent):
     output: str
     type: str = "lite_agent_execution_completed"
 
-
 class LiteAgentExecutionErrorEvent(BaseEvent):
     """Event emitted when a LiteAgent encounters an error during execution"""
 
     agent_info: Dict[str, Any]
     error: str
     type: str = "lite_agent_execution_error"
-
 
 # New logging events
 class AgentLogsStartedEvent(BaseEvent):
@@ -114,7 +107,6 @@ class AgentLogsStartedEvent(BaseEvent):
     task_description: Optional[str] = None
     verbose: bool = False
     type: str = "agent_logs_started"
-
 
 class AgentLogsExecutionEvent(BaseEvent):
     """Event emitted when agent logs should be shown during execution"""

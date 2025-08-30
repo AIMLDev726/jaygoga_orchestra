@@ -21,7 +21,6 @@ from jaygoga_orchestra.v1.knowledge.source.base_knowledge_source import BaseKnow
 from jaygoga_orchestra.v1.utilities.constants import KNOWLEDGE_DIRECTORY
 from jaygoga_orchestra.v1.utilities.logger import Logger
 
-
 class CrewDoclingSource(BaseKnowledgeSource):
     """Default Source class for converting documents to markdown or json
     This will auto support PDF, DOCX, and TXT, XLSX, Images, and HTML files without any additional dependencies and follows the docling package as the source of truth.

@@ -7,11 +7,10 @@ from typing import Dict, List, Optional
 from jaygoga_orchestra.v2.api.schemas.user import TeamSchema, UserSchema
 from jaygoga_orchestra.v2.api.schemas.workspace import WorkspaceSchema
 from jaygoga_orchestra.v2.cli.console import print_heading, print_info
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.json_io import read_json_file, write_json_file
 from jaygoga_orchestra.v2.utils.log import logger
 from jaygoga_orchestra.v2.workspace.config import WorkspaceConfig
-
 
 class AgnoCliConfig:
     """The AgnoCliConfig class manages user data for the jaygoga_orchestra.v2 cli"""
@@ -61,7 +60,7 @@ class AgnoCliConfig:
         logger.debug("Clearing user cache")
         self.ws_config_map.clear()
         self._active_ws_dir = None
-        jaygoga_orchestra.v2_cli_settings.ai_conversations_path.unlink(missing_ok=True)
+        jaygoga_orchestra_v2_cli_settings.ai_conversations_path.unlink(missing_ok=True)
         logger.info("Workspaces cleared. If applicable, please setup your workspace using `ag ws setup`")
 
     ######################################################
@@ -221,12 +220,12 @@ class AgnoCliConfig:
             "active_ws_dir": self.active_ws_dir,
             "ws_config_map": {k: v.to_dict() for k, v in self.ws_config_map.items()},
         }
-        write_json_file(file_path=jaygoga_orchestra.v2_cli_settings.config_file_path, data=config_data)
+        write_json_file(file_path=jaygoga_orchestra_v2_cli_settings.config_file_path, data=config_data)
 
     @classmethod
     def from_saved_config(cls) -> Optional["AgnoCliConfig"]:
         try:
-            config_data = read_json_file(file_path=jaygoga_orchestra.v2_cli_settings.config_file_path)
+            config_data = read_json_file(file_path=jaygoga_orchestra_v2_cli_settings.config_file_path)
             if config_data is None or not isinstance(config_data, dict):
                 logger.debug("No config found")
                 return None

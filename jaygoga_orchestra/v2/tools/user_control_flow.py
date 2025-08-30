@@ -5,7 +5,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.tools import Toolkit
 
-
 class UserControlFlowTools(Toolkit):
     def __init__(
         self,

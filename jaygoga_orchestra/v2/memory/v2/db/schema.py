@@ -5,7 +5,6 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
-
 class MemoryRow(BaseModel):
     """Memory Row that is stored in the database"""
 
@@ -29,7 +28,6 @@ class MemoryRow(BaseModel):
         _dict = self.model_dump(exclude={"last_updated"})
         _dict["last_updated"] = self.last_updated.isoformat() if self.last_updated else None
         return _dict
-
 
 class SummaryRow(BaseModel):
     """Session Summary Row that is stored in the database"""

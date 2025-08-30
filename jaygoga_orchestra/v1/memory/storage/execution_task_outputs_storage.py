@@ -8,12 +8,11 @@ from typing import Any, Dict, List, Optional
 
 from jaygoga_orchestra.v1.task import Task
 from jaygoga_orchestra.v1.utilities import Printer
-from jaygoga_orchestra.v1.utilities.crew_json_encoder import CrewJSONEncoder
+from jaygoga_orchestra.v1.utilities.team_json_encoder import CrewJSONEncoder
 from jaygoga_orchestra.v1.utilities.errors import DatabaseError, DatabaseOperationError
 from jaygoga_orchestra.v1.utilities.paths import db_storage_path
 
 logger = logging.getLogger(__name__)
-
 
 class KickoffTaskOutputsSQLiteStorage:
     """

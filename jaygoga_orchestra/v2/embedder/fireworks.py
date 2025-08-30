@@ -6,7 +6,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.embedder.openai import OpenAIEmbedder
 
-
 @dataclass
 class FireworksEmbedder(OpenAIEmbedder):
     id: str = "nomic-ai/nomic-embed-text-v1.5"

@@ -5,7 +5,6 @@ from typing import List
 from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.chunking.strategy import ChunkingStrategy
 
-
 class FixedSizeChunking(ChunkingStrategy):
     """Chunking strategy that splits text into fixed-size chunks with optional overlap"""
 

@@ -6,7 +6,6 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v2.models.message import Message
 
-
 def get_text_from_message(message: Union[List, Dict, str, Message, BaseModel]) -> str:
     """Return the user texts from the message"""
 

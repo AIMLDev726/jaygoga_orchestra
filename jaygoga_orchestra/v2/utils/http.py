@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 DEFAULT_MAX_RETRIES = 3
 DEFAULT_BACKOFF_FACTOR = 2  # Exponential backoff: 1, 2, 4, 8...
 
-
 def fetch_with_retry(
     url: str,
     max_retries: int = DEFAULT_MAX_RETRIES,
@@ -38,7 +37,6 @@ def fetch_with_retry(
             raise
 
     raise httpx.RequestError(f"Failed to fetch {url} after {max_retries} attempts")
-
 
 async def async_fetch_with_retry(
     url: str,

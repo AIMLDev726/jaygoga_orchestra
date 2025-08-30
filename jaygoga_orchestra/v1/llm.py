@@ -49,12 +49,11 @@ with warnings.catch_warnings():
     from litellm.types.utils import ModelResponse
     from litellm.utils import supports_response_schema
 
-
 import io
 from typing import TextIO
 
 from jaygoga_orchestra.v1.llms.base_llm import BaseLLM
-from jaygoga_orchestra.v1.utilities.events import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.exceptions.context_window_exceeding_exception import (
     LLMContextLengthExceededException,
 )
@@ -62,7 +61,6 @@ from jaygoga_orchestra.v1.utilities.exceptions.context_window_exceeding_exceptio
 load_dotenv()
 
 litellm.suppress_debug_info = True
-
 
 class FilteredStream(io.TextIOBase):
     _lock = None
@@ -118,7 +116,6 @@ class FilteredStream(io.TextIOBase):
     def writable(self):
         return True
 
-
 # Apply the filtered stream globally so that any subsequent writes containing the filtered
 # keywords (e.g., "litellm") are hidden from terminal output. We guard against double
 # wrapping to ensure idempotency in environments where this module might be reloaded.
@@ -126,7 +123,6 @@ if not isinstance(sys.stdout, FilteredStream):
     sys.stdout = FilteredStream(sys.stdout)
 if not isinstance(sys.stderr, FilteredStream):
     sys.stderr = FilteredStream(sys.stderr)
-
 
 LLM_CONTEXT_WINDOW_SIZES = {
     # openai
@@ -257,7 +253,6 @@ LLM_CONTEXT_WINDOW_SIZES = {
 DEFAULT_CONTEXT_WINDOW_SIZE = 8192
 CONTEXT_WINDOW_USAGE_RATIO = 0.85
 
-
 @contextmanager
 def suppress_warnings():
     with warnings.catch_warnings():
@@ -268,26 +263,21 @@ def suppress_warnings():
 
         yield
 
-
 class Delta(TypedDict):
     content: Optional[str]
     role: Optional[str]
-
 
 class StreamingChoices(TypedDict):
     delta: Delta
     index: int
     finish_reason: Optional[str]
 
-
 class FunctionArgs(BaseModel):
     name: str = ""
     arguments: str = ""
 
-
 class AccumulatedToolArgs(BaseModel):
     function: FunctionArgs = Field(default_factory=FunctionArgs)
-
 
 class LLM(BaseLLM):
     completion_cost: Optional[float] = None
@@ -535,8 +525,8 @@ class LLM(BaseLLM):
                     full_response += chunk_content
 
                     # Emit the chunk event
-                    assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-                    jaygoga_orchestra.v1_event_bus.emit(
+                    assert hasattr(event_bus, "emit")
+                    event_bus.emit(
                         self,
                         event=LLMStreamChunkEvent(
                             chunk=chunk_content,
@@ -690,8 +680,8 @@ class LLM(BaseLLM):
                 return full_response
 
             # Emit failed event and re-raise the exception
-            assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-            jaygoga_orchestra.v1_event_bus.emit(
+            assert hasattr(event_bus, "emit")
+            event_bus.emit(
                 self,
                 event=LLMCallFailedEvent(
                     error=str(e), from_task=from_task, from_agent=from_agent
@@ -717,8 +707,8 @@ class LLM(BaseLLM):
                 current_tool_accumulator.function.arguments += (
                     tool_call.function.arguments
                 )
-            assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-            jaygoga_orchestra.v1_event_bus.emit(
+            assert hasattr(event_bus, "emit")
+            event_bus.emit(
                 self,
                 event=LLMStreamChunkEvent(
                     tool_call=tool_call.to_dict(),
@@ -901,9 +891,9 @@ class LLM(BaseLLM):
                 fn = available_functions[function_name]
 
                 # --- 3.2) Execute function
-                assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
+                assert hasattr(event_bus, "emit")
                 started_at = datetime.now()
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self,
                     event=ToolUsageStartedEvent(
                         tool_name=function_name,
@@ -914,7 +904,7 @@ class LLM(BaseLLM):
                 )
 
                 result = fn(**function_args)
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self,
                     event=ToolUsageFinishedEvent(
                         output=result,
@@ -941,12 +931,12 @@ class LLM(BaseLLM):
                     function_name, lambda: None
                 )  # Ensure fn is always a callable
                 logging.error(f"Error executing function '{function_name}': {e}")
-                assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-                jaygoga_orchestra.v1_event_bus.emit(
+                assert hasattr(event_bus, "emit")
+                event_bus.emit(
                     self,
                     event=LLMCallFailedEvent(error=f"Tool execution error: {str(e)}"),
                 )
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self,
                     event=ToolUsageErrorEvent(
                         tool_name=function_name,
@@ -993,8 +983,8 @@ class LLM(BaseLLM):
             LLMContextLengthExceededException: If input exceeds model's context limit
         """
         # --- 1) Emit call started event
-        assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-        jaygoga_orchestra.v1_event_bus.emit(
+        assert hasattr(event_bus, "emit")
+        event_bus.emit(
             self,
             event=LLMCallStartedEvent(
                 messages=messages,
@@ -1067,8 +1057,8 @@ class LLM(BaseLLM):
                         from_agent=from_agent,
                     )
 
-                assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-                jaygoga_orchestra.v1_event_bus.emit(
+                assert hasattr(event_bus, "emit")
+                event_bus.emit(
                     self,
                     event=LLMCallFailedEvent(
                         error=str(e), from_task=from_task, from_agent=from_agent
@@ -1093,8 +1083,8 @@ class LLM(BaseLLM):
             from_agent: Optional agent object
             messages: Optional messages object
         """
-        assert hasattr(jaygoga_orchestra.v1_event_bus, "emit")
-        jaygoga_orchestra.v1_event_bus.emit(
+        assert hasattr(event_bus, "emit")
+        event_bus.emit(
             self,
             event=LLMCallCompletedEvent(
                 messages=messages,

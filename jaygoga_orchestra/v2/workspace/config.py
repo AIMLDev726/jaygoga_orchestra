@@ -15,7 +15,6 @@ from jaygoga_orchestra.v2.workspace.settings import WorkspaceSettings
 # List of directories to ignore when loading the workspace
 ignored_dirs = ["ignore", "test", "tests", "config"]
 
-
 class WorkspaceConfig(BaseModel):
     """The WorkspaceConfig holds the configuration for an Govinda workspace."""
 

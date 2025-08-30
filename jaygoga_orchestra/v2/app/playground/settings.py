@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from typing import List, Optional
 
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings
-
 
 class PlaygroundSettings(BaseSettings):
     """Playground API settings that can be set using environment variables.

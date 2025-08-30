@@ -12,7 +12,6 @@ from jaygoga_orchestra.v2.team.team import Team
 from jaygoga_orchestra.v2.utils.log import logger
 from jaygoga_orchestra.v2.workflow.workflow import Workflow
 
-
 def format_tools(agent_tools):
     formatted_tools = []
     if agent_tools is not None:
@@ -31,7 +30,6 @@ def format_tools(agent_tools):
                 logger.warning(f"Unknown tool type: {type(tool)}")
     return formatted_tools
 
-
 def get_agent_by_id(agent_id: str, agents: Optional[List[Agent]] = None) -> Optional[Agent]:
     if agent_id is None or agents is None:
         return None
@@ -40,7 +38,6 @@ def get_agent_by_id(agent_id: str, agents: Optional[List[Agent]] = None) -> Opti
         if agent.agent_id == agent_id:
             return agent
     return None
-
 
 def get_session_title(session: Union[AgentSession, TeamSession]) -> str:
     if session is None:
@@ -85,7 +82,6 @@ def get_session_title(session: Union[AgentSession, TeamSession]) -> str:
 
     return "Unnamed session"
 
-
 def get_session_title_from_workflow_session(workflow_session: WorkflowSession) -> str:
     if workflow_session is None:
         return "Unnamed session"
@@ -126,7 +122,6 @@ def get_session_title_from_workflow_session(workflow_session: WorkflowSession) -
                     return _run.content[:100] + "..." if len(_run.content) > 100 else _run.content
     return "Unnamed session"
 
-
 def get_workflow_by_id(workflow_id: str, workflows: Optional[List[Workflow]] = None) -> Optional[Workflow]:
     if workflows is None or workflow_id is None:
         return None
@@ -136,7 +131,6 @@ def get_workflow_by_id(workflow_id: str, workflows: Optional[List[Workflow]] = N
             return workflow
     return None
 
-
 def get_team_by_id(team_id: str, teams: Optional[List[Team]] = None) -> Optional[Team]:
     if teams is None or team_id is None:
         return None
@@ -145,7 +139,6 @@ def get_team_by_id(team_id: str, teams: Optional[List[Team]] = None) -> Optional
         if team.team_id == team_id:
             return team
     return None
-
 
 def get_session_title_from_team_session(team_session: TeamSession) -> str:
     if team_session is None:

@@ -10,7 +10,6 @@ from jaygoga_orchestra.v1.cli.utils import fetch_and_json_env_file, get_project_
 
 console = Console()
 
-
 class DeployCommand(BaseCommand, PlusAPIMixin):
     """
     A class to handle deployment-related operations for Govinda projects.
@@ -29,7 +28,7 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         """
         Display a standard error message when no UUID or project name is available.
         """
-        console.console.print(
+        print(
             "No UUID provided, project pyproject.toml not found or with error.",
             style="bold red",
         )
@@ -41,13 +40,13 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Args:
             json_response (Dict[str, Any]): The deployment information to display.
         """
-        console.console.print("Deploying the squad...\n", style="bold blue")
+        print("Deploying the squad...\n", style="bold blue")
         for key, value in json_response.items():
-            console.console.print(f"{key.title()}: [green]{value}[/green]")
-        console.console.print("\nTo check the status of the deployment, run:")
-        console.console.print("jaygoga_orchestra.v1 deploy status")
-        console.console.print(" or")
-        console.console.print(f"jaygoga_orchestra.v1 deploy status --uuid \"{json_response['uuid']}\"")
+            print(f"{key.title()}: [green]{value}[/green]")
+        print("\nTo check the status of the deployment, run:")
+        print("jaygoga_orchestra.v1 deploy status")
+        print(" or")
+        print(f"jaygoga_orchestra.v1 deploy status --uuid \"{json_response['uuid']}\"")
 
     def _display_logs(self, log_messages: List[Dict[str, Any]]) -> None:
         """
@@ -57,7 +56,7 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
             log_messages (List[Dict[str, Any]]): The log messages to display.
         """
         for log_message in log_messages:
-            console.console.print(
+            print(
                 f"{log_message['timestamp']} - {log_message['level']}: {log_message['message']}"
             )
 
@@ -68,8 +67,8 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Args:
             uuid (Optional[str]): The UUID of the squad to deploy.
         """
-        self._start_deployment_span = self._telemetry.start_deployment_span(uuid)
-        console.console.print("Starting deployment...", style="bold blue")
+        self._start_deployment_span = start_deployment_span(uuid)
+        print("Starting deployment...", style="bold blue")
         if uuid:
             response = self.plus_api_client.deploy_by_uuid(uuid)
         elif self.project_name:
@@ -86,9 +85,9 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Create a new squad deployment.
         """
         self._create_crew_deployment_span = (
-            self._telemetry.create_crew_deployment_span()
+            create_crew_deployment_span()
         )
-        console.console.print("Creating deployment...", style="bold blue")
+        print("Creating deployment...", style="bold blue")
         env_vars = fetch_and_json_env_file()
 
         try:
@@ -97,8 +96,8 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
             remote_repo_url = None
 
         if remote_repo_url is None:
-            console.console.print("No remote repository URL found.", style="bold red")
-            console.console.print(
+            print("No remote repository URL found.", style="bold red")
+            print(
                 "Please ensure your project has a valid remote repository.",
                 style="yellow",
             )
@@ -158,21 +157,21 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Args:
             json_response (Dict[str, Any]): The response containing squad information.
         """
-        console.console.print("Deployment created successfully!\n", style="bold green")
-        console.console.print(
+        print("Deployment created successfully!\n", style="bold green")
+        print(
             f"Name: {self.project_name} ({json_response['uuid']})", style="bold green"
         )
-        console.console.print(f"Status: {json_response['status']}", style="bold green")
-        console.console.print("\nTo (re)deploy the squad, run:")
-        console.console.print("jaygoga_orchestra.v1 deploy push")
-        console.console.print(" or")
-        console.console.print(f"jaygoga_orchestra.v1 deploy push --uuid {json_response['uuid']}")
+        print(f"Status: {json_response['status']}", style="bold green")
+        print("\nTo (re)deploy the squad, run:")
+        print("jaygoga_orchestra.v1 deploy push")
+        print(" or")
+        print(f"jaygoga_orchestra.v1 deploy push --uuid {json_response['uuid']}")
 
     def list_crews(self) -> None:
         """
         List all available crews.
         """
-        console.console.print("Listing all Crews\n", style="bold blue")
+        print("Listing all Crews\n", style="bold blue")
 
         response = self.plus_api_client.list_crews()
         json_response = response.json()
@@ -189,7 +188,7 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
             crews_data (List[Dict[str, Any]]): List of squad data to display.
         """
         for crew_data in crews_data:
-            console.console.print(
+            print(
                 f"- {crew_data['name']} ({crew_data['uuid']}) [blue]{crew_data['status']}[/blue]"
             )
 
@@ -197,8 +196,8 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         """
         Display a message when no crews are available.
         """
-        console.console.print("You don't have any Crews yet. Let's create one!", style="yellow")
-        console.console.print("  jaygoga_orchestra.v1 create squad <crew_name>", style="green")
+        print("You don't have any Crews yet. Let's create one!", style="yellow")
+        print("  jaygoga_orchestra.v1 create squad <crew_name>", style="green")
 
     def get_crew_status(self, uuid: Optional[str] = None) -> None:
         """
@@ -207,7 +206,7 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Args:
             uuid (Optional[str]): The UUID of the squad to check.
         """
-        console.console.print("Fetching deployment status...", style="bold blue")
+        print("Fetching deployment status...", style="bold blue")
         if uuid:
             response = self.plus_api_client.crew_status_by_uuid(uuid)
         elif self.project_name:
@@ -226,8 +225,8 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Args:
             status_data (Dict[str, str]): The status data to display.
         """
-        console.console.print(f"Name:\t {status_data['name']}")
-        console.console.print(f"Status:\t {status_data['status']}")
+        print(f"Name:\t {status_data['name']}")
+        print(f"Status:\t {status_data['status']}")
 
     def get_crew_logs(self, uuid: Optional[str], log_type: str = "deployment") -> None:
         """
@@ -237,8 +236,8 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
             uuid (Optional[str]): The UUID of the squad to get logs for.
             log_type (str): The type of logs to retrieve (default: "deployment").
         """
-        self._get_crew_logs_span = self._telemetry.get_crew_logs_span(uuid, log_type)
-        console.console.print(f"Fetching {log_type} logs...", style="bold blue")
+        self._get_crew_logs_span = get_crew_logs_span(uuid, log_type)
+        print(f"Fetching {log_type} logs...", style="bold blue")
 
         if uuid:
             response = self.plus_api_client.crew_by_uuid(uuid, log_type)
@@ -258,8 +257,8 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
         Args:
             uuid (Optional[str]): The UUID of the squad to remove.
         """
-        self._remove_crew_span = self._telemetry.remove_crew_span(uuid)
-        console.console.print("Removing deployment...", style="bold blue")
+        self._remove_crew_span = remove_crew_span(uuid)
+        print("Removing deployment...", style="bold blue")
 
         if uuid:
             response = self.plus_api_client.delete_crew_by_uuid(uuid)
@@ -270,10 +269,10 @@ class DeployCommand(BaseCommand, PlusAPIMixin):
             return
 
         if response.status_code == 204:
-            console.console.print(
+            print(
                 f"Squad '{self.project_name}' removed successfully.", style="green"
             )
         else:
-            console.console.print(
+            print(
                 f"Failed to remove squad '{self.project_name}'", style="bold red"
             )

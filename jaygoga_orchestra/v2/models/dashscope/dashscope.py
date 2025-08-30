@@ -9,7 +9,6 @@ from pydantic import BaseModel
 from jaygoga_orchestra.v2.exceptions import ModelProviderError
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 
-
 @dataclass
 class DashScope(OpenAILike):
     """

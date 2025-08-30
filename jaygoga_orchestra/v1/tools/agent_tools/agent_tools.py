@@ -7,7 +7,6 @@ from jaygoga_orchestra.v1.utilities import I18N
 from .ask_question_tool import AskQuestionTool
 from .delegate_work_tool import DelegateWorkTool
 
-
 class AgentTools:
     """Manager class for agent-related tools"""
 

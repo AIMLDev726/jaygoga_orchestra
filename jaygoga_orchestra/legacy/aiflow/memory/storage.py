@@ -16,7 +16,6 @@ from .base import BaseMemory, MemoryEntry, MemoryType, MemoryImportance, MemoryC
 
 logger = logging.getLogger(__name__)
 
-
 class DatabaseMemoryStorage(BaseMemory):
     """Abstract base class for database-backed memory storage."""
     
@@ -39,7 +38,6 @@ class DatabaseMemoryStorage(BaseMemory):
     async def initialize_schema(self) -> bool:
         """Initialize database schema."""
         pass
-
 
 class SQLiteMemoryStorage(DatabaseMemoryStorage):
     """SQLite-based memory storage implementation."""
@@ -369,7 +367,6 @@ class SQLiteMemoryStorage(DatabaseMemoryStorage):
             logger.error(f"Error getting stats: {e}")
         
         return base_stats
-
 
 class PostgreSQLMemoryStorage(DatabaseMemoryStorage):
     """PostgreSQL-based memory storage implementation."""

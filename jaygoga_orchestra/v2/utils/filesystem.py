@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from pathlib import Path
 
-
 def rmdir_recursive(dir_path: Path) -> bool:
     """Deletes dir_path recursively, including all files and dirs in that directory
     Returns True if dir deleted successfully.
@@ -20,7 +19,6 @@ def rmdir_recursive(dir_path: Path) -> bool:
 
     return True if not dir_path.exists() else False
 
-
 def delete_files_in_dir(dir: Path) -> None:
     """Deletes all files in a directory, but doesn't delete the directory"""
 
@@ -29,7 +27,6 @@ def delete_files_in_dir(dir: Path) -> None:
             rmdir_recursive(item)
         else:
             item.unlink()
-
 
 def delete_from_fs(path_to_del: Path) -> bool:
     if not path_to_del.exists():

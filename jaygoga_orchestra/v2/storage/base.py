@@ -5,7 +5,6 @@ from typing import List, Literal, Optional
 
 from jaygoga_orchestra.v2.storage.session import Session
 
-
 class Storage(ABC):
     def __init__(self, mode: Optional[Literal["agent", "team", "workflow", "workflow_v2"]] = "agent"):
         self._mode: Literal["agent", "team", "workflow", "workflow_v2"] = "agent" if mode is None else mode

@@ -5,7 +5,6 @@ from typing import Any, Callable, Optional, Union
 
 from jaygoga_orchestra.v1.utilities.events.base_events import BaseEvent
 
-
 class LLMGuardrailStartedEvent(BaseEvent):
     """Event emitted when a guardrail task starts
 
@@ -28,7 +27,6 @@ class LLMGuardrailStartedEvent(BaseEvent):
             self.guardrail = self.guardrail.description.strip()
         elif isinstance(self.guardrail, Callable):
             self.guardrail = getsource(self.guardrail).strip()
-
 
 class LLMGuardrailCompletedEvent(BaseEvent):
     """Event emitted when a guardrail task completes

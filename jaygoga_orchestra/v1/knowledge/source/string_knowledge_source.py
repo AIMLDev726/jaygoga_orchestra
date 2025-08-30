@@ -6,7 +6,6 @@ from pydantic import Field
 
 from jaygoga_orchestra.v1.knowledge.source.base_knowledge_source import BaseKnowledgeSource
 
-
 class StringKnowledgeSource(BaseKnowledgeSource):
     """A knowledge source that stores and queries plain text content using embeddings."""
 

@@ -15,7 +15,6 @@ try:
 except ImportError:
     raise ImportError("Oxylabs SDK not found. Please install it with: pip install oxylabs")
 
-
 class OxylabsTools(Toolkit):
     def __init__(
         self,

@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.media import Image
 from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.utils.log import log_error, log_warning
 
-
 def format_images_for_message(message: Message, images: Sequence[Image]) -> Message:
     """
     Format an image into the format expected by WatsonX.

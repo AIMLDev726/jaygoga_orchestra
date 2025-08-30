@@ -11,7 +11,6 @@ except ImportError:
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class Neo4jTools(Toolkit):
     def __init__(
         self,

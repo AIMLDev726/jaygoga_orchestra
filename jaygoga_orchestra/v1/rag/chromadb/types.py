@@ -24,7 +24,6 @@ from jaygoga_orchestra.v1.rag.core.base_client import BaseCollectionParams, Base
 
 ChromaDBClientType = ClientAPI | AsyncClientAPI
 
-
 class ChromaEmbeddingFunctionWrapper(ChromaEmbeddingFunction[Embeddable]):
     """Base class for ChromaDB EmbeddingFunction to work with Pydantic validation."""
 
@@ -39,7 +38,6 @@ class ChromaEmbeddingFunctionWrapper(ChromaEmbeddingFunction[Embeddable]):
         """
         return core_schema.any_schema()
 
-
 class PreparedDocuments(NamedTuple):
     """Prepared documents ready for ChromaDB insertion.
 
@@ -52,7 +50,6 @@ class PreparedDocuments(NamedTuple):
     ids: list[str]
     texts: list[str]
     metadatas: list[Mapping[str, str | int | float | bool]]
-
 
 class ExtractedSearchParams(NamedTuple):
     """Extracted search parameters for ChromaDB queries.
@@ -77,7 +74,6 @@ class ExtractedSearchParams(NamedTuple):
     where_document: WhereDocument | None
     include: Include
 
-
 class ChromaDBCollectionCreateParams(BaseCollectionParams, total=False):
     """Parameters for creating a ChromaDB collection.
 
@@ -90,7 +86,6 @@ class ChromaDBCollectionCreateParams(BaseCollectionParams, total=False):
     embedding_function: ChromaEmbeddingFunction[Embeddable]
     data_loader: DataLoader[Loadable]
     get_or_create: bool
-
 
 class ChromaDBCollectionSearchParams(BaseCollectionSearchParams, total=False):
     """Parameters for searching a ChromaDB collection.

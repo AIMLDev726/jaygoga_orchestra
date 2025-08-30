@@ -16,13 +16,11 @@ from pydantic import BaseModel as PydanticBaseModel
 
 from jaygoga_orchestra.v1.tools.structured_tool import CrewStructuredTool
 
-
 class EnvVar(BaseModel):
     name: str
     description: str
     required: bool = True
     default: Optional[str] = None
-
 
 class BaseTool(BaseModel, ABC):
     class _ArgsSchemaPlaceholder(PydanticBaseModel):
@@ -86,7 +84,7 @@ class BaseTool(BaseModel, ABC):
         *args: Any,
         **kwargs: Any,
     ) -> Any:
-        console.print(f"Using Tool: {self.name}")
+        print(f"Using Tool: {self.name}")
         result = self._run(*args, **kwargs)
 
         # If _run is async, we safely run it
@@ -214,7 +212,6 @@ class BaseTool(BaseModel, ABC):
 
         return origin.__name__
 
-
 class Tool(BaseTool):
     """The function that will be executed when the tool is called."""
 
@@ -275,12 +272,10 @@ class Tool(BaseTool):
             args_schema=args_schema,
         )
 
-
 def to_langchain(
     tools: list[BaseTool | CrewStructuredTool],
 ) -> list[CrewStructuredTool]:
     return [t.to_structured_tool() if isinstance(t, BaseTool) else t for t in tools]
-
 
 def tool(
     *args, result_as_answer: bool = False, max_usage_count: int | None = None

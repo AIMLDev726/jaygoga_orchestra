@@ -34,7 +34,6 @@ DEFAULT_INSTRUCTIONS = dedent(
     """
 )
 
-
 class ZepTools(Toolkit):
     def __init__(
         self,
@@ -237,7 +236,6 @@ class ZepTools(Toolkit):
         except Exception as e:
             log_error(f"Failed to search Zep graph for user {self.user_id}: {e}")
             return f"Error searching graph: {e}"
-
 
 class ZepAsyncTools(Toolkit):
     def __init__(

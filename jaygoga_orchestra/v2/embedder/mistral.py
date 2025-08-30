@@ -13,7 +13,6 @@ try:
 except ImportError:
     raise ImportError("`mistralai` not installed")
 
-
 @dataclass
 class MistralEmbedder(Embedder):
     id: str = "mistral-embed"

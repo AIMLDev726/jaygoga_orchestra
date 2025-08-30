@@ -9,7 +9,6 @@ def enable_debug_mode() -> None:
 
     set_log_level_to_debug()
 
-
 def disable_debug_mode() -> None:
     """Disable debug mode for the jaygoga_orchestra.v2 library.
 

@@ -92,7 +92,7 @@ def create_blog_tasks(topic: str):
 async def run_blog_generation(topic: str, model_name: str = "gpt-4o-mini"):
     """Generate blog post with real-time CLI output."""
 
-    console.print(Panel(
+    print(Panel(
         f"[bold cyan]🚀 Blog Generation Starting[/bold cyan]\n\n"
         f"Topic: [yellow]{topic}[/yellow]\n"
         f"Model: [green]{model_name}[/green]",
@@ -129,7 +129,7 @@ async def run_blog_generation(topic: str, model_name: str = "gpt-4o-mini"):
         final_content = extract_final_blog(results)
         save_blog_to_file(final_content, topic)
 
-        console.print(Panel(
+        print(Panel(
             f"[bold green]✅ Blog Generation Complete![/bold green]\n\n"
             f"📄 Blog saved to: [cyan]blog_{topic.replace(' ', '_').lower()}.md[/cyan]\n"
             f"📊 Full results: [cyan]results.md[/cyan]",
@@ -137,7 +137,7 @@ async def run_blog_generation(topic: str, model_name: str = "gpt-4o-mini"):
             border_style="green"
         ))
     else:
-        console.print("[red]❌ Blog generation failed![/red]")
+        print("[red]❌ Blog generation failed![/red]")
 
     return results
 
@@ -187,7 +187,7 @@ def save_blog_to_file(content, topic):
 async def main():
     """Main function with model selection."""
 
-    console.print(Panel(
+    print(Panel(
         "[bold cyan]🎯 Blog Generation Team[/bold cyan]\n\n"
         "Generate professional blog posts using AI agents",
         title="AIFlow Blog Generator",
@@ -203,9 +203,9 @@ async def main():
         "5": ("llama-3.1-70b-versatile", "Groq Llama 3.1 70B")
     }
 
-    console.print("\n[bold]Choose AI Model:[/bold]")
+    print("\n[bold]Choose AI Model:[/bold]")
     for key, (model, desc) in models.items():
-        console.print(f"{key}. {desc}")
+        print(f"{key}. {desc}")
 
     model_choice = console.input("\nEnter model choice (1-5): ").strip()
     selected_model = models.get(model_choice, ("gpt-4o-mini", "OpenAI GPT-4o Mini"))[0]
@@ -219,10 +219,10 @@ async def main():
         "The Rise of Edge Computing in IoT"
     ]
 
-    console.print("\n[bold]Choose Blog Topic:[/bold]")
+    print("\n[bold]Choose Blog Topic:[/bold]")
     for i, topic in enumerate(topics, 1):
-        console.print(f"{i}. {topic}")
-    console.print("6. Custom topic")
+        print(f"{i}. {topic}")
+    print("6. Custom topic")
 
     try:
         choice = console.input("\nEnter choice (1-6): ").strip()
@@ -230,24 +230,24 @@ async def main():
         if choice == "6":
             topic = console.input("Enter custom topic: ").strip()
             if not topic:
-                console.print("[red]Topic cannot be empty![/red]")
+                print("[red]Topic cannot be empty![/red]")
                 return
         else:
             choice_idx = int(choice) - 1
             if 0 <= choice_idx < len(topics):
                 topic = topics[choice_idx]
             else:
-                console.print("[red]Invalid choice![/red]")
+                print("[red]Invalid choice![/red]")
                 return
 
         await run_blog_generation(topic, selected_model)
 
     except ValueError:
-        console.print("[red]Please enter a valid number![/red]")
+        print("[red]Please enter a valid number![/red]")
     except KeyboardInterrupt:
-        console.print("\n[yellow]Blog generation cancelled.[/yellow]")
+        print("\n[yellow]Blog generation cancelled.[/yellow]")
     except Exception as e:
-        console.print(f"[red]Error: {e}[/red]")
+        print(f"[red]Error: {e}[/red]")
 
 if __name__ == "__main__":
     asyncio.run(main())

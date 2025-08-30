@@ -23,10 +23,10 @@ class ExperimentResultsDisplay:
         table.add_row("Failed", str(total - passed))
         table.add_row("Success Rate", f"{(passed / total * 100):.1f}%" if total > 0 else "N/A")
 
-        self.console.console.print(table)
+        self.print(table)
 
     def comparison_summary(self, comparison: Dict[str, Any], baseline_timestamp: str):
-        self.console.console.print(Panel(f"[bold]Comparison with baseline run from {baseline_timestamp}[/bold]",
+        self.print(Panel(f"[bold]Comparison with baseline run from {baseline_timestamp}[/bold]",
                                  expand=False))
 
         table = Table(title="Results Comparison")
@@ -69,4 +69,4 @@ class ExperimentResultsDisplay:
                 details += f" and {len(missing_tests) - 3} more"
             table.add_row("➖ Missing Tests", str(len(missing_tests)), details)
 
-        self.console.console.print(table)
+        self.print(table)

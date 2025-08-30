@@ -10,7 +10,6 @@ from jaygoga_orchestra.v2.document.reader.base import Reader
 from jaygoga_orchestra.v2.utils.http import async_fetch_with_retry, fetch_with_retry
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 class URLReader(Reader):
     """Reader for general URL content"""
 

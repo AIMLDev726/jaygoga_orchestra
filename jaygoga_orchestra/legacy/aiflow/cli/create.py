@@ -11,7 +11,6 @@ from typing import Dict, Any
 
 from .base import BaseCLICommand, CLIContext, CLIUtils
 
-
 class CreateCommand(BaseCLICommand):
     """Command for creating new AIFlow projects."""
     

@@ -7,7 +7,6 @@ from jaygoga_orchestra.v2.document.reader.gcs.pdf_reader import GCSPDFReader
 from jaygoga_orchestra.v2.knowledge.gcs.base import GCSKnowledgeBase
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info
 
-
 class GCSPDFKnowledgeBase(GCSKnowledgeBase):
     reader: GCSPDFReader = GCSPDFReader()
 

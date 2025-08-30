@@ -3,7 +3,6 @@ console = Console()
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional, Union
 
-
 class BaseLLM(ABC):
     """Abstract base class for LLM implementations.
 

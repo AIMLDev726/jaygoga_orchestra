@@ -19,7 +19,6 @@ from jaygoga_orchestra.v2.workflow.workflow import Workflow
 
 logger = logging.getLogger(__name__)
 
-
 class FastAPIApp(BaseAPIApp):
     type = "fastapi"
 

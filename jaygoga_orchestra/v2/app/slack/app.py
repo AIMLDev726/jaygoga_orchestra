@@ -10,7 +10,6 @@ from jaygoga_orchestra.v2.app.slack.sync_router import get_sync_router
 
 logger = logging.getLogger(__name__)
 
-
 class SlackAPI(BaseAPIApp):
     type = "slack"
 

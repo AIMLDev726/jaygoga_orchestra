@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`requests` not installed. Please install using `pip install requests`")
 
-
 class OpenWeatherTools(Toolkit):
     """
     OpenWeather is a toolkit for accessing weather data from OpenWeatherMap API.

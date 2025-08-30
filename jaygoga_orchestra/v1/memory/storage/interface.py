@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from typing import Any, Dict, List
 
-
 class Storage:
     """Abstract base class defining the storage interface"""
 

@@ -15,7 +15,6 @@ from jaygoga_orchestra.v2.storage.session.v2.workflow import WorkflowSession as 
 from jaygoga_orchestra.v2.storage.session.workflow import WorkflowSession
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class YamlStorage(Storage):
     def __init__(
         self, dir_path: Union[str, Path], mode: Optional[Literal["agent", "team", "workflow", "workflow_v2"]] = "agent"

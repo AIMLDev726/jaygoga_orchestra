@@ -26,7 +26,6 @@ try:
 except ImportError:
     raise ImportError("`pymongo` not installed. Please install using `pip install pymongo`")
 
-
 class MongoDb(VectorDb):
     """
     MongoDB Vector Database implementation with elegant handling of Atlas Search index creation.

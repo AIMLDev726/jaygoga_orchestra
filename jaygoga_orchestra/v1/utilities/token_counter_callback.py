@@ -8,7 +8,6 @@ from litellm.types.utils import Usage
 
 from jaygoga_orchestra.v1.agents.agent_builder.utilities.base_token_process import TokenProcess
 
-
 class TokenCalcHandler(CustomLogger):
     def __init__(self, token_cost_process: Optional[TokenProcess]):
         self.token_cost_process = token_cost_process

@@ -10,7 +10,6 @@ try:
 except ImportError:
     raise ImportError("The `wikipedia` package is not installed. Please install it via `pip install wikipedia`.")
 
-
 class WikipediaKnowledgeBase(AgentKnowledge):
     topics: List[str] = []
     auto_suggest: bool = True

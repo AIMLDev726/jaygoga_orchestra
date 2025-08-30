@@ -10,7 +10,6 @@ from typing import Any
 from jaygoga_orchestra.v1.rag.config.types import RagConfigType
 from jaygoga_orchestra.v1.rag.config.utils import set_rag_config
 
-
 _module_path = __path__
 _module_file = __file__
 
@@ -55,6 +54,5 @@ class _RagModule(ModuleType):
             return importlib.import_module(f"{self.__name__}.{name}")
         except ImportError:
             raise AttributeError(f"module '{self.__name__}' has no attribute '{name}'")
-
 
 sys.modules[__name__] = _RagModule(__name__)

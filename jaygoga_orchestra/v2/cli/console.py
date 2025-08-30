@@ -27,38 +27,30 @@ error_style = Style(color="red")
 info_style = Style()
 warn_style = Style(color="magenta")
 
-
 ######################################################
 ## Print functions
 ######################################################
 
-
 def print_heading(msg: str) -> None:
-    console.console.print(msg, style=heading_style)
-
+    print(msg, style=heading_style)
 
 def print_subheading(msg: str) -> None:
-    console.console.print(msg, style=subheading_style)
-
+    print(msg, style=subheading_style)
 
 def print_info(msg: str) -> None:
-    console.console.print(msg, style=info_style)
-
+    print(msg, style=info_style)
 
 def log_config_not_available_msg() -> None:
     logger.error("Govinda config not found, please run `ag init` and try again")
-
 
 def log_active_workspace_not_available() -> None:
     logger.error("Could not find an active workspace. You can:")
     logger.error("- Run `ag ws setup` to setup a workspace at the current path")
     logger.error("- Run `ag ws create` to create a new workspace")
 
-
 def print_available_workspaces(avl_ws_list) -> None:
     avl_ws_names = [w.ws_root_path.stem for w in avl_ws_list] if avl_ws_list else []
     print_info("Available Workspaces:\n  - {}".format("\n  - ".join(avl_ws_names)))
-
 
 def confirm_yes_no(question, default: str = "yes") -> bool:
     """Ask a yes/no question via raw_input().

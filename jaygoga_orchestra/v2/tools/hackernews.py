@@ -8,7 +8,6 @@ import httpx
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class HackerNewsTools(Toolkit):
     """
     HackerNews is a tool for getting top stories from Hacker News.

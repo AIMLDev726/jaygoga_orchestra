@@ -10,7 +10,6 @@ from jaygoga_orchestra.v1.utilities.logger import Logger
 
 """Controls request rate limiting for API calls."""
 
-
 class RPMController(BaseModel):
     """Manages requests per minute limiting."""
 

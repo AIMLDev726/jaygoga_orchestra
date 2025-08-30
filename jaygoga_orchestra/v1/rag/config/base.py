@@ -9,7 +9,6 @@ from pydantic.dataclasses import dataclass as pyd_dataclass
 
 from jaygoga_orchestra.v1.rag.config.optional_imports.types import SupportedProvider
 
-
 @pyd_dataclass(frozen=True)
 class BaseRagConfig:
     """Base class for RAG configuration with Pydantic serialization support."""

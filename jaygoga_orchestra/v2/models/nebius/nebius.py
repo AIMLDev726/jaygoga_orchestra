@@ -7,7 +7,6 @@ from typing import Any, Dict, Optional
 from jaygoga_orchestra.v2.exceptions import ModelProviderError
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 
-
 @dataclass
 class Nebius(OpenAILike):
     """

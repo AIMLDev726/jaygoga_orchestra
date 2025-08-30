@@ -10,13 +10,12 @@ from jaygoga_orchestra.v1.agent import Agent
 from jaygoga_orchestra.v1.task import Task
 from jaygoga_orchestra.v1.utilities import I18N
 from jaygoga_orchestra.v1.llm import LLM
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.reasoning_events import (
     AgentReasoningStartedEvent,
     AgentReasoningCompletedEvent,
     AgentReasoningFailedEvent,
 )
-
 
 class ReasoningPlan(BaseModel):
     """Model representing a reasoning plan for a task."""
@@ -24,19 +23,16 @@ class ReasoningPlan(BaseModel):
     plan: str = Field(description="The detailed reasoning plan for the task.")
     ready: bool = Field(description="Whether the agent is ready to execute the task.")
 
-
 class AgentReasoningOutput(BaseModel):
     """Model representing the output of the agent reasoning process."""
 
     plan: ReasoningPlan = Field(description="The reasoning plan for the task.")
-
 
 class ReasoningFunction(BaseModel):
     """Model for function calling with reasoning."""
 
     plan: str = Field(description="The detailed reasoning plan for the task.")
     ready: bool = Field(description="Whether the agent is ready to execute the task.")
-
 
 class AgentReasoning:
     """
@@ -63,7 +59,7 @@ class AgentReasoning:
         """
         # Emit a reasoning started event (attempt 1)
         try:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self.agent,
                 AgentReasoningStartedEvent(
                     agent_role=self.agent.role,
@@ -81,7 +77,7 @@ class AgentReasoning:
 
             # Emit reasoning completed event
             try:
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self.agent,
                     AgentReasoningCompletedEvent(
                         agent_role=self.agent.role,
@@ -99,7 +95,7 @@ class AgentReasoning:
         except Exception as e:
             # Emit reasoning failed event
             try:
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self.agent,
                     AgentReasoningFailedEvent(
                         agent_role=self.agent.role,
@@ -175,7 +171,7 @@ class AgentReasoning:
         while not ready and (max_attempts is None or attempt < max_attempts):
             # Emit event for each refinement attempt
             try:
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self.agent,
                     AgentReasoningStartedEvent(
                         agent_role=self.agent.role,

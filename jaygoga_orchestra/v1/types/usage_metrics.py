@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from pydantic import BaseModel, Field
 
-
 class UsageMetrics(BaseModel):
     """
     Model to track usage metrics for the squad's execution.

@@ -29,7 +29,6 @@ from jaygoga_orchestra.v1.rag.qdrant.types import (
 )
 from jaygoga_orchestra.v1.rag.types import SearchResult, BaseRecord
 
-
 def _ensure_list_embedding(embedding: QueryEmbedding) -> list[float]:
     """Convert embedding to list[float] format if needed.
 
@@ -43,7 +42,6 @@ def _ensure_list_embedding(embedding: QueryEmbedding) -> list[float]:
         return embedding.tolist()
     return embedding
 
-
 def _is_sync_client(client: QdrantClientType) -> TypeGuard[SyncQdrantClient]:
     """Type guard to check if the client is a synchronous QdrantClient.
 
@@ -55,7 +53,6 @@ def _is_sync_client(client: QdrantClientType) -> TypeGuard[SyncQdrantClient]:
     """
     return isinstance(client, SyncQdrantClient)
 
-
 def _is_async_client(client: QdrantClientType) -> TypeGuard[AsyncQdrantClient]:
     """Type guard to check if the client is an asynchronous AsyncQdrantClient.
 
@@ -66,7 +63,6 @@ def _is_async_client(client: QdrantClientType) -> TypeGuard[AsyncQdrantClient]:
         True if the client is an AsyncQdrantClient, False otherwise.
     """
     return isinstance(client, AsyncQdrantClient)
-
 
 def _is_async_embedding_function(
     func: EmbeddingFunction | AsyncEmbeddingFunction,
@@ -80,7 +76,6 @@ def _is_async_embedding_function(
         True if the function is async, False otherwise.
     """
     return asyncio.iscoroutinefunction(func)
-
 
 def _get_collection_params(
     kwargs: QdrantCollectionCreateParams,
@@ -117,7 +112,6 @@ def _get_collection_params(
         params["timeout"] = kwargs["timeout"]
 
     return params
-
 
 def _prepare_search_params(
     collection_name: str,
@@ -162,7 +156,6 @@ def _prepare_search_params(
 
     return search_kwargs
 
-
 def _normalize_qdrant_score(score: float) -> float:
     """Normalize Qdrant cosine similarity score to [0, 1] range.
 
@@ -176,7 +169,6 @@ def _normalize_qdrant_score(score: float) -> float:
     """
     normalized = (score + 1.0) / 2.0
     return max(0.0, min(1.0, normalized))
-
 
 def _process_search_results(response: QueryResponse) -> list[SearchResult]:
     """Process Qdrant search response into SearchResult format.
@@ -200,7 +192,6 @@ def _process_search_results(response: QueryResponse) -> list[SearchResult]:
         results.append(result)
 
     return results
-
 
 def _create_point_from_document(
     doc: BaseRecord, embedding: QueryEmbedding

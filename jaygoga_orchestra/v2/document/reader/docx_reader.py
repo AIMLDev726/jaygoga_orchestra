@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("The `python-docx` package is not installed. Please install it via `pip install python-docx`.")
 
-
 class DocxReader(Reader):
     """Reader for Doc/Docx files"""
 

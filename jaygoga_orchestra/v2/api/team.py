@@ -3,12 +3,11 @@ console = Console()
 from jaygoga_orchestra.v2.api.api import api
 from jaygoga_orchestra.v2.api.routes import ApiRoutes
 from jaygoga_orchestra.v2.api.schemas.team import TeamCreate, TeamRunCreate, TeamSessionCreate
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 def create_team_run(run: TeamRunCreate, monitor: bool = False) -> None:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     log_debug("--**-- Logging Team Run")
@@ -23,9 +22,8 @@ def create_team_run(run: TeamRunCreate, monitor: bool = False) -> None:
             log_debug(f"Could not create Team run: {e}")
     return
 
-
 async def acreate_team_run(run: TeamRunCreate, monitor: bool = False) -> None:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     log_debug("--**-- Logging Team Run")
@@ -39,9 +37,8 @@ async def acreate_team_run(run: TeamRunCreate, monitor: bool = False) -> None:
         except Exception as e:
             log_debug(f"Could not create Team run: {e}")
 
-
 def upsert_team_session(session: TeamSessionCreate, monitor: bool = False) -> None:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     log_debug("--**-- Logging Team Session")
@@ -56,9 +53,8 @@ def upsert_team_session(session: TeamSessionCreate, monitor: bool = False) -> No
             log_debug(f"Could not create Agent session: {e}")
     return
 
-
 def create_team(team: TeamCreate) -> None:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     with api.AuthenticatedClient() as api_client:
@@ -70,9 +66,8 @@ def create_team(team: TeamCreate) -> None:
         except Exception as e:
             log_debug(f"Could not create Team: {e}")
 
-
 async def acreate_team(team: TeamCreate) -> None:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     async with api.AuthenticatedAsyncClient() as api_client:
@@ -82,6 +77,6 @@ async def acreate_team(team: TeamCreate) -> None:
                 json=team.model_dump(exclude_none=True),
             )
         except Exception as e:
-            console.print(f"Could not create Team: {e}")
+            print(f"Could not create Team: {e}")
 
             log_debug(f"Could not create Team: {e}")

@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -16,7 +17,6 @@ from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.run.response import RunResponse
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class AgentRun(BaseModel):
     message: Optional[Message] = None
     messages: Optional[List[Message]] = None
@@ -31,7 +31,6 @@ class AgentRun(BaseModel):
             "response": self.response.to_dict() if self.response else None,
         }
         return {k: v for k, v in response.items() if v is not None}
-
 
 class AgentMemory(BaseModel):
     # Runs between the user and agent

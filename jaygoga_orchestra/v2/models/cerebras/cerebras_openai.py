@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 @dataclass
 class CerebrasOpenAI(OpenAILike):
     id: str = "llama-4-scout-17b-16e-instruct"

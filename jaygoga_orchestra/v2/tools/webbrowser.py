@@ -5,7 +5,6 @@ from typing import Any, List
 
 from jaygoga_orchestra.v2.tools import Toolkit
 
-
 class WebBrowserTools(Toolkit):
     """Tools for opening a page on the web browser"""
 

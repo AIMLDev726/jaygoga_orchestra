@@ -9,7 +9,6 @@ from pydantic import BaseModel, ValidationError
 
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def is_valid_uuid(uuid_str: str) -> bool:
     """
     Check if a string is a valid UUID
@@ -28,7 +27,6 @@ def is_valid_uuid(uuid_str: str) -> bool:
     except (ValueError, AttributeError, TypeError):
         return False
 
-
 def safe_content_hash(content: str) -> str:
     """
     Return an MD5 hash of the input string, replacing null bytes and invalid surrogates for safe hashing.
@@ -41,7 +39,6 @@ def safe_content_hash(content: str) -> str:
         content_hash = hashlib.md5(cleaned_content.encode("utf-8")).hexdigest()
 
     return content_hash
-
 
 def url_safe_string(input_string):
     # Replace spaces with dashes
@@ -61,7 +58,6 @@ def url_safe_string(input_string):
 
     return safe_string
 
-
 def hash_string_sha256(input_string):
     # Encode the input string to bytes
     encoded_string = input_string.encode("utf-8")
@@ -76,7 +72,6 @@ def hash_string_sha256(input_string):
     hex_digest = sha256_hash.hexdigest()
 
     return hex_digest
-
 
 def _extract_json_objects(text: str) -> list[str]:
     objs: list[str] = []
@@ -93,7 +88,6 @@ def _extract_json_objects(text: str) -> list[str]:
                 objs.append(text[start_idx : idx + 1])
                 start_idx = None
     return objs
-
 
 def _clean_json_content(content: str) -> str:
     """Clean and prepare JSON content for parsing."""
@@ -131,7 +125,6 @@ def _clean_json_content(content: str) -> str:
 
     return content
 
-
 def _parse_individual_json(content: str, response_model: Type[BaseModel]) -> Optional[BaseModel]:
     """Parse individual JSON objects from content and merge them based on response model fields."""
     candidate_jsons = _extract_json_objects(content)
@@ -167,7 +160,6 @@ def _parse_individual_json(content: str, response_model: Type[BaseModel]) -> Opt
     except ValidationError as e:
         logger.warning("Validation failed on merged data: %s", e)
         return None
-
 
 def parse_response_model_str(content: str, response_model: Type[BaseModel]) -> Optional[BaseModel]:
     structured_output = None

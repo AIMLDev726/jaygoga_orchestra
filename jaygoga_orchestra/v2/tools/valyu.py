@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`valyu` not installed. Please install using `pip install valyu`")
 
-
 class ValyuTools(Toolkit):
     def __init__(
         self,

@@ -16,7 +16,6 @@ from jaygoga_orchestra.v2.utils.whatsapp import get_media_async, send_image_mess
 
 from .security import validate_webhook_signature
 
-
 def get_async_router(agent: Optional[Agent] = None, team: Optional[Team] = None) -> APIRouter:
     router = APIRouter()
 

@@ -8,7 +8,6 @@ from jaygoga_orchestra.v1.experimental.evaluation.json_parser import extract_jso
 from jaygoga_orchestra.v1.agent import Agent
 from jaygoga_orchestra.v1.task import Task
 
-
 class ToolSelectionEvaluator(BaseEvaluator):
 
     @property
@@ -124,7 +123,6 @@ IMPORTANT:
                 feedback=f"Error evaluating tool selection: {e}",
                 raw_response=response
             )
-
 
 class ParameterExtractionEvaluator(BaseEvaluator):
     @property
@@ -266,7 +264,6 @@ Evaluate the quality of the agent's parameter extraction for this task.
                 feedback=f"Error evaluating parameter extraction: {e}",
                 raw_response=response
             )
-
 
 class ToolInvocationEvaluator(BaseEvaluator):
     @property

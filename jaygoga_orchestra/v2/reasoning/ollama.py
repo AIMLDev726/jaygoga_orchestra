@@ -1,13 +1,13 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from typing import List, Optional
 
 from jaygoga_orchestra.v2.models.base import Model
 from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 def is_ollama_reasoning_model(reasoning_model: Model) -> bool:
     return reasoning_model.__class__.__name__ == "Ollama" and (
@@ -16,7 +16,6 @@ def is_ollama_reasoning_model(reasoning_model: Model) -> bool:
         or "qwen2.5-coder" in reasoning_model.id
         or "openthinker" in reasoning_model.id
     )
-
 
 def get_ollama_reasoning(reasoning_agent: "Agent", messages: List[Message]) -> Optional[Message]:  # type: ignore  # noqa: F821
     from jaygoga_orchestra.v2.run.response import RunResponse
@@ -42,7 +41,6 @@ def get_ollama_reasoning(reasoning_agent: "Agent", messages: List[Message]) -> O
     return Message(
         role="assistant", content=f"<thinking>\n{reasoning_content}\n</thinking>", reasoning_content=reasoning_content
     )
-
 
 async def aget_ollama_reasoning(reasoning_agent: "Agent", messages: List[Message]) -> Optional[Message]:  # type: ignore  # noqa: F821
     from jaygoga_orchestra.v2.run.response import RunResponse

@@ -7,7 +7,6 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v1.utilities.events.base_events import BaseEvent
 
-
 class LLMEventBase(BaseEvent):
     task_name: Optional[str] = None
     task_id: Optional[str] = None
@@ -23,13 +22,11 @@ class LLMEventBase(BaseEvent):
         self._set_agent_params(data)
         self._set_task_params(data)
 
-
 class LLMCallType(Enum):
     """Type of LLM call being made"""
 
     TOOL_CALL = "tool_call"
     LLM_CALL = "llm_call"
-
 
 class LLMCallStartedEvent(LLMEventBase):
     """Event emitted when a LLM call starts
@@ -46,7 +43,6 @@ class LLMCallStartedEvent(LLMEventBase):
     callbacks: Optional[List[Any]] = None
     available_functions: Optional[Dict[str, Any]] = None
 
-
 class LLMCallCompletedEvent(LLMEventBase):
     """Event emitted when a LLM call completes"""
 
@@ -56,25 +52,21 @@ class LLMCallCompletedEvent(LLMEventBase):
     call_type: LLMCallType
     model: Optional[str] = None
 
-
 class LLMCallFailedEvent(LLMEventBase):
     """Event emitted when a LLM call fails"""
 
     error: str
     type: str = "llm_call_failed"
 
-
 class FunctionCall(BaseModel):
     arguments: str
     name: Optional[str] = None
-
 
 class ToolCall(BaseModel):
     id: Optional[str] = None
     function: FunctionCall
     type: Optional[str] = None
     index: int
-
 
 class LLMStreamChunkEvent(LLMEventBase):
     """Event emitted when a streaming chunk is received"""

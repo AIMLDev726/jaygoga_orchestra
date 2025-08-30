@@ -8,7 +8,7 @@ from pydantic import PrivateAttr
 from jaygoga_orchestra.v1.memory.entity.entity_memory_item import EntityMemoryItem
 from jaygoga_orchestra.v1.memory.memory import Memory
 from jaygoga_orchestra.v1.memory.storage.rag_storage import RAGStorage
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemoryQueryStartedEvent,
     MemoryQueryCompletedEvent,
@@ -17,7 +17,6 @@ from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemorySaveCompletedEvent,
     MemorySaveFailedEvent,
 )
-
 
 class EntityMemory(Memory):
     """
@@ -78,7 +77,7 @@ class EntityMemory(Memory):
         is_batch = len(items) > 1
 
         metadata = {"entity_count": len(items)} if is_batch else items[0].metadata
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemorySaveStartedEvent(
                 metadata=metadata,
@@ -117,7 +116,7 @@ class EntityMemory(Memory):
                 emit_value = f"{items[0].name}({items[0].type}): {items[0].description}"
                 metadata = items[0].metadata
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveCompletedEvent(
                     value=emit_value,
@@ -140,7 +139,7 @@ class EntityMemory(Memory):
                 if is_batch
                 else items[0].metadata
             )
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveFailedEvent(
                     metadata=fail_metadata,
@@ -158,7 +157,7 @@ class EntityMemory(Memory):
         limit: int = 3,
         score_threshold: float = 0.35,
     ):
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemoryQueryStartedEvent(
                 query=query,
@@ -176,7 +175,7 @@ class EntityMemory(Memory):
                 query=query, limit=limit, score_threshold=score_threshold
             )
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryCompletedEvent(
                     query=query,
@@ -192,7 +191,7 @@ class EntityMemory(Memory):
 
             return results
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryFailedEvent(
                     query=query,

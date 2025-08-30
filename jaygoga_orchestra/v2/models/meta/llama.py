@@ -28,7 +28,6 @@ try:
 except ImportError:
     raise ImportError("`llama-api-client` not installed. Please install using `pip install llama-api-client`")
 
-
 @dataclass
 class Llama(Model):
     """

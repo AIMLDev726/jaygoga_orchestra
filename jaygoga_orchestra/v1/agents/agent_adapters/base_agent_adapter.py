@@ -8,7 +8,6 @@ from pydantic import PrivateAttr
 from jaygoga_orchestra.v1.agent import BaseAgent
 from jaygoga_orchestra.v1.tools import BaseTool
 
-
 class BaseAgentAdapter(BaseAgent, ABC):
     """Base class for all agent adapters in Govinda.
 

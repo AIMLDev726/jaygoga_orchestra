@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("requests not installed, use pip install requests")
 
-
 @dataclass
 class JinaEmbedder(Embedder):
     id: str = "jina-embeddings-v3"

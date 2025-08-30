@@ -36,8 +36,7 @@ from jaygoga_orchestra.v1.utilities.events.agent_events import (
     AgentLogsStartedEvent,
     AgentLogsExecutionEvent,
 )
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
-
+from jaygoga_orchestra.v1.utilities.events import event_bus
 
 class CrewAgentExecutor(CrewAgentExecutorMixin):
     _logger: Logger = Logger()
@@ -115,7 +114,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
         try:
             formatted_answer = self._invoke_loop()
         except AssertionError:
-            self._printer.console.print(
+            self._printer.print(
                 content="Agent failed to reach a final answer. This is likely a bug - please report it.",
                 color="red",
             )
@@ -123,7 +122,6 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
         except Exception as e:
             handle_unknown_error(self._printer, e)
             raise
-
 
         if self.ask_for_human_input:
             formatted_answer = self._handle_human_feedback(formatted_answer)
@@ -268,7 +266,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
         if self.agent is None:
             raise ValueError("Agent cannot be None")
 
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self.agent,
             AgentLogsStartedEvent(
                 agent_role=self.agent.role,
@@ -285,7 +283,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
         if self.agent is None:
             raise ValueError("Agent cannot be None")
 
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self.agent,
             AgentLogsExecutionEvent(
                 agent_role=self.agent.role,
@@ -338,7 +336,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
         )
 
         if train_iteration is None or not isinstance(train_iteration, int):
-            self._printer.console.print(
+            self._printer.print(
                 content="Invalid or missing train iteration. Cannot save training data.",
                 color="red",
             )
@@ -361,7 +359,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
             if train_iteration in agent_training_data:
                 agent_training_data[train_iteration]["improved_output"] = result.output
             else:
-                self._printer.console.print(
+                self._printer.print(
                     content=(
                         f"No existing training data for agent {agent_id} and iteration "
                         f"{train_iteration}. Cannot save improved output."
@@ -443,7 +441,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
 
     def _log_feedback_error(self, retry_count: int, error: Exception) -> None:
         """Log feedback processing errors."""
-        self._printer.console.print(
+        self._printer.print(
             content=(
                 f"Error processing feedback: {error}. "
                 f"Retrying... ({retry_count + 1}/{MAX_LLM_RETRY})"
@@ -453,7 +451,7 @@ class CrewAgentExecutor(CrewAgentExecutorMixin):
 
     def _log_max_retries_exceeded(self) -> None:
         """Log when max retries for feedback processing are exceeded."""
-        self._printer.console.print(
+        self._printer.print(
             content=(
                 f"Failed to process feedback after {MAX_LLM_RETRY} attempts. "
                 "Ending feedback loop."

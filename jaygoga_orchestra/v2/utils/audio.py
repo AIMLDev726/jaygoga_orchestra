@@ -5,7 +5,6 @@ import os
 
 from jaygoga_orchestra.v2.utils.log import log_info
 
-
 def write_audio_to_file(audio, filename: str):
     """
     Write base64 encoded audio file to disk.

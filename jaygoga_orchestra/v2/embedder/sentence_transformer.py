@@ -18,7 +18,6 @@ try:
 except ImportError:
     raise ImportError("numpy not installed, use `pip install numpy`")
 
-
 @dataclass
 class SentenceTransformerEmbedder(Embedder):
     id: str = "sentence-transformers/all-MiniLM-L6-v2"

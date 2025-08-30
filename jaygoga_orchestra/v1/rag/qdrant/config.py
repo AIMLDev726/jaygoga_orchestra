@@ -10,7 +10,6 @@ from jaygoga_orchestra.v1.rag.config.base import BaseRagConfig
 from jaygoga_orchestra.v1.rag.qdrant.types import QdrantClientParams, QdrantEmbeddingFunctionWrapper
 from jaygoga_orchestra.v1.rag.qdrant.constants import DEFAULT_EMBEDDING_MODEL, DEFAULT_STORAGE_PATH
 
-
 def _default_options() -> QdrantClientParams:
     """Create default Qdrant client options.
 
@@ -18,7 +17,6 @@ def _default_options() -> QdrantClientParams:
         Default options with file-based storage.
     """
     return QdrantClientParams(path=DEFAULT_STORAGE_PATH)
-
 
 def _default_embedding_function() -> QdrantEmbeddingFunctionWrapper:
     """Create default Qdrant embedding function.
@@ -43,7 +41,6 @@ def _default_embedding_function() -> QdrantEmbeddingFunctionWrapper:
         return embeddings[0].tolist() if embeddings else []
 
     return cast(QdrantEmbeddingFunctionWrapper, embed_fn)
-
 
 @pyd_dataclass(frozen=True)
 class QdrantConfig(BaseRagConfig):

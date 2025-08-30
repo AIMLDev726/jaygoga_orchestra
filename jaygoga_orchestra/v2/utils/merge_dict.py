@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from typing import Any, Dict
 
-
 def merge_dictionaries(a: Dict[str, Any], b: Dict[str, Any]) -> None:
     """
     Recursively merges two dictionaries.

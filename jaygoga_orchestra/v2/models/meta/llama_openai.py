@@ -15,7 +15,6 @@ from jaygoga_orchestra.v2.models.meta.llama import Message
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 from jaygoga_orchestra.v2.utils.models.llama import format_message
 
-
 @dataclass
 class LlamaOpenAI(OpenAILike):
     """

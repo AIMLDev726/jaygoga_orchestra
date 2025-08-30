@@ -56,7 +56,6 @@ HIDDEN_SETTINGS_KEYS = [
     "tool_repository_password",
 ]
 
-
 class Settings(BaseModel):
     enterprise_base_url: Optional[str] = Field(
         default=DEFAULT_CLI_SETTINGS["enterprise_base_url"],

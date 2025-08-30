@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from importlib import metadata
 from pathlib import Path
@@ -13,10 +14,9 @@ from jaygoga_orchestra.v2.utils.log import logger
 
 AGNO_CLI_CONFIG_DIR: Path = Path.home().resolve().joinpath(".config").joinpath("ag")
 
-
 class AgnoCliSettings(BaseSettings):
-    app_name: str = "govinda"
-    app_version: str = metadata.version("govinda")
+    app_name: str = "jaygoga-orchestra"
+    app_version: str = metadata.version("jaygoga-orchestra")
 
     tmp_token_path: Path = AGNO_CLI_CONFIG_DIR.joinpath("tmp_token")
     config_file_path: Path = AGNO_CLI_CONFIG_DIR.joinpath("config.json")
@@ -94,5 +94,4 @@ class AgnoCliSettings(BaseSettings):
             logger.error("This is an Alpha feature not for general use.\nPlease message the Govinda team for access.")
             exit(1)
 
-
-jaygoga_orchestra.v2_cli_settings = AgnoCliSettings()
+jaygoga_orchestra_v2_cli_settings = AgnoCliSettings()

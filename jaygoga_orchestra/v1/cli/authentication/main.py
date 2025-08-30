@@ -8,13 +8,11 @@ import requests
 from rich.console import Console
 from pydantic import BaseModel, Field
 
-
 from .utils import validate_jwt_token
 from jaygoga_orchestra.v1.cli.shared.token_manager import TokenManager
 from jaygoga_orchestra.v1.cli.config import Settings
 
 console = Console()
-
 
 class Oauth2Settings(BaseModel):
     provider: str = Field(
@@ -42,7 +40,6 @@ class Oauth2Settings(BaseModel):
             audience=settings.oauth2_audience,
         )
 
-
 class ProviderFactory:
     @classmethod
     def from_settings(cls, settings: Optional[Oauth2Settings] = None):
@@ -57,7 +54,6 @@ class ProviderFactory:
 
         return provider(settings)
 
-
 class AuthenticationCommand:
     def __init__(self):
         self.token_manager = TokenManager()
@@ -65,7 +61,7 @@ class AuthenticationCommand:
 
     def login(self) -> None:
         """Sign up to Govinda+"""
-        console.console.print("Signing in to Govinda Enterprise...\n", style="bold blue")
+        print("Signing in to Govinda Enterprise...\n", style="bold blue")
 
         device_code_data = self._get_device_code()
         self._display_auth_instructions(device_code_data)
@@ -90,8 +86,8 @@ class AuthenticationCommand:
 
     def _display_auth_instructions(self, device_code_data: Dict[str, str]) -> None:
         """Display the authentication instructions to the user."""
-        console.console.print("1. Navigate to: ", device_code_data["verification_uri_complete"])
-        console.console.print("2. Enter the following code: ", device_code_data["user_code"])
+        print("1. Navigate to: ", device_code_data["verification_uri_complete"])
+        print("2. Enter the following code: ", device_code_data["user_code"])
         webbrowser.open(device_code_data["verification_uri_complete"])
 
     def _poll_for_token(self, device_code_data: Dict[str, Any]) -> None:
@@ -103,7 +99,7 @@ class AuthenticationCommand:
             "client_id": self.oauth2_provider.get_client_id(),
         }
 
-        console.console.print("\nWaiting for authentication... ", style="bold blue", end="")
+        print("\nWaiting for authentication... ", style="bold blue", end="")
 
         attempts = 0
         while True and attempts < 10:
@@ -115,14 +111,14 @@ class AuthenticationCommand:
             if response.status_code == 200:
                 self._validate_and_save_token(token_data)
 
-                console.console.print(
+                print(
                     "Success!",
                     style="bold green",
                 )
 
                 self._login_to_tool_repository()
 
-                console.console.print(
+                print(
                     "\n[bold green]Welcome to Govinda Enterprise![/bold green]\n"
                 )
                 return
@@ -133,7 +129,7 @@ class AuthenticationCommand:
             time.sleep(device_code_data["interval"])
             attempts += 1
 
-        console.console.print(
+        print(
             "Timeout: Failed to get the token. Please try again.", style="bold red"
         )
 
@@ -160,7 +156,7 @@ class AuthenticationCommand:
         from jaygoga_orchestra.v1.cli.tools.main import ToolCommand
 
         try:
-            console.console.print(
+            print(
                 "Now logging you in to the Tool Repository... ",
                 style="bold blue",
                 end="",
@@ -168,22 +164,22 @@ class AuthenticationCommand:
 
             ToolCommand().login()
 
-            console.console.print(
+            print(
                 "Success!\n",
                 style="bold green",
             )
 
             settings = Settings()
-            console.console.print(
+            print(
                 f"You are authenticated to the tool repository as [bold cyan]'{settings.org_name}'[/bold cyan] ({settings.org_uuid})",
                 style="green",
             )
         except Exception:
-            console.console.print(
+            print(
                 "\n[bold yellow]Warning:[/bold yellow] Authentication with the Tool Repository failed.",
                 style="yellow",
             )
-            console.console.print(
+            print(
                 "Other features will work normally, but you may experience limitations "
                 "with downloading and publishing tools."
                 "\nRun [bold]jaygoga_orchestra.v1 login[/bold] to try logging in again.\n",

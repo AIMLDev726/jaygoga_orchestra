@@ -30,7 +30,6 @@ from jaygoga_orchestra.v2.vectordb.distance import Distance
 from jaygoga_orchestra.v2.vectordb.pgvector.index import HNSW, Ivfflat
 from jaygoga_orchestra.v2.vectordb.search import SearchType
 
-
 class PgVector(VectorDb):
     """
     PgVector class for managing vector operations with PostgreSQL and pgvector.

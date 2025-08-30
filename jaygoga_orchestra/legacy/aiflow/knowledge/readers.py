@@ -16,7 +16,6 @@ from .base import Knowledge
 
 logger = logging.getLogger(__name__)
 
-
 class BaseDocumentReader(ABC):
     """Abstract base class for document readers."""
     
@@ -45,7 +44,6 @@ class BaseDocumentReader(ABC):
             },
             created_at=datetime.now()
         )
-
 
 class TextReader(BaseDocumentReader):
     """Reader for plain text files."""
@@ -102,7 +100,6 @@ class TextReader(BaseDocumentReader):
                 break
 
         return chunks
-
 
 class JSONReader(BaseDocumentReader):
     """Reader for JSON files."""
@@ -183,7 +180,6 @@ class JSONReader(BaseDocumentReader):
                 break
 
         return chunks
-
 
 class PDFReader(BaseDocumentReader):
     """Reader for PDF files."""

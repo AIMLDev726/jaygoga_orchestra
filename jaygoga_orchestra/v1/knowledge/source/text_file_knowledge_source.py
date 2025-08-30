@@ -5,7 +5,6 @@ from typing import Dict, List
 
 from jaygoga_orchestra.v1.knowledge.source.base_file_knowledge_source import BaseFileKnowledgeSource
 
-
 class TextFileKnowledgeSource(BaseFileKnowledgeSource):
     """A knowledge source that stores and queries text file content using embeddings."""
 

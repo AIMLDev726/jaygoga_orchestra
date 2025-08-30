@@ -21,7 +21,6 @@ try:
 except (ImportError, ModuleNotFoundError):
     raise ImportError("`mcp` not installed. Please install using `pip install mcp`")
 
-
 def _prepare_command(command: str) -> list[str]:
     """Sanitize a command and split it into parts before using it to run a MCP server."""
     from shlex import split
@@ -61,7 +60,6 @@ def _prepare_command(command: str) -> list[str]:
 
     return parts
 
-
 @dataclass
 class SSEClientParams:
     """Parameters for SSE client connection."""
@@ -70,7 +68,6 @@ class SSEClientParams:
     headers: Optional[Dict[str, Any]] = None
     timeout: Optional[float] = 5
     sse_read_timeout: Optional[float] = 60 * 5
-
 
 @dataclass
 class StreamableHTTPClientParams:
@@ -81,7 +78,6 @@ class StreamableHTTPClientParams:
     timeout: Optional[timedelta] = timedelta(seconds=30)
     sse_read_timeout: Optional[timedelta] = timedelta(seconds=60 * 5)
     terminate_on_close: Optional[bool] = None
-
 
 class MCPTools(Toolkit):
     """
@@ -346,7 +342,6 @@ class MCPTools(Toolkit):
         except Exception as e:
             logger.error(f"Failed to get MCP tools: {e}")
             raise
-
 
 class MultiMCPTools(Toolkit):
     """

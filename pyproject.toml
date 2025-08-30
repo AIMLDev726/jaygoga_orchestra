@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jaygoga-orchestra"
-version = "1.0.1"
+version = "1.0.2"
 description = "JayGoga-Orchestra - Advanced AI Agent Orchestration Framework"
 readme = "README.md"
 requires-python = ">=3.8"

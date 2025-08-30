@@ -16,7 +16,6 @@ try:
 except (ModuleNotFoundError, ImportError):
     raise ImportError("`groq` not installed. Please install using `pip install groq`")
 
-
 class GroqTools(Toolkit):
     """Tools for interacting with Groq API"""
 

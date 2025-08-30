@@ -9,13 +9,11 @@ from pydantic.dataclasses import dataclass as pyd_dataclass
 
 from jaygoga_orchestra.v1.rag.config.optional_imports.base import _MissingProvider
 
-
 @pyd_dataclass(config=ConfigDict(extra="forbid"))
 class MissingChromaDBConfig(_MissingProvider):
     """Placeholder for missing ChromaDB configuration."""
 
     provider: Literal["chromadb"] = field(default="chromadb")
-
 
 @pyd_dataclass(config=ConfigDict(extra="forbid"))
 class MissingQdrantConfig(_MissingProvider):

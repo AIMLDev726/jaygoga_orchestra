@@ -9,13 +9,11 @@ from jaygoga_orchestra.v1.utilities import I18N
 
 i18n = I18N()
 
-
 class AddImageToolSchema(BaseModel):
     image_url: str = Field(..., description="The URL or path of the image to add")
     action: Optional[str] = Field(
         default=None, description="Optional context or question about the image"
     )
-
 
 class AddImageTool(BaseTool):
     """Tool for adding images to the content"""

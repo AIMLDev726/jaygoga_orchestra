@@ -12,7 +12,7 @@ from jaygoga_orchestra.v1.agents.agent_builder.base_agent import BaseAgent
 from jaygoga_orchestra.v1.tools import BaseTool
 from jaygoga_orchestra.v1.tools.agent_tools.agent_tools import AgentTools
 from jaygoga_orchestra.v1.utilities import Logger
-from jaygoga_orchestra.v1.utilities.events import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.agent_events import (
     AgentExecutionCompletedEvent,
     AgentExecutionErrorEvent,
@@ -28,7 +28,6 @@ try:
     OPENAI_AVAILABLE = True
 except ImportError:
     OPENAI_AVAILABLE = False
-
 
 class OpenAIAgentAdapter(BaseAgentAdapter):
     """Adapter for OpenAI Assistants"""
@@ -102,7 +101,7 @@ class OpenAIAgentAdapter(BaseAgentAdapter):
                 task_prompt = self.i18n.slice("task_with_context").format(
                     task=task_prompt, context=context
                 )
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionStartedEvent(
                     agent=self,
@@ -113,7 +112,7 @@ class OpenAIAgentAdapter(BaseAgentAdapter):
             )
             result = self.agent_executor.run_sync(self._openai_agent, task_prompt)
             final_answer = self.handle_execution_result(result)
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionCompletedEvent(
                     agent=self, task=task, output=final_answer
@@ -123,7 +122,7 @@ class OpenAIAgentAdapter(BaseAgentAdapter):
 
         except Exception as e:
             self._logger.log("error", f"Error executing OpenAI task: {str(e)}")
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionErrorEvent(
                     agent=self,

@@ -11,7 +11,6 @@ from jaygoga_orchestra.v1.knowledge.storage.knowledge_storage import KnowledgeSt
 from jaygoga_orchestra.v1.utilities.constants import KNOWLEDGE_DIRECTORY
 from jaygoga_orchestra.v1.utilities.logger import Logger
 
-
 class BaseFileKnowledgeSource(BaseKnowledgeSource, ABC):
     """Base class for knowledge sources that load content from files."""
 

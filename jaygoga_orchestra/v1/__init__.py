@@ -15,7 +15,6 @@ from jaygoga_orchestra.v1.process import Process
 from jaygoga_orchestra.v1.task import Task
 from jaygoga_orchestra.v1.tasks.llm_guardrail import LLMGuardrail
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
-from jaygoga_orchestra.v1.telemetry.telemetry import Telemetry
 
 warnings.filterwarnings(
     "ignore",
@@ -25,7 +24,6 @@ warnings.filterwarnings(
 )
 
 _telemetry_submitted = False
-
 
 def _track_install():
     """Track package installation/first-use via Scarf analytics."""
@@ -46,15 +44,13 @@ def _track_install():
     except Exception:
         pass
 
+# def _track_install_async():
+#     """Track installation in background thread to avoid blocking imports."""
+#     if not Telemetry._is_telemetry_disabled():
+#         thread = threading.Thread(target=_track_install, daemon=True)
+#         thread.start()
 
-def _track_install_async():
-    """Track installation in background thread to avoid blocking imports."""
-    if not Telemetry._is_telemetry_disabled():
-        thread = threading.Thread(target=_track_install, daemon=True)
-        thread.start()
-
-
-_track_install_async()
+# _track_install_async()
 
 __version__ = "1.0.0"
 __all__ = [

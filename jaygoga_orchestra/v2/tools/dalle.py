@@ -16,7 +16,6 @@ try:
 except ImportError:
     raise ImportError("`openai` not installed. Please install using `pip install openai`")
 
-
 class DalleTools(Toolkit):
     def __init__(
         self,

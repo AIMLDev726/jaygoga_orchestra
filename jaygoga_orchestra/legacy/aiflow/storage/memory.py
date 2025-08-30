@@ -19,7 +19,6 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 
 Base = declarative_base()
 
-
 class MemoryEntry(Base):
     """SQLAlchemy model for memory entries."""
     __tablename__ = "memory_entries"
@@ -31,7 +30,6 @@ class MemoryEntry(Base):
     key = Column(String, nullable=True, index=True)
     content = Column(Text, nullable=False)
     entry_metadata = Column(Text, nullable=True)  # JSON string
-
 
 class MemoryManager:
     """
@@ -292,7 +290,6 @@ class MemoryManager:
         if not self._initialized:
             await self._initialize_db()
 
-
 # Fallback simple memory manager for when SQLAlchemy is not available
 class SimpleMemoryManager:
     """Simple in-memory fallback when SQLAlchemy is not available."""
@@ -349,7 +346,6 @@ class SimpleMemoryManager:
         # Simple memory manager doesn't need cleanup
         return
 
-
 # Try to use full MemoryManager, fallback to simple version
 try:
     # Test if SQLAlchemy async is available
@@ -357,7 +353,6 @@ try:
     DefaultMemoryManager = MemoryManager
 except ImportError:
     DefaultMemoryManager = SimpleMemoryManager
-
 
 # Export the appropriate manager
 MemoryManager = DefaultMemoryManager

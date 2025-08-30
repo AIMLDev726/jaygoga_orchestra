@@ -6,9 +6,8 @@ from urllib.parse import urljoin
 import requests
 
 from jaygoga_orchestra.v1.cli.config import Settings
-from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra.v1_version
+from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra_v1_version
 from jaygoga_orchestra.v1.cli.constants import DEFAULT_CREWAI_ENTERPRISE_URL
-
 
 class PlusAPI:
     """
@@ -27,8 +26,8 @@ class PlusAPI:
         self.headers = {
             "Authorization": f"Bearer {api_key}",
             "Content-Type": "application/json",
-            "User-Agent": f"Govinda-CLI/{get_jaygoga_orchestra.v1_version()}",
-            "X-Crewai-Version": get_jaygoga_orchestra.v1_version(),
+            "User-Agent": f"Govinda-CLI/{get_jaygoga_orchestra_v1_version()}",
+            "X-Crewai-Version": get_jaygoga_orchestra_v1_version(),
         }
         settings = Settings()
         if settings.org_uuid:

@@ -4,7 +4,6 @@ console = Console()
 
 from typing import Optional
 
-
 class DatabaseOperationError(Exception):
     """Base exception class for database operation errors."""
 
@@ -17,7 +16,6 @@ class DatabaseOperationError(Exception):
         """
         super().__init__(message)
         self.original_error = original_error
-
 
 class DatabaseError:
     """Standardized error message templates for database operations."""
@@ -40,7 +38,6 @@ class DatabaseError:
             The formatted error message
         """
         return template.format(str(error))
-
 
 class AgentRepositoryError(Exception):
     """Exception raised when an agent repository is not found."""

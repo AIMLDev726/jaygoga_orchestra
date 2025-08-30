@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional
 from jaygoga_orchestra.v2.infra.base import InfraBase
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class InfraResource(InfraBase):
     """Base class for Infrastructure Resources."""
 

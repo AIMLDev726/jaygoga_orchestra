@@ -7,7 +7,6 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def is_origin_union_type(origin: Any) -> bool:
     import sys
 
@@ -17,7 +16,6 @@ def is_origin_union_type(origin: Any) -> bool:
         return origin in [Union, UnionType]
 
     return origin is Union
-
 
 def get_json_type_for_py_type(arg: str) -> str:
     """
@@ -41,7 +39,6 @@ def get_json_type_for_py_type(arg: str) -> str:
 
     # If the type is not recognized, return "object"
     return "object"
-
 
 def inline_pydantic_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -116,7 +113,6 @@ def inline_pydantic_schema(schema: Dict[str, Any]) -> Dict[str, Any]:
 
     return result
 
-
 def get_json_schema_for_arg(type_hint: Any) -> Optional[Dict[str, Any]]:
     # log_info(f"Getting JSON schema for arg: {t}")
     type_args = get_args(type_hint)
@@ -187,7 +183,6 @@ def get_json_schema_for_arg(type_hint: Any) -> Optional[Dict[str, Any]]:
         json_schema["properties"] = {}
         json_schema["additionalProperties"] = False
     return json_schema
-
 
 def get_json_schema(
     type_hints: Dict[str, Any], param_descriptions: Optional[Dict[str, str]] = None, strict: bool = False

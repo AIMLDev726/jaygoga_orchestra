@@ -12,7 +12,6 @@ from datetime import datetime
 
 from .base import BaseCLICommand, CLIContext
 
-
 class TrainCommand(BaseCLICommand):
     """Command for training AIFlow agents."""
     

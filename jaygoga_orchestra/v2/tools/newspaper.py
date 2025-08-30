@@ -8,7 +8,6 @@ try:
 except ImportError:
     raise ImportError("`newspaper3k` not installed. Please run `pip install newspaper3k lxml_html_clean`.")
 
-
 class NewspaperTools(Toolkit):
     """
     Newspaper is a tool for getting the text of an article from a URL.

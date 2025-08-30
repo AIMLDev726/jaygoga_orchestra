@@ -3,7 +3,6 @@ console = Console()
 import warnings
 from typing import Any, Optional, Type
 
-
 class InternalInstructor:
     """Class that wraps an agent llm with instructor."""
 

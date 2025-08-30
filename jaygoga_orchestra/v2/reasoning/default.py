@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from textwrap import dedent
 from typing import Any, Callable, Dict, List, Literal, Optional, Union
@@ -9,7 +10,6 @@ from jaygoga_orchestra.v2.models.base import Model
 from jaygoga_orchestra.v2.reasoning.step import ReasoningSteps
 from jaygoga_orchestra.v2.tools.function import Function
 from jaygoga_orchestra.v2.tools.toolkit import Toolkit
-
 
 def get_default_reasoning_agent(
     reasoning_model: Model,

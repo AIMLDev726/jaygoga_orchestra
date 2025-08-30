@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class LangChainKnowledgeBase(AgentKnowledge):
     loader: Optional[Callable] = None
 

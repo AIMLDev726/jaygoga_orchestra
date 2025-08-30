@@ -32,7 +32,6 @@ from jaygoga_orchestra.v1.utilities.string_utils import interpolate_only
 
 T = TypeVar("T", bound="BaseAgent")
 
-
 class BaseAgent(ABC, BaseModel):
     """Abstract Base Class for all third party agents compatible with Govinda.
 
@@ -58,7 +57,6 @@ class BaseAgent(ABC, BaseModel):
         knowledge_sources: Knowledge sources for the agent.
         knowledge_storage: Custom knowledge storage for the agent.
         security_config: Security configuration for the agent, including fingerprinting.
-
 
     Methods:
         execute_task(task: Any, context: Optional[str] = None, tools: Optional[List[BaseTool]] = None) -> str:

@@ -19,12 +19,11 @@ from jaygoga_orchestra.v2.app.playground.async_router import get_async_playgroun
 from jaygoga_orchestra.v2.app.playground.sync_router import get_sync_playground_router
 from jaygoga_orchestra.v2.app.utils import generate_id
 from jaygoga_orchestra.v2.cli.console import console
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.playground.settings import PlaygroundSettings
 from jaygoga_orchestra.v2.team.team import Team
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 from jaygoga_orchestra.v2.workflow.workflow import Workflow
-
 
 class Playground:
     def __init__(
@@ -188,7 +187,7 @@ class Playground:
         )
 
         # Create a panel with the playground URL
-        url = f"{jaygoga_orchestra.v2_cli_settings.playground_url}?endpoint={encoded_endpoint}"
+        url = f"{jaygoga_orchestra_v2_cli_settings.playground_url}?endpoint={encoded_endpoint}"
         panel = Panel(
             f"[bold green]Playground URL:[/bold green] [link={url}]{url}[/link]",
             title="Agent Playground",
@@ -199,7 +198,7 @@ class Playground:
         )
 
         # Print the panel
-        console.console.print(panel)
+        print(panel)
         self.set_app_id()
 
         self.register_app_on_platform()

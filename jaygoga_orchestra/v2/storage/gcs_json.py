@@ -17,7 +17,6 @@ try:
 except ImportError:
     raise ImportError("`google-cloud-storage` not installed. Please install it with `pip install google-cloud-storage`")
 
-
 class GCSJsonStorage(JsonStorage):
     """
     A Cloud-based JSON storage for agent sessions that stores session (memory) data

@@ -30,7 +30,6 @@ WorkflowSteps = List[
     ]
 ]
 
-
 @dataclass
 class Condition:
     """A condition that executes a step (or list of steps) if the condition is met"""

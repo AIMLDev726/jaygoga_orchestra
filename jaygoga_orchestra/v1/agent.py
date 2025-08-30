@@ -45,7 +45,7 @@ from jaygoga_orchestra.v1.utilities.events.agent_events import (
     AgentExecutionErrorEvent,
     AgentExecutionStartedEvent,
 )
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemoryRetrievalStartedEvent,
     MemoryRetrievalCompletedEvent,
@@ -61,7 +61,6 @@ from jaygoga_orchestra.v1.utilities.events.knowledge_events import (
 from jaygoga_orchestra.v1.utilities.llm_utils import create_llm
 from jaygoga_orchestra.v1.utilities.token_counter_callback import TokenCalcHandler
 from jaygoga_orchestra.v1.utilities.training_handler import CrewTrainingHandler
-
 
 class Agent(BaseAgent):
     """Represents an agent in a system.
@@ -284,7 +283,7 @@ class Agent(BaseAgent):
                         "error", f"Error during reasoning process: {str(e)}"
                     )
                 else:
-                    console.print(f"Error during reasoning process: {str(e)}")
+                    print(f"Error during reasoning process: {str(e)}")
 
         self._inject_date_to_task(task)
 
@@ -317,7 +316,7 @@ class Agent(BaseAgent):
             )
 
         if self._is_any_available_memory():
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryRetrievalStartedEvent(
                     task_id=str(task.id) if task else None,
@@ -341,7 +340,7 @@ class Agent(BaseAgent):
             if memory.strip() != "":
                 task_prompt += self.i18n.slice("memory").format(memory=memory)
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryRetrievalCompletedEvent(
                     task_id=str(task.id) if task else None,
@@ -357,7 +356,7 @@ class Agent(BaseAgent):
         )
 
         if self.knowledge or (self.squad and self.squad.knowledge):
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=KnowledgeRetrievalStartedEvent(
                     agent=self,
@@ -391,7 +390,7 @@ class Agent(BaseAgent):
                         if self.crew_knowledge_context:
                             task_prompt += self.crew_knowledge_context
 
-                    jaygoga_orchestra.v1_event_bus.emit(
+                    event_bus.emit(
                         self,
                         event=KnowledgeRetrievalCompletedEvent(
                             query=self.knowledge_search_query,
@@ -409,7 +408,7 @@ class Agent(BaseAgent):
                         ),
                     )
             except Exception as e:
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self,
                     event=KnowledgeSearchQueryFailedEvent(
                         query=self.knowledge_search_query or "",
@@ -427,7 +426,7 @@ class Agent(BaseAgent):
             task_prompt = self._use_trained_data(task_prompt=task_prompt)
 
         try:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionStartedEvent(
                     agent=self,
@@ -454,7 +453,7 @@ class Agent(BaseAgent):
 
         except TimeoutError as e:
             # Propagate TimeoutError without retry
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionErrorEvent(
                     agent=self,
@@ -466,7 +465,7 @@ class Agent(BaseAgent):
         except Exception as e:
             if e.__class__.__module__.startswith("litellm"):
                 # Do not retry on litellm errors
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self,
                     event=AgentExecutionErrorEvent(
                         agent=self,
@@ -477,7 +476,7 @@ class Agent(BaseAgent):
                 raise e
             self._times_executed += 1
             if self._times_executed > self.max_retry_limit:
-                jaygoga_orchestra.v1_event_bus.emit(
+                event_bus.emit(
                     self,
                     event=AgentExecutionErrorEvent(
                         agent=self,
@@ -497,7 +496,7 @@ class Agent(BaseAgent):
         for tool_result in self.tools_results:  # type: ignore # Item "None" of "list[Any] | None" has no attribute "__iter__" (not iterable)
             if tool_result.get("result_as_answer", False):
                 result = tool_result["result"]
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=AgentExecutionCompletedEvent(agent=self, task=task, output=result),
         )
@@ -704,7 +703,7 @@ class Agent(BaseAgent):
                 if hasattr(self, "_logger"):
                     self._logger.log("warning", f"Failed to inject date: {str(e)}")
                 else:
-                    console.print(f"Warning: Failed to inject date: {str(e)}")
+                    print(f"Warning: Failed to inject date: {str(e)}")
 
     def _validate_docker_installation(self) -> None:
         """Check if Docker is installed and running."""
@@ -729,7 +728,7 @@ class Agent(BaseAgent):
         return f"Agent(role={self.role}, goal={self.goal}, backstory={self.backstory})"
 
     @property
-    def fingerconsole.print(self) -> Fingerprint:
+    def fingerprint(self) -> Fingerprint:
         """
         Get the agent's fingerprint.
 
@@ -738,12 +737,12 @@ class Agent(BaseAgent):
         """
         return self.security_config.fingerprint
 
-    def set_fingerconsole.print(self, fingerprint: Fingerprint):
+    def set_fingerprint(self, fingerprint: Fingerprint):
         self.security_config.fingerprint = fingerprint
 
     def _get_knowledge_search_query(self, task_prompt: str) -> str | None:
         """Generate a search query for the knowledge base based on the task description."""
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=KnowledgeQueryStartedEvent(
                 task_prompt=task_prompt,
@@ -759,7 +758,7 @@ class Agent(BaseAgent):
                 "warning",
                 f"Knowledge search query failed: LLM for agent '{self.role}' is not an instance of BaseLLM",
             )
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=KnowledgeQueryFailedEvent(
                     agent=self,
@@ -778,7 +777,7 @@ class Agent(BaseAgent):
                     {"role": "user", "content": query},
                 ]
             )
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=KnowledgeQueryCompletedEvent(
                     query=query,
@@ -787,7 +786,7 @@ class Agent(BaseAgent):
             )
             return rewritten_query
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=KnowledgeQueryFailedEvent(
                     agent=self,

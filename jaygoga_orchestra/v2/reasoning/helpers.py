@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.reasoning.step import NextAction, ReasoningStep
 from jaygoga_orchestra.v2.run.messages import RunMessages
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def get_reasoning_agent(
     reasoning_model: Model,
     monitoring: bool = False,
@@ -32,7 +31,6 @@ def get_reasoning_agent(
         extra_data=extra_data,
     )
 
-
 def get_next_action(reasoning_step: ReasoningStep) -> NextAction:
     next_action = reasoning_step.next_action or NextAction.FINAL_ANSWER
     if isinstance(next_action, str):
@@ -42,7 +40,6 @@ def get_next_action(reasoning_step: ReasoningStep) -> NextAction:
             logger.warning(f"Reasoning error. Invalid next action: {next_action}")
             return NextAction.FINAL_ANSWER
     return next_action
-
 
 def update_messages_with_reasoning(
     run_messages: RunMessages,

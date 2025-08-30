@@ -16,12 +16,10 @@ try:
 except ImportError:
     raise ImportError("`anthropic` not installed. Please install using `pip install anthropic`")
 
-
 @dataclass
 class MCPToolConfiguration:
     enabled: bool = True
     allowed_tools: List[str] = field(default_factory=list)
-
 
 @dataclass
 class MCPServerConfiguration:
@@ -31,14 +29,12 @@ class MCPServerConfiguration:
     tool_configuration: Optional[MCPToolConfiguration] = None
     authorization_token: Optional[str] = None
 
-
 ROLE_MAP = {
     "system": "system",
     "user": "user",
     "assistant": "assistant",
     "tool": "user",
 }
-
 
 def _format_image_for_message(image: Image) -> Optional[Dict[str, Any]]:
     """
@@ -129,7 +125,6 @@ def _format_image_for_message(image: Image) -> Optional[Dict[str, Any]]:
         log_error(f"Error processing image: {e}")
         return None
 
-
 def _format_file_for_message(file: File) -> Optional[Dict[str, Any]]:
     """
     Add a document url or base64 encoded content to a message.
@@ -202,7 +197,6 @@ def _format_file_for_message(file: File) -> Optional[Dict[str, Any]]:
             "citations": {"enabled": True},
         }
     return None
-
 
 def format_messages(messages: List[Message]) -> Tuple[List[Dict[str, str]], str]:
     """

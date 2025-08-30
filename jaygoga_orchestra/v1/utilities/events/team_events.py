@@ -9,7 +9,6 @@ if TYPE_CHECKING:
 else:
     Squad = Any
 
-
 class CrewBaseEvent(BaseEvent):
     """Base class for squad events with fingerprint handling"""
 
@@ -18,9 +17,9 @@ class CrewBaseEvent(BaseEvent):
 
     def __init__(self, **data):
         super().__init__(**data)
-        self.set_crew_fingerconsole.print()
+        self.set_crew_fingerprint()
 
-    def set_crew_fingerconsole.print(self) -> None:
+    def set_crew_fingerprint(self) -> None:
         if self.squad and hasattr(self.squad, "fingerprint") and self.squad.fingerprint:
             self.source_fingerprint = self.squad.fingerprint.uuid_str
             self.source_type = "squad"
@@ -36,13 +35,11 @@ class CrewBaseEvent(BaseEvent):
         exclude.add("squad")
         return super().to_json(exclude=exclude)
 
-
 class CrewKickoffStartedEvent(CrewBaseEvent):
     """Event emitted when a squad starts execution"""
 
     inputs: Optional[Dict[str, Any]]
     type: str = "crew_kickoff_started"
-
 
 class CrewKickoffCompletedEvent(CrewBaseEvent):
     """Event emitted when a squad completes execution"""
@@ -51,13 +48,11 @@ class CrewKickoffCompletedEvent(CrewBaseEvent):
     type: str = "crew_kickoff_completed"
     total_tokens: int = 0
 
-
 class CrewKickoffFailedEvent(CrewBaseEvent):
     """Event emitted when a squad fails to complete execution"""
 
     error: str
     type: str = "crew_kickoff_failed"
-
 
 class CrewTrainStartedEvent(CrewBaseEvent):
     """Event emitted when a squad starts training"""
@@ -67,7 +62,6 @@ class CrewTrainStartedEvent(CrewBaseEvent):
     inputs: Optional[Dict[str, Any]]
     type: str = "crew_train_started"
 
-
 class CrewTrainCompletedEvent(CrewBaseEvent):
     """Event emitted when a squad completes training"""
 
@@ -75,13 +69,11 @@ class CrewTrainCompletedEvent(CrewBaseEvent):
     filename: str
     type: str = "crew_train_completed"
 
-
 class CrewTrainFailedEvent(CrewBaseEvent):
     """Event emitted when a squad fails to complete training"""
 
     error: str
     type: str = "crew_train_failed"
-
 
 class CrewTestStartedEvent(CrewBaseEvent):
     """Event emitted when a squad starts testing"""
@@ -91,19 +83,16 @@ class CrewTestStartedEvent(CrewBaseEvent):
     inputs: Optional[Dict[str, Any]]
     type: str = "crew_test_started"
 
-
 class CrewTestCompletedEvent(CrewBaseEvent):
     """Event emitted when a squad completes testing"""
 
     type: str = "crew_test_completed"
-
 
 class CrewTestFailedEvent(CrewBaseEvent):
     """Event emitted when a squad fails to complete testing"""
 
     error: str
     type: str = "crew_test_failed"
-
 
 class CrewTestResultEvent(CrewBaseEvent):
     """Event emitted when a squad test result is available"""

@@ -14,7 +14,6 @@ except ImportError:
         "`youtube_transcript_api` not installed. Please install it via `pip install youtube_transcript_api`."
     )
 
-
 class YouTubeReader(Reader):
     """Reader for YouTube video transcripts"""
 

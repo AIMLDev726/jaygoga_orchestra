@@ -9,13 +9,11 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v2.utils.log import log_error
 
-
 class RunEvent(str, Enum):
     """Events that can be sent by the run() functions"""
 
     workflow_started = "WorkflowStarted"
     workflow_completed = "WorkflowCompleted"
-
 
 @dataclass
 class BaseWorkflowRunResponseEvent:
@@ -45,17 +43,14 @@ class BaseWorkflowRunResponseEvent:
 
         return json.dumps(_dict, indent=2)
 
-
 @dataclass
 class WorkflowRunResponseStartedEvent(BaseWorkflowRunResponseEvent):
     event: str = RunEvent.workflow_started.value
-
 
 @dataclass
 class WorkflowCompletedEvent(BaseWorkflowRunResponseEvent):
     event: str = RunEvent.workflow_completed.value
     content: Optional[Any] = None
     content_type: str = "str"
-
 
 WorkflowRunResponseEvent = Union[WorkflowRunResponseStartedEvent, WorkflowCompletedEvent]

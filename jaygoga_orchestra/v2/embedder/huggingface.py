@@ -13,7 +13,6 @@ except ImportError:
     logger.error("`huggingface-hub` not installed, please run `pip install huggingface-hub`")
     raise
 
-
 @dataclass
 class HuggingfaceCustomEmbedder(Embedder):
     """Huggingface Custom Embedder"""

@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.media import AudioArtifact, File, ImageArtifact, Video
 from jaygoga_orchestra.v2.run.response import RunResponse
 from jaygoga_orchestra.v2.run.team import TeamRunResponse
 
-
 @dataclass
 class WorkflowExecutionInput:
     """Input data for a step execution"""
@@ -58,7 +57,6 @@ class WorkflowExecutionInput:
             "videos": [vid.to_dict() for vid in self.videos] if self.videos else None,
             "audio": [aud.to_dict() for aud in self.audio] if self.audio else None,
         }
-
 
 @dataclass
 class StepInput:
@@ -180,7 +178,6 @@ class StepInput:
             "files": [file for file in self.files] if self.files else None,
         }
 
-
 @dataclass
 class StepOutput:
     """Output data from a step execution"""
@@ -284,7 +281,6 @@ class StepOutput:
             files=files,
         )
 
-
 @dataclass
 class StepMetrics:
     """Metrics for a single step execution"""
@@ -332,7 +328,6 @@ class StepMetrics:
             metrics=data.get("metrics") if data.get("executor_type") != "parallel" else None,
             parallel_steps=parallel_steps,
         )
-
 
 @dataclass
 class WorkflowMetrics:

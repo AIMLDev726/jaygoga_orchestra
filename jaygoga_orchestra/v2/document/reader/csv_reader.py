@@ -20,7 +20,6 @@ from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.reader.base import Reader
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class CSVReader(Reader):
     """Reader for CSV files"""
 
@@ -132,7 +131,6 @@ class CSVReader(Reader):
         except Exception as e:
             logger.error(f"Error reading async: {file.name if isinstance(file, IO) else file}: {e}")
             return []
-
 
 class CSVUrlReader(Reader):
     """Reader for CSV files"""

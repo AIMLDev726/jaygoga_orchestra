@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from dataclasses import dataclass
 
-
 @dataclass
 class ApiRoutes:
     # User paths
@@ -35,7 +34,7 @@ class ApiRoutes:
 
     # Workflow paths
     WORKFLOW_CREATE: str = "/v2/workflows"
-    # Telemetry paths
+    
     # TODO: Update to use the new telemetry paths
     AGENT_TELEMETRY_SESSION_CREATE: str = "/v1/telemetry/agent/session/create"
     AGENT_TELEMETRY_RUN_CREATE: str = "/v1/telemetry/agent/run/create"

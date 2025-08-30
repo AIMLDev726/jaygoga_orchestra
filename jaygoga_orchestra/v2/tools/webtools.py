@@ -5,7 +5,6 @@ import httpx
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class WebTools(Toolkit):
     """
     A toolkit for working with web-related tools.

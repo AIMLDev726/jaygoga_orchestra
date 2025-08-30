@@ -8,7 +8,6 @@ from jaygoga_orchestra.v1.task import Task
 from jaygoga_orchestra.v1.tasks.output_format import OutputFormat
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
 
-
 class ConditionalTask(Task):
     """
     A task that can be conditionally executed based on the output of another task.

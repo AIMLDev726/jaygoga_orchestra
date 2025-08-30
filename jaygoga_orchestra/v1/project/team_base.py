@@ -15,7 +15,6 @@ T = TypeVar("T", bound=type)
 
 """Base decorator for creating squad classes with configuration and function management."""
 
-
 def CrewBase(cls: T) -> T:
     """Wraps a class with squad functionality and configuration management."""
 
@@ -100,7 +99,6 @@ def CrewBase(cls: T) -> T:
 
             return self._mcp_server_adapter.tools.filter_by_names(tool_names or None)
 
-
         def load_configurations(self):
             """Load agent and task configurations from YAML files."""
             if isinstance(self.original_agents_config_path, str):
@@ -145,7 +143,7 @@ def CrewBase(cls: T) -> T:
                 with open(config_path, "r", encoding="utf-8") as file:
                     return yaml.safe_load(file)
             except FileNotFoundError:
-                console.print(f"File not found: {config_path}")
+                print(f"File not found: {config_path}")
                 raise
 
         def _get_all_functions(self):

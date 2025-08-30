@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 from typing import List, Union
 
-
 def safe_path_join(*parts: str, root: Union[str, Path, None] = None) -> str:
     """
     Safely join path components and ensure the result is within allowed boundaries.
@@ -62,7 +61,6 @@ def safe_path_join(*parts: str, root: Union[str, Path, None] = None) -> str:
             raise
         raise ValueError(f"Invalid path components: {str(e)}")
 
-
 def validate_path_exists(path: Union[str, Path], file_type: str = "file") -> str:
     """
     Validate that a path exists and is of the expected type.
@@ -101,7 +99,6 @@ def validate_path_exists(path: Union[str, Path], file_type: str = "file") -> str
         if isinstance(e, ValueError):
             raise
         raise ValueError(f"Invalid path: {str(e)}")
-
 
 def list_files(directory: Union[str, Path], pattern: str = "*") -> List[str]:
     """

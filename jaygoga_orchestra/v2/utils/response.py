@@ -10,7 +10,6 @@ from jaygoga_orchestra.v2.run.base import RunResponseExtraData
 from jaygoga_orchestra.v2.run.response import RunResponse, RunResponseEvent, RunResponsePausedEvent
 from jaygoga_orchestra.v2.run.team import TeamRunResponse, TeamRunResponseEvent
 
-
 def create_panel(content, title, border_style="blue"):
     from rich.box import HEAVY
     from rich.panel import Panel
@@ -18,7 +17,6 @@ def create_panel(content, title, border_style="blue"):
     return Panel(
         content, title=title, title_align="left", border_style=border_style, box=HEAVY, expand=True, padding=(1, 1)
     )
-
 
 def escape_markdown_tags(content: str, tags: Set[str]) -> str:
     """Escape special tags in markdown content."""
@@ -30,11 +28,9 @@ def escape_markdown_tags(content: str, tags: Set[str]) -> str:
         escaped_content = escaped_content.replace(f"</{tag}>", f"&lt;/{tag}&gt;")
     return escaped_content
 
-
 def check_if_run_cancelled(run_response: Union[RunResponse, RunResponseEvent, TeamRunResponse, TeamRunResponseEvent]):
     if run_response.is_cancelled:
         raise RunCancelledException()
-
 
 def update_run_response_with_reasoning(
     run_response: Union[RunResponse, TeamRunResponse],
@@ -56,7 +52,6 @@ def update_run_response_with_reasoning(
     else:
         run_response.extra_data.reasoning_messages.extend(reasoning_agent_messages)
 
-
 def format_tool_calls(tool_calls: List[ToolExecution]) -> List[str]:
     """Format tool calls for display in a readable format.
 
@@ -77,7 +72,6 @@ def format_tool_calls(tool_calls: List[ToolExecution]) -> List[str]:
             formatted_tool_calls.append(f"{tool_name}({args_str})")
 
     return formatted_tool_calls
-
 
 def create_paused_run_response_panel(run_response: Union[RunResponsePausedEvent, RunResponse]):
     from rich.text import Text
@@ -120,7 +114,6 @@ def create_paused_run_response_panel(run_response: Union[RunResponsePausedEvent,
     )
     return response_panel
 
-
 def get_paused_content(run_response: RunResponse) -> str:
     paused_content = ""
     for tool in run_response.tools or []:
@@ -152,12 +145,10 @@ def get_paused_content(run_response: RunResponse) -> str:
             paused_content = "I have tools to execute, but it needs external execution."
     return paused_content
 
-
 def generator_wrapper(
     event: Union[RunResponseEvent, TeamRunResponseEvent],
 ) -> Iterator[Union[RunResponseEvent, TeamRunResponseEvent]]:
     yield event
-
 
 async def async_generator_wrapper(
     event: Union[RunResponseEvent, TeamRunResponseEvent],

@@ -9,7 +9,6 @@ from jaygoga_orchestra.v1.tasks.output_format import OutputFormat
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
 from jaygoga_orchestra.v1.types.usage_metrics import UsageMetrics
 
-
 class CrewOutput(BaseModel):
     """Class that represents the result of a squad."""
 

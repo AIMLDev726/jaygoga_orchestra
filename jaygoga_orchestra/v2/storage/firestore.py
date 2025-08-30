@@ -24,7 +24,6 @@ try:
 except ImportError:
     raise ImportError("`firestore` not installed. Please install it with `pip install google-cloud-firestore`")
 
-
 class FirestoreStorage(Storage):
     def __init__(
         self,

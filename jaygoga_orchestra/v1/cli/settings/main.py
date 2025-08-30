@@ -8,7 +8,6 @@ from typing import Any
 
 console = Console()
 
-
 class SettingsCommand(BaseCommand):
     """A class to handle CLI configuration commands."""
 
@@ -37,7 +36,7 @@ class SettingsCommand(BaseCommand):
 
             table.add_row(field_name, display_value, description)
 
-        console.console.print(table)
+        print(table)
 
     def set(self, key: str, value: str) -> None:
         """Set a CLI configuration parameter."""
@@ -45,25 +44,25 @@ class SettingsCommand(BaseCommand):
         readonly_settings = READONLY_SETTINGS_KEYS + HIDDEN_SETTINGS_KEYS
 
         if not hasattr(self.settings, key) or key in readonly_settings:
-            console.console.print(
+            print(
                 f"Error: Unknown or readonly configuration key '{key}'",
                 style="bold red",
             )
-            console.console.print("Available keys:", style="yellow")
+            print("Available keys:", style="yellow")
             for field_name in Settings.model_fields.keys():
                 if field_name not in readonly_settings:
-                    console.console.print(f"  - {field_name}", style="yellow")
+                    print(f"  - {field_name}", style="yellow")
             raise SystemExit(1)
 
         setattr(self.settings, key, value)
         self.settings.dump()
 
-        console.console.print(f"Successfully set '{key}' to '{value}'", style="bold green")
+        print(f"Successfully set '{key}' to '{value}'", style="bold green")
 
     def reset_all_settings(self) -> None:
         """Reset all CLI configuration parameters to default values."""
         self.settings.reset()
-        console.console.print(
+        print(
             "Successfully reset all configuration parameters to default values. It is recommended to run [bold yellow]'jaygoga_orchestra.v1 login'[/bold yellow] to re-authenticate.",
             style="bold green",
         )

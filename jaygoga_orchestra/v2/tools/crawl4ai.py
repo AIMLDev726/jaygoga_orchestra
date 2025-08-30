@@ -11,7 +11,6 @@ try:
 except ImportError:
     raise ImportError("`crawl4ai` not installed. Please install using `pip install crawl4ai`")
 
-
 class Crawl4aiTools(Toolkit):
     def __init__(
         self,

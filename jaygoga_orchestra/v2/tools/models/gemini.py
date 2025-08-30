@@ -17,7 +17,6 @@ try:
 except (ModuleNotFoundError, ImportError):
     raise ImportError("`google-genai` not installed. Please install using `pip install google-genai`")
 
-
 class GeminiTools(Toolkit):
     """Tools for interacting with Google Gemini API"""
 

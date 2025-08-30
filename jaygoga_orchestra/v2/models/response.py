@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.media import AudioResponse, ImageArtifact
 from jaygoga_orchestra.v2.models.message import Citations, MessageMetrics
 from jaygoga_orchestra.v2.tools.function import UserInputField
 
-
 class ModelResponseEvent(str, Enum):
     """Events that can be sent by the model provider"""
 
@@ -17,7 +16,6 @@ class ModelResponseEvent(str, Enum):
     tool_call_started = "ToolCallStarted"
     tool_call_completed = "ToolCallCompleted"
     assistant_response = "AssistantResponse"
-
 
 @dataclass
 class ToolExecution:
@@ -79,7 +77,6 @@ class ToolExecution:
             metrics=MessageMetrics(**(data.get("metrics", {}) or {})),
         )
 
-
 @dataclass
 class ModelResponse:
     """Response from the model provider"""
@@ -112,7 +109,6 @@ class ModelResponse:
     created_at: int = int(time())
 
     extra: Optional[Dict[str, Any]] = None
-
 
 class FileType(str, Enum):
     MP4 = "mp4"

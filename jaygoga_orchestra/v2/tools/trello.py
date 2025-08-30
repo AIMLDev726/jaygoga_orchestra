@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`py-trello` not installed.")
 
-
 class TrelloTools(Toolkit):
     def __init__(
         self,

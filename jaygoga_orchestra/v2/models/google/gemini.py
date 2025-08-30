@@ -44,7 +44,6 @@ try:
 except ImportError:
     raise ImportError("`google-genai` not installed. Please install it using `pip install google-genai`")
 
-
 @dataclass
 class Gemini(Model):
     """

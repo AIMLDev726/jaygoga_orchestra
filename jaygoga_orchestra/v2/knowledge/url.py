@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.document.reader.url_reader import URLReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class UrlKnowledge(AgentKnowledge):
     urls: List[str] = []
     reader: URLReader = URLReader()

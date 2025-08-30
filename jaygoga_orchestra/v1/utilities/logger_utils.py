@@ -7,7 +7,6 @@ import io
 import logging
 from collections.abc import Generator
 
-
 @contextlib.contextmanager
 def suppress_logging(
     logger_name: str,

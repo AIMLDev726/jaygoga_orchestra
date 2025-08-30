@@ -92,7 +92,6 @@ from jaygoga_orchestra.v2.utils.safe_formatter import SafeFormatter
 from jaygoga_orchestra.v2.utils.string import is_valid_uuid, parse_response_model_str, url_safe_string
 from jaygoga_orchestra.v2.utils.timer import Timer
 
-
 @dataclass(init=False)
 class Team:
     """
@@ -304,7 +303,7 @@ class Team:
     show_members_responses: bool = False
     # monitoring=True logs Team information to jaygoga_orchestra.v2.com for monitoring
     monitoring: bool = False
-    # telemetry=True logs minimal telemetry for analytics
+
     # This helps us improve the Teams implementation and provide better support
     telemetry: bool = True
 
@@ -494,7 +493,6 @@ class Team:
         self.show_members_responses = show_members_responses
 
         self.monitoring = monitoring
-        self.telemetry = telemetry
 
         # --- Params not to be set by user ---
         self.session_metrics: Optional[SessionMetrics] = None
@@ -556,7 +554,7 @@ class Team:
 
         telemetry_env = getenv("AGNO_TELEMETRY")
         if telemetry_env is not None:
-            self.telemetry = telemetry_env.lower() == "true"
+            pass
 
     def _initialize_member(self, member: Union["Team", Agent], session_id: Optional[str] = None) -> None:
         # Set debug mode for all members
@@ -4451,7 +4449,6 @@ class Team:
         return Agent(
             model=reasoning_model,
             monitoring=self.monitoring,
-            telemetry=self.telemetry,
             debug_mode=self.debug_mode,
             debug_level=self.debug_level,
         )
@@ -4603,7 +4600,6 @@ class Team:
                     min_steps=self.reasoning_min_steps,
                     max_steps=self.reasoning_max_steps,
                     monitoring=self.monitoring,
-                    telemetry=self.telemetry,
                     debug_mode=self.debug_mode,
                     debug_level=self.debug_level,
                     use_json_mode=use_json_mode,
@@ -4831,7 +4827,6 @@ class Team:
                     min_steps=self.reasoning_min_steps,
                     max_steps=self.reasoning_max_steps,
                     monitoring=self.monitoring,
-                    telemetry=self.telemetry,
                     debug_mode=self.debug_mode,
                     debug_level=self.debug_level,
                     use_json_mode=use_json_mode,
@@ -8122,8 +8117,8 @@ class Team:
         )
 
     def _log_team_run(self, session_id: str, user_id: Optional[str] = None) -> None:
-        if not self.telemetry and not self.monitoring:
-            return
+            
+            # return
 
         from jaygoga_orchestra.v2.api.team import TeamRunCreate, create_team_run
 
@@ -8148,8 +8143,7 @@ class Team:
             log_debug(f"Could not create team event: {e}")
 
     async def _alog_team_run(self, session_id: str, user_id: Optional[str] = None) -> None:
-        if not self.telemetry and not self.monitoring:
-            return
+            # return
 
         from jaygoga_orchestra.v2.api.team import TeamRunCreate, acreate_team_run
 
@@ -8172,8 +8166,7 @@ class Team:
             log_debug(f"Could not create team event: {e}")
 
     def _log_team_session(self, session_id: str, user_id: Optional[str] = None):
-        if not (self.telemetry or self.monitoring):
-            return
+            # return
 
         from jaygoga_orchestra.v2.api.team import TeamSessionCreate, upsert_team_session
 

@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`agentql` not installed. Please install using `pip install agentql`")
 
-
 class AgentQLTools(Toolkit):
     def __init__(self, api_key: Optional[str] = None, scrape: bool = True, agentql_query: str = "", **kwargs):
         self.api_key = api_key or getenv("AGENTQL_API_KEY")

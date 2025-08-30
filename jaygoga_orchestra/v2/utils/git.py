@@ -7,7 +7,6 @@ import git
 
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 def get_remote_origin_for_dir(
     ws_root_path: Optional[Path],
 ) -> Optional[str]:
@@ -36,11 +35,10 @@ def get_remote_origin_for_dir(
         break
     return _remote_origin_url
 
-
 class GitCloneProgress(git.RemoteProgress):
     # https://gitpython.readthedocs.io/en/stable/reference.html#module-git.remote
     # def line_dropped(self, line):
-    #     console.print("line dropped: {}".format(line))
+    #     print("line dropped: {}".format(line))
 
     def update(self, op_code, cur_count, max_count=None, message=""):
         if op_code == 5:
@@ -51,4 +49,4 @@ class GitCloneProgress(git.RemoteProgress):
         # log_debug(f"cur_count: {cur_count}")
         # log_debug(f"max_count: {max_count}")
         # log_debug(f"message: {message}")
-        # console.print(self._cur_line)
+        # print(self._cur_line)

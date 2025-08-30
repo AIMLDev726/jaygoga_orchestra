@@ -10,7 +10,6 @@ from jaygoga_orchestra.v1.knowledge.source.base_knowledge_source import BaseKnow
 from jaygoga_orchestra.v1.utilities.constants import KNOWLEDGE_DIRECTORY
 from jaygoga_orchestra.v1.utilities.logger import Logger
 
-
 class ExcelKnowledgeSource(BaseKnowledgeSource):
     """A knowledge source that stores and queries Excel file content using embeddings."""
 

@@ -15,7 +15,6 @@ except ImportError:
 # Set logging level
 sgai_logger.set_logging(level="INFO")
 
-
 class ScrapeGraphTools(Toolkit):
     def __init__(
         self,

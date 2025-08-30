@@ -14,7 +14,6 @@ from jaygoga_orchestra.v2.utils.log import log_error
 if TYPE_CHECKING:
     from jaygoga_orchestra.v2.workflow.v2.types import StepOutput, WorkflowMetrics
 
-
 class WorkflowRunEvent(str, Enum):
     """Events that can be sent by workflow execution"""
 
@@ -45,7 +44,6 @@ class WorkflowRunEvent(str, Enum):
     steps_execution_completed = "StepsExecutionCompleted"
 
     step_output = "StepOutput"
-
 
 @dataclass
 class BaseWorkflowRunResponseEvent:
@@ -113,13 +111,11 @@ class BaseWorkflowRunResponseEvent:
 
         return status
 
-
 @dataclass
 class WorkflowStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when workflow execution starts"""
 
     event: str = WorkflowRunEvent.workflow_started.value
-
 
 @dataclass
 class WorkflowCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -133,14 +129,12 @@ class WorkflowCompletedEvent(BaseWorkflowRunResponseEvent):
     step_responses: List["StepOutput"] = field(default_factory=list)  # noqa: F821
     extra_data: Optional[Dict[str, Any]] = None
 
-
 @dataclass
 class WorkflowErrorEvent(BaseWorkflowRunResponseEvent):
     """Event sent when workflow execution fails"""
 
     event: str = WorkflowRunEvent.workflow_error.value
     error: Optional[str] = None
-
 
 @dataclass
 class WorkflowCancelledEvent(BaseWorkflowRunResponseEvent):
@@ -153,7 +147,6 @@ class WorkflowCancelledEvent(BaseWorkflowRunResponseEvent):
     def is_cancelled(self):
         return True
 
-
 @dataclass
 class StepStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when step execution starts"""
@@ -161,7 +154,6 @@ class StepStartedEvent(BaseWorkflowRunResponseEvent):
     event: str = WorkflowRunEvent.step_started.value
     step_name: Optional[str] = None
     step_index: Optional[Union[int, tuple]] = None
-
 
 @dataclass
 class StepCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -183,7 +175,6 @@ class StepCompletedEvent(BaseWorkflowRunResponseEvent):
     # Store actual step execution results as StepOutput objects
     step_response: Optional["StepOutput"] = None  # noqa: F821
 
-
 @dataclass
 class StepErrorEvent(BaseWorkflowRunResponseEvent):
     """Event sent when step execution fails"""
@@ -192,7 +183,6 @@ class StepErrorEvent(BaseWorkflowRunResponseEvent):
     step_name: Optional[str] = None
     step_index: Optional[Union[int, tuple]] = None
     error: Optional[str] = None
-
 
 @dataclass
 class LoopExecutionStartedEvent(BaseWorkflowRunResponseEvent):
@@ -203,7 +193,6 @@ class LoopExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     step_index: Optional[Union[int, tuple]] = None
     max_iterations: Optional[int] = None
 
-
 @dataclass
 class LoopIterationStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when loop iteration starts"""
@@ -213,7 +202,6 @@ class LoopIterationStartedEvent(BaseWorkflowRunResponseEvent):
     step_index: Optional[Union[int, tuple]] = None
     iteration: int = 0
     max_iterations: Optional[int] = None
-
 
 @dataclass
 class LoopIterationCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -227,7 +215,6 @@ class LoopIterationCompletedEvent(BaseWorkflowRunResponseEvent):
     iteration_results: List["StepOutput"] = field(default_factory=list)  # noqa: F821
     should_continue: bool = True
 
-
 @dataclass
 class LoopExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when loop execution completes"""
@@ -239,7 +226,6 @@ class LoopExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
     max_iterations: Optional[int] = None
     all_results: List[List["StepOutput"]] = field(default_factory=list)  # noqa: F821
 
-
 @dataclass
 class ParallelExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when parallel step execution starts"""
@@ -248,7 +234,6 @@ class ParallelExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     step_name: Optional[str] = None
     step_index: Optional[Union[int, tuple]] = None
     parallel_step_count: Optional[int] = None
-
 
 @dataclass
 class ParallelExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -262,7 +247,6 @@ class ParallelExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
     # Results from all parallel steps
     step_results: List["StepOutput"] = field(default_factory=list)  # noqa: F821
 
-
 @dataclass
 class ConditionExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when condition step execution starts"""
@@ -271,7 +255,6 @@ class ConditionExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     step_name: Optional[str] = None
     step_index: Optional[Union[int, tuple]] = None
     condition_result: Optional[bool] = None
-
 
 @dataclass
 class ConditionExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -286,7 +269,6 @@ class ConditionExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
     # Results from executed steps
     step_results: List["StepOutput"] = field(default_factory=list)  # noqa: F821
 
-
 @dataclass
 class RouterExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when router step execution starts"""
@@ -296,7 +278,6 @@ class RouterExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     step_index: Optional[Union[int, tuple]] = None
     # Names of steps selected by router
     selected_steps: List[str] = field(default_factory=list)
-
 
 @dataclass
 class RouterExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -312,7 +293,6 @@ class RouterExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
     # Results from executed steps
     step_results: List["StepOutput"] = field(default_factory=list)  # noqa: F821
 
-
 @dataclass
 class StepsExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     """Event sent when steps execution starts"""
@@ -321,7 +301,6 @@ class StepsExecutionStartedEvent(BaseWorkflowRunResponseEvent):
     step_name: Optional[str] = None
     step_index: Optional[Union[int, tuple]] = None
     steps_count: Optional[int] = None
-
 
 @dataclass
 class StepsExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
@@ -335,7 +314,6 @@ class StepsExecutionCompletedEvent(BaseWorkflowRunResponseEvent):
 
     # Results from executed steps
     step_results: List["StepOutput"] = field(default_factory=list)  # noqa: F821
-
 
 @dataclass
 class StepOutputEvent(BaseWorkflowRunResponseEvent):
@@ -377,7 +355,6 @@ class StepOutputEvent(BaseWorkflowRunResponseEvent):
     def stop(self) -> bool:
         return self.step_output.stop if self.step_output else False
 
-
 # Union type for all workflow run response events
 WorkflowRunResponseEvent = Union[
     WorkflowStartedEvent,
@@ -400,7 +377,6 @@ WorkflowRunResponseEvent = Union[
     StepsExecutionCompletedEvent,
     StepOutputEvent,
 ]
-
 
 @dataclass
 class WorkflowRunResponse:

@@ -33,7 +33,6 @@ StepExecutor = Callable[
     ],
 ]
 
-
 @dataclass
 class Step:
     """A single unit of work in a workflow pipeline"""

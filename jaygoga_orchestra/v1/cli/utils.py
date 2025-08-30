@@ -22,7 +22,6 @@ if sys.version_info >= (3, 11):
 
 console = Console()
 
-
 def copy_template(src, dst, name, class_name, folder_name):
     """Copy a file from src to dst."""
     with open(src, "r") as file:
@@ -39,26 +38,22 @@ def copy_template(src, dst, name, class_name, folder_name):
 
     click.secho(f"  - Created {dst}", fg="green")
 
-
 def read_toml(file_path: str = "pyproject.toml"):
     """Read the content of a TOML file and return it as a dictionary."""
     with open(file_path, "rb") as f:
         toml_dict = tomli.load(f)
     return toml_dict
 
-
 def parse_toml(content):
     if sys.version_info >= (3, 11):
         return tomllib.loads(content)
     return tomli.loads(content)
-
 
 def get_project_name(
     pyproject_path: str = "pyproject.toml", require: bool = False
 ) -> str | None:
     """Get the project name from the pyproject.toml file."""
     return _get_project_attribute(pyproject_path, ["project", "name"], require=require)
-
 
 def get_project_version(
     pyproject_path: str = "pyproject.toml", require: bool = False
@@ -68,7 +63,6 @@ def get_project_version(
         pyproject_path, ["project", "version"], require=require
     )
 
-
 def get_project_description(
     pyproject_path: str = "pyproject.toml", require: bool = False
 ) -> str | None:
@@ -76,7 +70,6 @@ def get_project_description(
     return _get_project_attribute(
         pyproject_path, ["project", "description"], require=require
     )
-
 
 def _get_project_attribute(
     pyproject_path: str, keys: List[str], require: bool
@@ -96,21 +89,21 @@ def _get_project_attribute(
 
         attribute = _get_nested_value(pyproject_content, keys)
     except FileNotFoundError:
-        console.console.print(f"Error: {pyproject_path} not found.", style="bold red")
+        print(f"Error: {pyproject_path} not found.", style="bold red")
     except KeyError:
-        console.console.print(f"Error: {pyproject_path} is not a valid pyproject.toml file.", style="bold red")
+        print(f"Error: {pyproject_path} is not a valid pyproject.toml file.", style="bold red")
     except tomllib.TOMLDecodeError if sys.version_info >= (3, 11) else Exception as e:  # type: ignore
-        console.console.print(
+        print(
             f"Error: {pyproject_path} is not a valid TOML file."
             if sys.version_info >= (3, 11)
             else f"Error reading the pyproject.toml file: {e}",
             style="bold red",
         )
     except Exception as e:
-        console.console.print(f"Error reading the pyproject.toml file: {e}", style="bold red")
+        print(f"Error reading the pyproject.toml file: {e}", style="bold red")
 
     if require and not attribute:
-        console.console.print(
+        print(
             f"Unable to read '{'.'.join(keys)}' in the pyproject.toml file. Please verify that the file exists and contains the specified attribute.",
             style="bold red",
         )
@@ -118,10 +111,8 @@ def _get_project_attribute(
 
     return attribute
 
-
 def _get_nested_value(data: Dict[str, Any], keys: List[str]) -> Any:
     return reduce(dict.__getitem__, keys, data)
-
 
 def fetch_and_json_env_file(env_file_path: str = ".env") -> dict:
     """Fetch the environment variables from a .env file and return them as a dictionary."""
@@ -140,12 +131,11 @@ def fetch_and_json_env_file(env_file_path: str = ".env") -> dict:
         return env_dict
 
     except FileNotFoundError:
-        console.console.print(f"Error: {env_file_path} not found.", style="bold red")
+        print(f"Error: {env_file_path} not found.", style="bold red")
     except Exception as e:
-        console.console.print(f"Error reading the .env file: {e}", style="bold red")
+        print(f"Error reading the .env file: {e}", style="bold red")
 
     return {}
-
 
 def tree_copy(source, destination):
     """Copies the entire directory structure from the source to the destination."""
@@ -156,7 +146,6 @@ def tree_copy(source, destination):
             shutil.copytree(source_item, destination_item)
         else:
             shutil.copy2(source_item, destination_item)
-
 
 def tree_find_and_replace(directory, find, replace):
     """Recursively searches through a directory, replacing a target string in
@@ -183,7 +172,6 @@ def tree_find_and_replace(directory, find, replace):
                 old_dirpath = os.path.join(path, dirname)
                 os.rename(old_dirpath, new_dirpath)
 
-
 def load_env_vars(folder_path):
     """
     Loads environment variables from a .env file in the specified folder path.
@@ -203,7 +191,6 @@ def load_env_vars(folder_path):
                 if key and value:
                     env_vars[key] = value
     return env_vars
-
 
 def update_env_vars(env_vars, provider, model):
     """
@@ -242,7 +229,6 @@ def update_env_vars(env_vars, provider, model):
     click.secho(f"Selected model: {model}", fg="green")
     return env_vars
 
-
 def write_env_file(folder_path, env_vars):
     """
     Writes environment variables to a .env file in the specified folder.
@@ -255,7 +241,6 @@ def write_env_file(folder_path, env_vars):
     with open(env_file_path, "w") as file:
         for key, value in env_vars.items():
             file.write(f"{key.upper()}={value}\n")
-
 
 def get_crews(crew_path: str = "squad.py", require: bool = False) -> list[Squad]:
     """Get the squad instances from a file."""
@@ -298,7 +283,7 @@ def get_crews(crew_path: str = "squad.py", require: bool = False) -> list[Squad]
                                 try:
                                     crew_instances.extend(fetch_crews(module_attr))
                                 except Exception as e:
-                                    console.console.print(f"Error processing attribute {attr_name}: {e}", style="bold red")
+                                    print(f"Error processing attribute {attr_name}: {e}", style="bold red")
                                     continue
 
                             # If we found squad instances, break out of the loop
@@ -306,11 +291,11 @@ def get_crews(crew_path: str = "squad.py", require: bool = False) -> list[Squad]
                                 break
 
                         except Exception as exec_error:
-                            console.console.print(f"Error executing module: {exec_error}", style="bold red")
+                            print(f"Error executing module: {exec_error}", style="bold red")
 
                     except (ImportError, AttributeError) as e:
                         if require:
-                            console.console.print(
+                            print(
                                 f"Error importing squad from {crew_path}: {str(e)}",
                                 style="bold red",
                             )
@@ -321,17 +306,16 @@ def get_crews(crew_path: str = "squad.py", require: bool = False) -> list[Squad]
                 break
 
         if require and not crew_instances:
-            console.console.print("No valid Squad instance found in squad.py", style="bold red")
+            print("No valid Squad instance found in squad.py", style="bold red")
             raise SystemExit
 
     except Exception as e:
         if require:
-            console.console.print(
+            print(
                 f"Unexpected error while loading squad: {str(e)}", style="bold red"
             )
             raise SystemExit
     return crew_instances
-
 
 def get_crew_instance(module_attr) -> Squad | None:
     if (
@@ -353,7 +337,6 @@ def get_crew_instance(module_attr) -> Squad | None:
     else:
         return None
 
-
 def fetch_crews(module_attr) -> list[Squad]:
     crew_instances: list[Squad] = []
 
@@ -368,7 +351,6 @@ def fetch_crews(module_attr) -> list[Squad]:
                 crew_instances.append(crew_instance)
     return crew_instances
 
-
 def is_valid_tool(obj):
     from jaygoga_orchestra.v1.tools.base_tool import Tool
 
@@ -379,7 +361,6 @@ def is_valid_tool(obj):
             return False
 
     return isinstance(obj, Tool)
-
 
 def extract_available_exports(dir_path: str = "src"):
     """
@@ -404,12 +385,11 @@ def extract_available_exports(dir_path: str = "src"):
         return available_exports
 
     except Exception as e:
-        console.console.print(f"[red]Error: Could not extract tool classes: {str(e)}[/red]")
-        console.console.print(
+        print(f"[red]Error: Could not extract tool classes: {str(e)}[/red]")
+        print(
             "Please ensure your project contains valid tools (classes inheriting from BaseTool or functions with @tool decorator)."
         )
         raise SystemExit(1)
-
 
 def _load_tools_from_init(init_file: Path) -> list[dict[str, Any]]:
     """
@@ -427,7 +407,7 @@ def _load_tools_from_init(init_file: Path) -> list[dict[str, Any]]:
         spec.loader.exec_module(module)
 
         if not hasattr(module, "__all__"):
-            console.console.print(
+            print(
                 f"Warning: No __all__ defined in {init_file}",
                 style="bold yellow",
             )
@@ -442,25 +422,24 @@ def _load_tools_from_init(init_file: Path) -> list[dict[str, Any]]:
         ]
 
     except Exception as e:
-        console.console.print(f"[red]Warning: Could not load {init_file}: {str(e)}[/red]")
+        print(f"[red]Warning: Could not load {init_file}: {str(e)}[/red]")
         raise SystemExit(1)
 
     finally:
         sys.modules.pop("temp_module", None)
 
-
 def _print_no_tools_warning():
     """
     Display warning and usage instructions if no tools were found.
     """
-    console.console.print(
+    print(
         "\n[bold yellow]Warning: No valid tools were exposed in your __init__.py file![/bold yellow]"
     )
-    console.console.print(
+    print(
         "Your __init__.py file must contain all classes that inherit from [bold]BaseTool[/bold] "
         "or functions decorated with [bold]@tool[/bold]."
     )
-    console.console.print(
+    print(
         "\nExample:\n[dim]# In your __init__.py file[/dim]\n"
         "[green]__all__ = ['YourTool', 'your_tool_function'][/green]\n\n"
         "[dim]# In your tool.py file[/dim]\n"

@@ -4,11 +4,10 @@ console = Console()
 
 from typing import Optional
 
-
 class Printer:
     """Handles colored console output formatting."""
 
-    def console.print(self, content: str, color: Optional[str] = None):
+    def print(self, content: str, color: Optional[str] = None):
         if color == "purple":
             self._print_purple(content)
         elif color == "red":
@@ -34,40 +33,40 @@ class Printer:
         elif color == "green":
             self._print_green(content)
         else:
-            console.print(content)
+            print(content)
 
     def _print_bold_purple(self, content):
-        console.print("\033[1m\033[95m {}\033[00m".format(content))
+        print("\033[1m\033[95m {}\033[00m".format(content))
 
     def _print_bold_green(self, content):
-        console.print("\033[1m\033[92m {}\033[00m".format(content))
+        print("\033[1m\033[92m {}\033[00m".format(content))
 
     def _print_purple(self, content):
-        console.print("\033[95m {}\033[00m".format(content))
+        print("\033[95m {}\033[00m".format(content))
 
     def _print_red(self, content):
-        console.print("\033[91m {}\033[00m".format(content))
+        print("\033[91m {}\033[00m".format(content))
 
     def _print_bold_blue(self, content):
-        console.print("\033[1m\033[94m {}\033[00m".format(content))
+        print("\033[1m\033[94m {}\033[00m".format(content))
 
     def _print_yellow(self, content):
-        console.print("\033[93m {}\033[00m".format(content))
+        print("\033[93m {}\033[00m".format(content))
 
     def _print_bold_yellow(self, content):
-        console.print("\033[1m\033[93m {}\033[00m".format(content))
+        print("\033[1m\033[93m {}\033[00m".format(content))
 
     def _print_cyan(self, content):
-        console.print("\033[96m {}\033[00m".format(content))
+        print("\033[96m {}\033[00m".format(content))
 
     def _print_bold_cyan(self, content):
-        console.print("\033[1m\033[96m {}\033[00m".format(content))
+        print("\033[1m\033[96m {}\033[00m".format(content))
 
     def _print_magenta(self, content):
-        console.print("\033[35m {}\033[00m".format(content))
+        print("\033[35m {}\033[00m".format(content))
 
     def _print_bold_magenta(self, content):
-        console.print("\033[1m\033[35m {}\033[00m".format(content))
+        print("\033[1m\033[35m {}\033[00m".format(content))
 
     def _print_green(self, content):
-        console.print("\033[32m {}\033[00m".format(content))
+        print("\033[32m {}\033[00m".format(content))

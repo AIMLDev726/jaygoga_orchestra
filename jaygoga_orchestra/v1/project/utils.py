@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from functools import wraps
 
-
 def memoize(func):
     cache = {}
 

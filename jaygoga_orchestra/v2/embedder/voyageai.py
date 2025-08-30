@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`voyageai` not installed. Please install using `pip install voyageai`")
 
-
 @dataclass
 class VoyageAIEmbedder(Embedder):
     id: str = "voyage-2"

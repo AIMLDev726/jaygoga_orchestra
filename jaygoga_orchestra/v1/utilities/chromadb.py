@@ -16,7 +16,6 @@ DEFAULT_COLLECTION = "default_collection"
 INVALID_CHARS_PATTERN = re.compile(r"[^a-zA-Z0-9_-]")
 IPV4_PATTERN = re.compile(r"^(\d{1,3}\.){3}\d{1,3}$")
 
-
 def is_ipv4_pattern(name: str) -> bool:
     """
     Check if a string matches an IPv4 address pattern.
@@ -28,7 +27,6 @@ def is_ipv4_pattern(name: str) -> bool:
         True if the string matches an IPv4 pattern, False otherwise
     """
     return bool(IPV4_PATTERN.match(name))
-
 
 def sanitize_collection_name(
     name: Optional[str], max_collection_length: int = MAX_COLLECTION_LENGTH
@@ -69,7 +67,6 @@ def sanitize_collection_name(
             sanitized = sanitized[:-1] + "z"
 
     return sanitized
-
 
 def create_persistent_client(path: str, **kwargs):
     """

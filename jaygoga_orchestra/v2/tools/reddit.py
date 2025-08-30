@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("praw` not installed. Please install using `pip install praw`")
 
-
 class RedditTools(Toolkit):
     def __init__(
         self,

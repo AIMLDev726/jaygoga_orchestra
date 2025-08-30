@@ -9,9 +9,8 @@ from rich.panel import Panel
 from rich.text import Text
 
 from jaygoga_orchestra.v2.api.playground import deploy_playground_archive
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 def create_deployment_info(
     app: str, root: Path, elapsed_time: str = "[waiting...]", status: Optional[str] = None, error: Optional[str] = None
@@ -56,7 +55,6 @@ def create_deployment_info(
 
     return Text.assemble(*elements)
 
-
 def create_info_panel(deployment_info: Text) -> Panel:
     """Create a formatted panel to display deployment information.
 
@@ -74,7 +72,6 @@ def create_info_panel(deployment_info: Text) -> Panel:
         padding=(1, 2),
     )
 
-
 def create_error_panel(deployment_info: Text) -> Panel:
     """Create a formatted panel to display deployment error information.
 
@@ -91,7 +88,6 @@ def create_error_panel(deployment_info: Text) -> Panel:
         box=box.HEAVY,
         padding=(1, 2),
     )
-
 
 def create_tar_archive(root: Path) -> Path:
     """Create a gzipped tar archive of the playground files.
@@ -116,7 +112,6 @@ def create_tar_archive(root: Path) -> Path:
         logger.error(f"Failed to create playground archive: {e}")
         raise
 
-
 def deploy_archive(name: str, tar_path: Path) -> None:
     """Deploying the tar archive to jaygoga_orchestra.v2-cloud.
 
@@ -134,7 +129,6 @@ def deploy_archive(name: str, tar_path: Path) -> None:
     except Exception:
         raise
 
-
 def cleanup_archive(tar_path: Path) -> None:
     """Delete the temporary tar archive after deployment.
 
@@ -151,7 +145,6 @@ def cleanup_archive(tar_path: Path) -> None:
     except Exception as e:
         logger.error(f"Failed to delete playground archive: {e}")
         raise
-
 
 def deploy_playground_app(
     app: str,
@@ -176,7 +169,7 @@ def deploy_playground_app(
         Exception: If any step of the deployment process fails
     """
 
-    jaygoga_orchestra.v2_cli_settings.gate_alpha_feature()
+    jaygoga_orchestra_v2_cli_settings.gate_alpha_feature()
 
     from rich.console import Group
     from rich.live import Live

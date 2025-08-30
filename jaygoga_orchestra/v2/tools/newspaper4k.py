@@ -11,7 +11,6 @@ try:
 except ImportError:
     raise ImportError("`newspaper4k` not installed. Please run `pip install newspaper4k lxml_html_clean`.")
 
-
 class Newspaper4kTools(Toolkit):
     """
     Newspaper4kTools is a toolkit for getting the text of an article from a URL.

@@ -6,12 +6,11 @@ import click
 
 from jaygoga_orchestra.v1.cli.utils import copy_template
 
-
 def add_crew_to_flow(crew_name: str) -> None:
     """Add a new squad to the current flow."""
     # Check if pyproject.toml exists in the current directory
     if not Path("pyproject.toml").exists():
-        console.print("This command must be run from the root of a flow project.")
+        print("This command must be run from the root of a flow project.")
         raise click.ClickException(
             "This command must be run from the root of a flow project."
         )
@@ -21,7 +20,7 @@ def add_crew_to_flow(crew_name: str) -> None:
     crews_folder = flow_folder / "src" / flow_folder.name / "crews"
 
     if not crews_folder.exists():
-        console.print("Crews folder does not exist in the current flow.")
+        print("Crews folder does not exist in the current flow.")
         raise click.ClickException("Crews folder does not exist in the current flow.")
 
     # Create the squad within the flow's crews directory
@@ -30,7 +29,6 @@ def add_crew_to_flow(crew_name: str) -> None:
     click.echo(
         f"Squad {crew_name} added to the current flow successfully!",
     )
-
 
 def create_embedded_crew(crew_name: str, parent_folder: Path) -> None:
     """Create a new squad within an existing flow project."""

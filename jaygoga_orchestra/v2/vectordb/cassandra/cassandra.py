@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_info
 from jaygoga_orchestra.v2.vectordb.base import VectorDb
 from jaygoga_orchestra.v2.vectordb.cassandra.index import AgnoMetadataVectorCassandraTable
 
-
 class Cassandra(VectorDb):
     def __init__(
         self,

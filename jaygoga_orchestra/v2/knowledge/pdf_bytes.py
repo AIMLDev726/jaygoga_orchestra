@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.document.reader.pdf_reader import PDFImageReader, PDFReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 
-
 class PDFBytesKnowledgeBase(AgentKnowledge):
     pdfs: Union[List[bytes], List[IO]]
 

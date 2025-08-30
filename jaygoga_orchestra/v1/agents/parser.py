@@ -24,7 +24,6 @@ from jaygoga_orchestra.v1.utilities import I18N
 
 _I18N = I18N()
 
-
 @dataclass
 class AgentAction:
     """Represents an action to be taken by an agent."""
@@ -35,7 +34,6 @@ class AgentAction:
     text: str
     result: str | None = None
 
-
 @dataclass
 class AgentFinish:
     """Represents the final answer from an agent."""
@@ -43,7 +41,6 @@ class AgentFinish:
     thought: str
     output: str
     text: str
-
 
 class OutputParserException(Exception):
     """Exception raised when output parsing fails.
@@ -60,7 +57,6 @@ class OutputParserException(Exception):
         """
         self.error = error
         super().__init__(error)
-
 
 def parse(text: str) -> AgentAction | AgentFinish:
     """Parse agent output text into AgentAction or AgentFinish.
@@ -134,7 +130,6 @@ def parse(text: str) -> AgentAction | AgentFinish:
             error,
         )
 
-
 def _extract_thought(text: str) -> str:
     """Extract the thought portion from the text.
 
@@ -154,7 +149,6 @@ def _extract_thought(text: str) -> str:
     thought = thought.replace("```", "").strip()
     return thought
 
-
 def _clean_action(text: str) -> str:
     """Clean action string by removing non-essential formatting characters.
 
@@ -165,7 +159,6 @@ def _clean_action(text: str) -> str:
         The cleaned action string.
     """
     return text.strip().strip("*").strip()
-
 
 def _safe_repair_json(tool_input: str) -> str:
     """Safely repair JSON input.

@@ -12,13 +12,11 @@ try:
 except ImportError:
     raise ImportError("numpy not installed, use `pip install numpy`")
 
-
 try:
     from fastembed import TextEmbedding  # type: ignore
 
 except ImportError:
     raise ImportError("fastembed not installed, use pip install fastembed")
-
 
 @dataclass
 class FastEmbedEmbedder(Embedder):

@@ -15,7 +15,6 @@ from jaygoga_orchestra.v1.rag.config.constants import (
 )
 from jaygoga_orchestra.v1.rag.factory import create_client
 
-
 class RagContext(BaseModel):
     """Context holding RAG configuration and client instance."""
 
@@ -24,9 +23,7 @@ class RagContext(BaseModel):
         default=None, description="Instantiated RAG client"
     )
 
-
 _rag_context: ContextVar[RagContext | None] = ContextVar("_rag_context", default=None)
-
 
 def set_rag_config(config: RagConfigType) -> None:
     """Set global RAG client configuration and instantiate the client.
@@ -37,7 +34,6 @@ def set_rag_config(config: RagConfigType) -> None:
     client = create_client(config)
     context = RagContext(config=config, client=client)
     _rag_context.set(context)
-
 
 def get_rag_config() -> RagConfigType:
     """Get current RAG configuration.
@@ -60,7 +56,6 @@ def get_rag_config() -> RagConfigType:
 
     return context.config
 
-
 def get_rag_client() -> BaseClient:
     """Get the current RAG client instance.
 
@@ -81,7 +76,6 @@ def get_rag_client() -> BaseClient:
         )
 
     return context.client
-
 
 def clear_rag_config() -> None:
     """Clear the current RAG configuration and client, reverting to defaults."""

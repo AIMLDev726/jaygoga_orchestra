@@ -6,12 +6,10 @@ from pydantic import BaseModel, Field
 
 from jaygoga_orchestra.v1.tools.agent_tools.base_agent_tools import BaseAgentTool
 
-
 class AskQuestionToolSchema(BaseModel):
     question: str = Field(..., description="The question to ask")
     context: str = Field(..., description="The context for the question")
     coworker: str = Field(..., description="The role/name of the coworker to ask")
-
 
 class AskQuestionTool(BaseAgentTool):
     """Tool for asking questions to coworkers"""

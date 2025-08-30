@@ -26,7 +26,6 @@ from jaygoga_orchestra.v2.memory.v2.db.base import MemoryDb
 from jaygoga_orchestra.v2.memory.v2.db.schema import MemoryRow
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class SqliteMemoryDb(MemoryDb):
     def __init__(
         self,

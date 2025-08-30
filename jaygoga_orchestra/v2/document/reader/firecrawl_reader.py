@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("The `firecrawl` package is not installed. Please install it via `pip install firecrawl-py`.")
 
-
 @dataclass
 class FirecrawlReader(Reader):
     api_key: Optional[str] = None

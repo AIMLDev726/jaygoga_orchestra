@@ -13,7 +13,6 @@ from .base import BaseVectorDB, VectorDBConfig, SearchResult, DistanceMetric, In
 
 logger = logging.getLogger(__name__)
 
-
 class PgVectorDB(BaseVectorDB):
     """PostgreSQL with pgvector extension implementation."""
     
@@ -277,7 +276,6 @@ class PgVectorDB(BaseVectorDB):
             logger.error(f"Error updating {collection}: {e}")
             return False
 
-
 class WeaviateDB(BaseVectorDB):
     """Weaviate vector database implementation."""
     
@@ -488,7 +486,6 @@ class WeaviateDB(BaseVectorDB):
         except Exception as e:
             logger.error(f"Error updating {collection}: {e}")
             return False
-
 
 class LanceVectorDB(BaseVectorDB):
     """LanceDB vector database implementation."""

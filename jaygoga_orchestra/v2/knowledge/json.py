@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.document.reader.json_reader import JSONReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class JSONKnowledgeBase(AgentKnowledge):
     path: Optional[Union[str, Path, List[Dict[str, Union[str, Dict[str, Any]]]]]] = None
     reader: JSONReader = JSONReader()

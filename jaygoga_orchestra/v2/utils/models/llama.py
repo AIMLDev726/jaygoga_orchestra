@@ -20,7 +20,6 @@ TOOL_CALL_ROLE_MAP = {
     "tool": "tool",
 }
 
-
 def format_message(message: Message, openai_like: bool = False, tool_calls: bool = False) -> Dict[str, Any]:
     """
     Format a message into the format expected by Llama API.

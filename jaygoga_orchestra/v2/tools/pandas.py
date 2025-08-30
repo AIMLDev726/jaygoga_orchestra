@@ -10,7 +10,6 @@ try:
 except ImportError:
     raise ImportError("`pandas` not installed. Please install using `pip install pandas`.")
 
-
 class PandasTools(Toolkit):
     def __init__(self, **kwargs):
         self.dataframes: Dict[str, pd.DataFrame] = {}

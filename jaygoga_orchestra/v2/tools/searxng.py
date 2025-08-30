@@ -9,7 +9,6 @@ import httpx
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_info
 
-
 class Searxng(Toolkit):
     def __init__(
         self,
@@ -161,7 +160,6 @@ class Searxng(Toolkit):
             return json.dumps(resp)
         except Exception as e:
             return f"Error fetching results from searxng: {e}"
-
 
 # Alias for consistency with other tools
 SearxngTools = Searxng

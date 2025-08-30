@@ -14,7 +14,6 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v1.flow.persistence.base import FlowPersistence
 
-
 class SQLiteFlowPersistence(FlowPersistence):
     """SQLite-based implementation of flow state persistence.
 

@@ -4,7 +4,6 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
-
 class ChatInputField(BaseModel):
     """
     Represents a single required input for the squad, with a name and short description.
@@ -17,7 +16,6 @@ class ChatInputField(BaseModel):
 
     name: str = Field(..., description="The name of the input field")
     description: str = Field(..., description="A short description of the input field")
-
 
 class ChatInputs(BaseModel):
     """

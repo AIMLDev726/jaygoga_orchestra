@@ -16,7 +16,7 @@ class EvaluationDisplayFormatter:
 
     def display_evaluation_with_feedback(self, iterations_results: Dict[int, Dict[str, List[Any]]]):
         if not iterations_results:
-            self.console_formatter.console.print("[yellow]No evaluation results to display[/yellow]")
+            self.console_formatter.print("[yellow]No evaluation results to display[/yellow]")
             return
 
         all_agent_roles: set[str] = set()
@@ -24,7 +24,7 @@ class EvaluationDisplayFormatter:
             all_agent_roles.update(iter_results.keys())
 
         for agent_role in sorted(all_agent_roles):
-            self.console_formatter.console.print(f"\n[bold cyan]Agent: {agent_role}[/bold cyan]")
+            self.console_formatter.print(f"\n[bold cyan]Agent: {agent_role}[/bold cyan]")
 
             for iter_num, results in sorted(iterations_results.items()):
                 if agent_role not in results or not results[agent_role]:
@@ -39,7 +39,7 @@ class EvaluationDisplayFormatter:
                     results=agent_results,
                 )
 
-                self.console_formatter.console.print(f"\n[bold]Iteration {iter_num}[/bold]")
+                self.console_formatter.print(f"\n[bold]Iteration {iter_num}[/bold]")
 
                 table = Table(box=ROUNDED)
                 table.add_column("Metric", style="cyan")
@@ -87,14 +87,14 @@ class EvaluationDisplayFormatter:
                         "Overall agent evaluation score"
                     )
 
-                self.console_formatter.console.print(table)
+                self.console_formatter.print(table)
 
     def display_summary_results(self, iterations_results: Dict[int, Dict[str, List[AgentAggregatedEvaluationResult]]]):
         if not iterations_results:
-            self.console_formatter.console.print("[yellow]No evaluation results to display[/yellow]")
+            self.console_formatter.print("[yellow]No evaluation results to display[/yellow]")
             return
 
-        self.console_formatter.console.print("\n")
+        self.console_formatter.print("\n")
 
         table = Table(title="Agent Performance Scores \n (1-10 Higher is better)", box=HEAVY_EDGE)
 
@@ -217,8 +217,8 @@ class EvaluationDisplayFormatter:
 
             table.add_row(*[""] * (len(sorted(iterations_results.keys())) + 2))
 
-        self.console_formatter.console.print(table)
-        self.console_formatter.console.print("\n")
+        self.console_formatter.print(table)
+        self.console_formatter.print("\n")
 
     def _aggregate_agent_results(
         self,

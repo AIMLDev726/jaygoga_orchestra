@@ -6,7 +6,6 @@ import json
 import re
 from typing import Any
 
-
 def extract_json_from_llm_response(text: str) -> dict[str, Any]:
     try:
         return json.loads(text)

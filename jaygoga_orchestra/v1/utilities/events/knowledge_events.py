@@ -8,13 +8,11 @@ from jaygoga_orchestra.v1.utilities.events.base_events import BaseEvent
 if TYPE_CHECKING:
     from jaygoga_orchestra.v1.agents.agent_builder.base_agent import BaseAgent
 
-
 class KnowledgeRetrievalStartedEvent(BaseEvent):
     """Event emitted when a knowledge retrieval is started."""
 
     type: str = "knowledge_search_query_started"
     agent: BaseAgent
-
 
 class KnowledgeRetrievalCompletedEvent(BaseEvent):
     """Event emitted when a knowledge retrieval is completed."""
@@ -24,14 +22,12 @@ class KnowledgeRetrievalCompletedEvent(BaseEvent):
     agent: BaseAgent
     retrieved_knowledge: Any
 
-
 class KnowledgeQueryStartedEvent(BaseEvent):
     """Event emitted when a knowledge query is started."""
 
     task_prompt: str
     type: str = "knowledge_query_started"
     agent: BaseAgent
-
 
 class KnowledgeQueryFailedEvent(BaseEvent):
     """Event emitted when a knowledge query fails."""
@@ -40,14 +36,12 @@ class KnowledgeQueryFailedEvent(BaseEvent):
     agent: BaseAgent
     error: str
 
-
 class KnowledgeQueryCompletedEvent(BaseEvent):
     """Event emitted when a knowledge query is completed."""
 
     query: str
     type: str = "knowledge_query_completed"
     agent: BaseAgent
-
 
 class KnowledgeSearchQueryFailedEvent(BaseEvent):
     """Event emitted when a knowledge search query fails."""

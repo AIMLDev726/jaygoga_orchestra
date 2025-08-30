@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`chonkie` is required for semantic chunking, please install using `pip install chonkie`")
 
-
 class SemanticChunking(ChunkingStrategy):
     """Chunking strategy that splits text into semantic chunks using chonkie"""
 

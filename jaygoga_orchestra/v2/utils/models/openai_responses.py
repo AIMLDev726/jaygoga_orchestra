@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional, Sequence, Union
 from jaygoga_orchestra.v2.media import Image
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def _process_bytes_image(image: bytes) -> Dict[str, Any]:
     """Process bytes image data."""
     import base64
@@ -14,7 +13,6 @@ def _process_bytes_image(image: bytes) -> Dict[str, Any]:
     base64_image = base64.b64encode(image).decode("utf-8")
     image_url = f"data:image/jpeg;base64,{base64_image}"
     return {"type": "input_image", "image_url": image_url}
-
 
 def _process_image_path(image_path: Union[Path, str]) -> Dict[str, Any]:
     """Process image ( file path)."""
@@ -32,7 +30,6 @@ def _process_image_path(image_path: Union[Path, str]) -> Dict[str, Any]:
         image_url = f"data:{mime_type};base64,{base64_image}"
         return {"type": "input_image", "image_url": image_url}
 
-
 def _process_image_url(image_url: str) -> Dict[str, Any]:
     """Process image (base64 or URL)."""
 
@@ -40,7 +37,6 @@ def _process_image_url(image_url: str) -> Dict[str, Any]:
         return {"type": "input_image", "image_url": image_url}
     else:
         raise ValueError("Image URL must start with 'data:image' or 'http(s)://'.")
-
 
 def _process_image(image: Image) -> Optional[Dict[str, Any]]:
     """Process an image based on the format."""
@@ -62,7 +58,6 @@ def _process_image(image: Image) -> Optional[Dict[str, Any]]:
         image_payload["image_url"]["detail"] = image.detail
 
     return image_payload
-
 
 def images_to_message(images: Sequence[Image]) -> List[Dict[str, Any]]:
     """
@@ -93,7 +88,6 @@ def images_to_message(images: Sequence[Image]) -> List[Dict[str, Any]]:
             continue
 
     return image_messages
-
 
 def sanitize_response_schema(schema: dict):
     """

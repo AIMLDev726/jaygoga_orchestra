@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.models.base import Model
 from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class MemoryClassifier(BaseModel):
     model: Optional[Model] = None
 

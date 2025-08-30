@@ -53,7 +53,6 @@ LOG_MESSAGES = {
     "id_missing": "Flow state must have an 'id' field for persistence"
 }
 
-
 class PersistenceDecorator:
     """Class to handle flow state persistence with consistent logging."""
 
@@ -93,7 +92,7 @@ class PersistenceDecorator:
 
             # Log state saving only if verbose is True
             if verbose:
-                cls._printer.console.print(LOG_MESSAGES["save_state"].format(flow_uuid), color="cyan")
+                cls._printer.print(LOG_MESSAGES["save_state"].format(flow_uuid), color="cyan")
                 logger.info(LOG_MESSAGES["save_state"].format(flow_uuid))
 
             try:
@@ -104,20 +103,19 @@ class PersistenceDecorator:
                 )
             except Exception as e:
                 error_msg = LOG_MESSAGES["save_error"].format(method_name, str(e))
-                cls._printer.console.print(error_msg, color="red")
+                cls._printer.print(error_msg, color="red")
                 logger.error(error_msg)
                 raise RuntimeError(f"State persistence failed: {str(e)}") from e
         except AttributeError:
             error_msg = LOG_MESSAGES["state_missing"]
-            cls._printer.console.print(error_msg, color="red")
+            cls._printer.print(error_msg, color="red")
             logger.error(error_msg)
             raise ValueError(error_msg)
         except (TypeError, ValueError) as e:
             error_msg = LOG_MESSAGES["id_missing"]
-            cls._printer.console.print(error_msg, color="red")
+            cls._printer.print(error_msg, color="red")
             logger.error(error_msg)
             raise ValueError(error_msg) from e
-
 
 def persist(persistence: Optional[FlowPersistence] = None, verbose: bool = False):
     """Decorator to persist flow state.

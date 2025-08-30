@@ -4,7 +4,6 @@ console = Console()
 
 import re
 
-
 def prepare_python_code(code: str) -> str:
     """Fix common problems with LLM-generated Python code."""
     python_keywords = {"true": "True", "false": "False", "none": "None"}

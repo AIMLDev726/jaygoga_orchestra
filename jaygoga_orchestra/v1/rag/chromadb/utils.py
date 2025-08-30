@@ -29,7 +29,6 @@ from jaygoga_orchestra.v1.rag.chromadb.types import (
 )
 from jaygoga_orchestra.v1.rag.types import BaseRecord, SearchResult
 
-
 def _is_sync_client(client: ChromaDBClientType) -> TypeGuard[ClientAPI]:
     """Type guard to check if the client is a synchronous ClientAPI.
 
@@ -41,7 +40,6 @@ def _is_sync_client(client: ChromaDBClientType) -> TypeGuard[ClientAPI]:
     """
     return isinstance(client, ClientAPI)
 
-
 def _is_async_client(client: ChromaDBClientType) -> TypeGuard[AsyncClientAPI]:
     """Type guard to check if the client is an asynchronous AsyncClientAPI.
 
@@ -52,7 +50,6 @@ def _is_async_client(client: ChromaDBClientType) -> TypeGuard[AsyncClientAPI]:
         True if the client is an AsyncClientAPI, False otherwise.
     """
     return isinstance(client, AsyncClientAPI)
-
 
 def _prepare_documents_for_chromadb(
     documents: list[BaseRecord],
@@ -88,7 +85,6 @@ def _prepare_documents_for_chromadb(
 
     return PreparedDocuments(ids, texts, metadatas)
 
-
 def _extract_search_params(
     kwargs: ChromaDBCollectionSearchParams,
 ) -> ExtractedSearchParams:
@@ -114,7 +110,6 @@ def _extract_search_params(
         ),
     )
 
-
 def _convert_distance_to_score(
     distance: float,
     distance_metric: Literal["l2", "cosine", "ip"],
@@ -135,7 +130,6 @@ def _convert_distance_to_score(
         score = 1.0 - 0.5 * distance
         return max(0.0, min(1.0, score))
     raise ValueError(f"Unsupported distance metric: {distance_metric}")
-
 
 def _convert_chromadb_results_to_search_results(
     results: QueryResult,
@@ -197,7 +191,6 @@ def _convert_chromadb_results_to_search_results(
 
     return search_results
 
-
 def _process_query_results(
     collection: Collection | AsyncCollection,
     results: QueryResult,
@@ -226,7 +219,6 @@ def _process_query_results(
         score_threshold=params.score_threshold,
     )
 
-
 def _is_ipv4_pattern(name: str) -> bool:
     """Check if a string matches an IPv4 address pattern.
 
@@ -237,7 +229,6 @@ def _is_ipv4_pattern(name: str) -> bool:
         True if the string matches an IPv4 pattern, False otherwise
     """
     return bool(IPV4_PATTERN.match(name))
-
 
 def _sanitize_collection_name(
     name: str | None, max_collection_length: int = MAX_COLLECTION_LENGTH

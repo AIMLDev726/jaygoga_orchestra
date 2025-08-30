@@ -3,7 +3,6 @@ console = Console()
 import jwt
 from jwt import PyJWKClient
 
-
 def validate_jwt_token(
     jwt_token: str, jwks_url: str, issuer: str, audience: str
 ) -> dict:

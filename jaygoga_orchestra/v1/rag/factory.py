@@ -12,7 +12,6 @@ from jaygoga_orchestra.v1.rag.core.base_client import BaseClient
 from jaygoga_orchestra.v1.rag.config.types import RagConfigType
 from jaygoga_orchestra.v1.utilities.import_utils import require
 
-
 def create_client(config: RagConfigType) -> BaseClient:
     """Create a client from configuration using the appropriate factory.
 

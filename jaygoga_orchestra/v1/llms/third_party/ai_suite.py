@@ -6,7 +6,6 @@ import aisuite as ai
 
 from jaygoga_orchestra.v1.llms.base_llm import BaseLLM
 
-
 class AISuiteLLM(BaseLLM):
     def __init__(self, model: str, temperature: Optional[float] = None, **kwargs):
         super().__init__(model, temperature, **kwargs)

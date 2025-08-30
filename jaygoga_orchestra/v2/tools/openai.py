@@ -20,7 +20,6 @@ OpenAIVoice = Literal["alloy", "echo", "fable", "onyx", "nova", "shimmer"]
 OpenAITTSModel = Literal["tts-1", "tts-1-hd"]
 OpenAITTSFormat = Literal["mp3", "opus", "aac", "flac", "wav", "pcm"]
 
-
 class OpenAITools(Toolkit):
     """Tools for interacting with OpenAIChat API"""
 

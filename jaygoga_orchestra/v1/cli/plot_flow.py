@@ -4,7 +4,6 @@ import subprocess
 
 import click
 
-
 def plot_flow() -> None:
     """
     Plot the flow by running a command in the UV environment.

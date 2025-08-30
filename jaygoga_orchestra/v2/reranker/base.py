@@ -6,7 +6,6 @@ from pydantic import BaseModel, ConfigDict
 
 from jaygoga_orchestra.v2.document import Document
 
-
 class Reranker(BaseModel):
     """Base class for rerankers"""
 

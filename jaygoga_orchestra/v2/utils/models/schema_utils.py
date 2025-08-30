@@ -9,7 +9,6 @@ from typing import Any, Dict, Type
 
 from pydantic import BaseModel
 
-
 def is_dict_field(schema: Dict[str, Any]) -> bool:
     """
     Check if a schema represents a Dict[str, T] field.
@@ -28,7 +27,6 @@ def is_dict_field(schema: Dict[str, Any]) -> bool:
         and "properties" not in schema
     )
 
-
 def get_dict_value_type(schema: Dict[str, Any]) -> str:
     """
     Extract the value type from a Dict field schema.
@@ -42,7 +40,6 @@ def get_dict_value_type(schema: Dict[str, Any]) -> str:
     if is_dict_field(schema):
         return schema["additionalProperties"]["type"]
     return "string"
-
 
 def normalize_schema_for_provider(schema: Dict[str, Any], provider: str) -> Dict[str, Any]:
     """
@@ -68,14 +65,12 @@ def normalize_schema_for_provider(schema: Dict[str, Any], provider: str) -> Dict
         # Default normalization for other providers
         return _normalize_generic(normalized)
 
-
 def _normalize_for_openai(schema: Dict[str, Any]) -> Dict[str, Any]:
     """Normalize schema for OpenAI structured outputs."""
     from jaygoga_orchestra.v2.utils.models.openai_responses import sanitize_response_schema
 
     sanitize_response_schema(schema)
     return schema
-
 
 def _normalize_for_gemini(schema: Dict[str, Any]) -> Dict[str, Any]:
     """
@@ -114,7 +109,6 @@ def _normalize_for_gemini(schema: Dict[str, Any]) -> Dict[str, Any]:
     _process_schema(schema)
     return schema
 
-
 def _normalize_generic(schema: Dict[str, Any]) -> Dict[str, Any]:
     """Generic normalization for other providers."""
 
@@ -135,7 +129,6 @@ def _normalize_generic(schema: Dict[str, Any]) -> Dict[str, Any]:
 
     _process_schema(schema)
     return schema
-
 
 def get_response_schema_for_provider(response_model: Type[BaseModel], provider: str) -> Dict[str, Any]:
     """

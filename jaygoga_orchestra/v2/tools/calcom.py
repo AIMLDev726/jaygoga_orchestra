@@ -13,7 +13,6 @@ try:
 except ImportError:
     raise ImportError("`requests` and `pytz` not installed. Please install using `pip install requests pytz`")
 
-
 class CalComTools(Toolkit):
     def __init__(
         self,

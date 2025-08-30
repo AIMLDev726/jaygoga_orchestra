@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`todoist-api-python` not installed. Please install using `pip install todoist-api-python`")
 
-
 class TodoistTools(Toolkit):
     """A toolkit for interacting with Todoist tasks and projects."""
 

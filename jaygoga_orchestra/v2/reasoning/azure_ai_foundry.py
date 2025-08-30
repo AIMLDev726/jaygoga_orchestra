@@ -1,13 +1,13 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from typing import List, Optional
 
 from jaygoga_orchestra.v2.models.base import Model
 from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 def is_ai_foundry_reasoning_model(reasoning_model: Model) -> bool:
     return reasoning_model.__class__.__name__ == "AzureAIFoundry" and (
@@ -16,7 +16,6 @@ def is_ai_foundry_reasoning_model(reasoning_model: Model) -> bool:
         or ("o3" in reasoning_model.id.lower())
         or ("o4" in reasoning_model.id.lower())
     )
-
 
 def get_ai_foundry_reasoning(reasoning_agent: "Agent", messages: List[Message]) -> Optional[Message]:  # type: ignore  # noqa: F821
     from jaygoga_orchestra.v2.run.response import RunResponse
@@ -42,7 +41,6 @@ def get_ai_foundry_reasoning(reasoning_agent: "Agent", messages: List[Message]) 
     return Message(
         role="assistant", content=f"<thinking>\n{reasoning_content}\n</thinking>", reasoning_content=reasoning_content
     )
-
 
 async def aget_ai_foundry_reasoning(reasoning_agent: "Agent", messages: List[Message]) -> Optional[Message]:  # type: ignore  # noqa: F821
     from jaygoga_orchestra.v2.run.response import RunResponse

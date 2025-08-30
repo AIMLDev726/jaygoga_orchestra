@@ -23,13 +23,11 @@ try:
 except ImportError:
     raise ImportError("The `pinecone` package is not installed, please install using `pip install pinecone`.")
 
-
 from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.embedder import Embedder
 from jaygoga_orchestra.v2.reranker.base import Reranker
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 from jaygoga_orchestra.v2.vectordb.base import VectorDb
-
 
 class PineconeDb(VectorDb):
     """A class representing a Pinecone database.

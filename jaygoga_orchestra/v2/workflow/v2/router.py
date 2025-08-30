@@ -30,7 +30,6 @@ WorkflowSteps = List[
     ]
 ]
 
-
 @dataclass
 class Router:
     """A router that dynamically selects which step(s) to execute based on input"""

@@ -18,7 +18,6 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from jaygoga_orchestra.v1.security.fingerprint import Fingerprint
 
-
 class SecurityConfig(BaseModel):
     """
     Configuration for Govinda security features.
@@ -73,12 +72,12 @@ class SecurityConfig(BaseModel):
 
     @model_validator(mode='before')
     @classmethod
-    def validate_fingerconsole.print(cls, values):
+    def validate_fingerprint(cls, values):
         """Ensure fingerprint is properly initialized."""
         if isinstance(values, dict):
             # Handle case where fingerprint is not provided or is None
             if 'fingerprint' not in values or values['fingerprint'] is None:
-                values['fingerprint'] = Fingerconsole.print()
+                values['fingerprint'] = Fingerprint()
             # Handle case where fingerprint is a string (seed)
             elif isinstance(values['fingerprint'], str):
                 if not values['fingerprint'].strip():
@@ -113,6 +112,6 @@ class SecurityConfig(BaseModel):
         data_copy = data.copy()
 
         fingerprint_data = data_copy.pop("fingerprint", None)
-        fingerprint = Fingerprint.from_dict(fingerprint_data) if fingerprint_data else Fingerconsole.print()
+        fingerprint = Fingerprint.from_dict(fingerprint_data) if fingerprint_data else Fingerprint()
 
         return cls(fingerprint=fingerprint)

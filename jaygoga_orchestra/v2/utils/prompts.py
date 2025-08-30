@@ -7,7 +7,6 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v2.utils.log import log_warning
 
-
 def get_json_output_prompt(response_model: Union[str, list, BaseModel]) -> str:
     """Return the JSON output prompt for the Agent.
 
@@ -95,7 +94,6 @@ def get_json_output_prompt(response_model: Union[str, list, BaseModel]) -> str:
     json_output_prompt += "\nYour output will be passed to json.loads() to convert it to a Python object."
     json_output_prompt += "\nMake sure it only contains valid JSON."
     return json_output_prompt
-
 
 def get_response_model_format_prompt(response_model: Type[BaseModel]) -> str:
     """Return the format prompt for the response model."""

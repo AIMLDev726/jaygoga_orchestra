@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field
 
 from jaygoga_orchestra.v1.utilities import I18N
 
-
 class Prompts(BaseModel):
     """Manages and generates prompts for a generic agent."""
 

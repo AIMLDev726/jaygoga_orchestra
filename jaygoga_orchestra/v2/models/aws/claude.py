@@ -23,7 +23,6 @@ try:
 except ImportError:
     raise ImportError("`boto3` not installed. Please install using `pip install boto3`")
 
-
 @dataclass
 class Claude(AnthropicClaude):
     """

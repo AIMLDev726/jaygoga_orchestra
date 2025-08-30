@@ -17,11 +17,9 @@ try:
 except ImportError:
     raise ImportError("`pypdf` not installed. Please install it via `pip install pypdf`.")
 
-
 PAGE_START_NUMBERING_FORMAT_DEFAULT = "<start page {page_nr}>"
 PAGE_END_NUMBERING_FORMAT_DEFAULT = "<end page {page_nr}>"
 PAGE_NUMBERING_CORRECTNESS_RATIO_FOR_REMOVAL = 0.4
-
 
 def _ocr_reader(page: Any) -> str:
     """A single PDF page object."""
@@ -45,7 +43,6 @@ def _ocr_reader(page: Any) -> str:
         images_text_list += [item[1] for item in ocr_result] if ocr_result else []
 
     return "\n".join(images_text_list)
-
 
 async def _async_ocr_reader(page: Any) -> str:
     """page: A single PDF page object."""
@@ -71,7 +68,6 @@ async def _async_ocr_reader(page: Any) -> str:
 
     images_text = "\n".join(images_text_list)
     return images_text
-
 
 def _clean_page_numbers(
     page_content_list: List[str],
@@ -149,7 +145,6 @@ def _clean_page_numbers(
 
     return page_content_list, best_shift
 
-
 def _identify_best_page_sequence(page_numbers, range_shifts):
     best_match = None
     best_shift: Optional[int] = None
@@ -171,7 +166,6 @@ def _identify_best_page_sequence(page_numbers, range_shifts):
             best_shift = shift
 
     return best_match, best_correct_count, best_shift
-
 
 class BasePDFReader(Reader):
     def __init__(
@@ -304,7 +298,6 @@ class BasePDFReader(Reader):
 
         return self._create_documents(pdf_content_clean, doc_name, use_uuid_for_id, shift)
 
-
 class PDFReader(BasePDFReader):
     """Reader for PDF files"""
 
@@ -355,7 +348,6 @@ class PDFReader(BasePDFReader):
 
         # Read and chunk.
         return await self._async_pdf_reader_to_documents(pdf_reader, doc_name, use_uuid_for_id=True)
-
 
 class PDFUrlReader(BasePDFReader):
     """Reader for PDF files from URL"""
@@ -409,7 +401,6 @@ class PDFUrlReader(BasePDFReader):
         # Read and chunk.
         return await self._async_pdf_reader_to_documents(pdf_reader, doc_name, use_uuid_for_id=False)
 
-
 class PDFImageReader(BasePDFReader):
     """Reader for PDF files with text and images extraction"""
 
@@ -456,7 +447,6 @@ class PDFImageReader(BasePDFReader):
 
         # Read and chunk.
         return await self._async_pdf_reader_to_documents(pdf_reader, doc_name, read_images=True, use_uuid_for_id=False)
-
 
 class PDFUrlImageReader(BasePDFReader):
     """Reader for PDF files from URL with text and images extraction"""

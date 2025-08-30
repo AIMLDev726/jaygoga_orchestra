@@ -9,7 +9,6 @@ from jaygoga_orchestra.v1.tools.tool_types import ToolResult
 from jaygoga_orchestra.v1.tools.tool_usage import ToolUsage, ToolUsageErrorException
 from jaygoga_orchestra.v1.utilities.i18n import I18N
 
-
 def execute_tool_and_check_finality(
     agent_action: AgentAction,
     tools: List[CrewStructuredTool],
@@ -50,7 +49,7 @@ def execute_tool_and_check_finality(
                     if isinstance(fingerprint_context, dict):
                         try:
                             fingerprint_obj = Fingerprint.from_dict(fingerprint_context)
-                            agent.set_fingerconsole.print(fingerprint_obj)
+                            agent.set_fingerprint(fingerprint_obj)
                         except Exception as e:
                             raise ValueError(f"Failed to set fingerprint: {e}")
 

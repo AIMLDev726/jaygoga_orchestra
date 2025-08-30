@@ -1,13 +1,13 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Dict, List, Mapping, Optional
 
 from jaygoga_orchestra.v2.run.v2.workflow import WorkflowRunResponse
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 @dataclass
 class WorkflowSession:

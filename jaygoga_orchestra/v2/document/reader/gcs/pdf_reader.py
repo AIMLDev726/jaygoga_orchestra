@@ -19,7 +19,6 @@ try:
 except ImportError:
     raise ImportError("`pypdf` not installed. Please install it via `pip install pypdf`.")
 
-
 class GCSPDFReader(Reader):
     def read(self, blob: storage.Blob) -> List[Document]:
         log_info(f"Reading: gs://{blob.bucket.name}/{blob.name}")

@@ -19,7 +19,6 @@ try:
 except ImportError:
     PANDAS_AVAILABLE = False
 
-
 class DataAnalysisTool(BaseTool):
     """
     Professional data analysis tool for agents.

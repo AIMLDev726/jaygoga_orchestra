@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.models.nebius import Nebius
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_error, log_warning
 
-
 class NebiusTools(Toolkit):
     """Tools for interacting with Nebius AI Studio's text-to-image API"""
 

@@ -19,7 +19,6 @@ try:
 except ImportError:
     raise ImportError("`litellm` not installed. Please install it via `pip install litellm`")
 
-
 @dataclass
 class LiteLLM(Model):
     """

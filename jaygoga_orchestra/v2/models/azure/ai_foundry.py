@@ -33,7 +33,6 @@ except ImportError:
         "`azure-ai-inference` not installed. Please install it via `pip install azure-ai-inference aiohttp`."
     )
 
-
 @dataclass
 class AzureAIFoundry(Model):
     """

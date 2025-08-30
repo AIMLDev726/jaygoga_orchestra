@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`google-genai` not installed. Please install it using `pip install google-genai`")
 
-
 @dataclass
 class GeminiEmbedder(Embedder):
     id: str = "gemini-embedding-exp-03-07"

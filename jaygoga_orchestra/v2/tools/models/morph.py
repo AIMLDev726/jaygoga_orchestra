@@ -13,7 +13,6 @@ try:
 except ImportError:
     raise ImportError("`openai` not installed. Please install using `pip install openai`")
 
-
 class MorphTools(Toolkit):
     """Tools for interacting with Morph's Fast Apply API for code editing"""
 

@@ -5,7 +5,6 @@ from typing import Any, List, Optional
 
 from jaygoga_orchestra.v1.tools.base_tool import BaseTool
 
-
 class BaseToolAdapter(ABC):
     """Base class for all tool adapters in Govinda.
 

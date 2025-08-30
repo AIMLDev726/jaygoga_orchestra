@@ -23,7 +23,6 @@ try:
 except (ImportError, ModuleNotFoundError) as e:
     raise ImportError("`openai` not installed. Please install using `pip install openai -U`") from e
 
-
 @dataclass
 class OpenAIResponses(Model):
     """

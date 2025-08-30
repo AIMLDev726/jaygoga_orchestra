@@ -12,7 +12,6 @@ Serializable = Union[
     SerializablePrimitive, List["Serializable"], Dict[str, "Serializable"]
 ]
 
-
 def to_serializable(
     obj: Any,
     exclude: set[str] | None = None,
@@ -72,12 +71,10 @@ def to_serializable(
     else:
         return repr(obj)
 
-
 def _to_serializable_key(key: Any) -> str:
     if isinstance(key, (str, int)):
         return str(key)
     return f"key_{id(key)}_{repr(key)}"
-
 
 def to_string(obj: Any) -> str | None:
     """Serializes an object into a JSON string.

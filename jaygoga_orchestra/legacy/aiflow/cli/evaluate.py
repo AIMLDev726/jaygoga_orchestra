@@ -11,7 +11,6 @@ from typing import Dict, Any, List
 
 from .base import BaseCLICommand, CLIContext
 
-
 class EvaluateCommand(BaseCLICommand):
     """Command for evaluating AIFlow agents."""
     

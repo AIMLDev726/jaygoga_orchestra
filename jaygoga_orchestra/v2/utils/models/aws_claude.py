@@ -23,7 +23,6 @@ ROLE_MAP = {
     "tool": "user",
 }
 
-
 def _format_image_for_message(image: Image) -> Optional[Dict[str, Any]]:
     """
     Add an image to a message by converting it to base64 encoded format.
@@ -108,7 +107,6 @@ def _format_image_for_message(image: Image) -> Optional[Dict[str, Any]]:
     except Exception as e:
         log_error(f"Error processing image: {e}")
         return None
-
 
 def format_messages(messages: List[Message]) -> Tuple[List[Dict[str, str]], str]:
     """

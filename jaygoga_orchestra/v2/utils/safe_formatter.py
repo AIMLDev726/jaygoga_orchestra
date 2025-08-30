@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 import string
 
-
 class SafeFormatter(string.Formatter):
     def get_value(self, key, args, kwargs):
         """Handle missing keys by returning '{key}'."""

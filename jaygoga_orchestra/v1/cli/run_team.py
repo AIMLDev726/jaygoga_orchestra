@@ -8,13 +8,11 @@ import click
 from packaging import version
 
 from jaygoga_orchestra.v1.cli.utils import read_toml
-from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra.v1_version
-
+from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra_v1_version
 
 class CrewType(Enum):
     STANDARD = "standard"
     FLOW = "flow"
-
 
 def run_crew() -> None:
     """
@@ -24,7 +22,7 @@ def run_crew() -> None:
     standard crews and flows. For flows, it detects the type from pyproject.toml
     and automatically runs the appropriate command.
     """
-    jaygoga_orchestra.v1_version = get_jaygoga_orchestra.v1_version()
+    jaygoga_orchestra.v1_version = get_jaygoga_orchestra_v1_version()
     min_required_version = "0.71.0"
     pyproject_data = read_toml()
 
@@ -48,7 +46,6 @@ def run_crew() -> None:
     # Execute the appropriate command
     execute_command(crew_type)
 
-
 def execute_command(crew_type: CrewType) -> None:
     """
     Execute the appropriate command based on squad type.
@@ -66,7 +63,6 @@ def execute_command(crew_type: CrewType) -> None:
 
     except Exception as e:
         click.echo(f"An unexpected error occurred: {e}", err=True)
-
 
 def handle_error(error: subprocess.CalledProcessError, crew_type: CrewType) -> None:
     """

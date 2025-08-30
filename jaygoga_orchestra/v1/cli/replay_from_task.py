@@ -4,7 +4,6 @@ import subprocess
 
 import click
 
-
 def replay_task_command(task_id: str) -> None:
     """
     Replay the squad execution from a specific task.

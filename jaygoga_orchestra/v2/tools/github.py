@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`PyGithub` not installed. Please install using `pip install pygithub`")
 
-
 class GithubTools(Toolkit):
     def __init__(
         self,
@@ -371,7 +370,6 @@ class GithubTools(Toolkit):
         Args:
             repo_name (str): The full name of the repository (e.g., 'owner/repo').
             pr_number (int): The number of the pull request.
-
 
         Returns:
             A JSON-formatted string containing pull request details.

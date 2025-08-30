@@ -16,7 +16,6 @@ from jaygoga_orchestra.v2.utils.timer import Timer
 if TYPE_CHECKING:
     from rich.console import Console
 
-
 @dataclass
 class PerformanceResult:
     """
@@ -141,7 +140,7 @@ class PerformanceResult:
             perf_table.add_row("Median", f"{self.median_memory_usage:.6f}")
             perf_table.add_row("95th %ile", f"{self.p95_memory_usage:.6f}")
 
-        console.console.print(perf_table)
+        print(perf_table)
 
     def print_results(
         self, console: Optional["Console"] = None, measure_memory: bool = True, measure_runtime: bool = True
@@ -174,8 +173,7 @@ class PerformanceResult:
             else:
                 results_table.add_row(str(i + 1))
 
-        console.console.print(results_table)
-
+        print(results_table)
 
 @dataclass
 class PerformanceEval:

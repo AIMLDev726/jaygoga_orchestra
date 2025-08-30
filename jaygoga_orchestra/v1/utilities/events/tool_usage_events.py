@@ -5,7 +5,6 @@ from typing import Any, Callable, Dict, Optional
 
 from .base_events import BaseEvent
 
-
 class ToolUsageEvent(BaseEvent):
     """Base event for tool usage tracking"""
 
@@ -39,12 +38,10 @@ class ToolUsageEvent(BaseEvent):
             ):
                 self.fingerprint_metadata = self.agent.fingerprint.metadata
 
-
 class ToolUsageStartedEvent(ToolUsageEvent):
     """Event emitted when a tool execution is started"""
 
     type: str = "tool_usage_started"
-
 
 class ToolUsageFinishedEvent(ToolUsageEvent):
     """Event emitted when a tool execution is completed"""
@@ -55,13 +52,11 @@ class ToolUsageFinishedEvent(ToolUsageEvent):
     output: Any
     type: str = "tool_usage_finished"
 
-
 class ToolUsageErrorEvent(ToolUsageEvent):
     """Event emitted when a tool execution encounters an error"""
 
     error: Any
     type: str = "tool_usage_error"
-
 
 class ToolValidateInputErrorEvent(ToolUsageEvent):
     """Event emitted when a tool input validation encounters an error"""
@@ -69,13 +64,11 @@ class ToolValidateInputErrorEvent(ToolUsageEvent):
     error: Any
     type: str = "tool_validate_input_error"
 
-
 class ToolSelectionErrorEvent(ToolUsageEvent):
     """Event emitted when a tool selection encounters an error"""
 
     error: Any
     type: str = "tool_selection_error"
-
 
 class ToolExecutionErrorEvent(BaseEvent):
     """Event emitted when a tool execution encounters an error"""

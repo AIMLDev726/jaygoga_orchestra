@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("infinity_client not installed, please run `pip install infinity_client`")
 
-
 class InfinityReranker(Reranker):
     model: str = "BAAI/bge-reranker-base"
     host: str = "localhost"

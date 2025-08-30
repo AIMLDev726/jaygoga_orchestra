@@ -7,7 +7,6 @@ from typing import Any, Dict, Optional
 from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 
-
 @dataclass
 class AIMLApi(OpenAILike):
     """

@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.document.reader.markdown_reader import MarkdownReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class MarkdownKnowledgeBase(AgentKnowledge):
     path: Optional[Union[str, Path, List[Dict[str, Union[str, Dict[str, Any]]]]]] = None
     formats: List[str] = [".md"]

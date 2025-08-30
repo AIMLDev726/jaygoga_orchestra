@@ -15,7 +15,6 @@ from jaygoga_orchestra.v2.memory.db.base import MemoryDb
 from jaygoga_orchestra.v2.memory.row import MemoryRow
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class MongoMemoryDb(MemoryDb):
     def __init__(
         self,

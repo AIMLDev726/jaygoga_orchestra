@@ -9,7 +9,6 @@ the Flow system.
 from typing import Any, TypedDict
 from typing_extensions import NotRequired, Required
 
-
 class FlowMethodData(TypedDict):
     """Flow method information.
 
@@ -20,7 +19,6 @@ class FlowMethodData(TypedDict):
 
     name: str
     starting_point: NotRequired[bool]
-
 
 class CompletedMethodData(TypedDict):
     """Completed method information.
@@ -34,7 +32,6 @@ class CompletedMethodData(TypedDict):
 
     flow_method: FlowMethodData
     status: str
-
 
 class ExecutionMethodData(TypedDict, total=False):
     """Execution method information.
@@ -60,7 +57,6 @@ class ExecutionMethodData(TypedDict, total=False):
     final_state: dict[str, Any]
     error_details: dict[str, Any]
 
-
 class FlowData(TypedDict):
     """Flow structure information.
 
@@ -73,7 +69,6 @@ class FlowData(TypedDict):
 
     name: str
     flow_methods_attributes: list[FlowMethodData]
-
 
 class FlowExecutionData(TypedDict):
     """Flow execution data.

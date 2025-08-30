@@ -29,7 +29,6 @@ class ReasoningPatternType(Enum):
     INDECISIVE = "indecisive"  # Agent struggles to make decisions
     SCATTERED = "scattered"  # Agent jumps between topics without focus
 
-
 class ReasoningEfficiencyEvaluator(BaseEvaluator):
     @property
     def metric_category(self) -> MetricCategory:

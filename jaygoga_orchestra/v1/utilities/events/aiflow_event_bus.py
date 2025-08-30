@@ -11,7 +11,6 @@ from jaygoga_orchestra.v1.utilities.events.event_types import EventTypes
 
 EventT = TypeVar("EventT", bound=BaseEvent)
 
-
 class GovindaEventsBus:
     """
     A singleton event bus that uses blinker signals for event handling.
@@ -31,7 +30,7 @@ class GovindaEventsBus:
 
     def _initialize(self) -> None:
         """Initialize the event bus internal state"""
-        self._signal = Signal("jaygoga_orchestra.v1_event_bus")
+        self._signal = Signal("event_bus")
         self._handlers: Dict[Type[BaseEvent], List[Callable]] = {}
 
     def on(
@@ -41,12 +40,12 @@ class GovindaEventsBus:
         Decorator to register an event handler for a specific event type.
 
         Usage:
-            @jaygoga_orchestra.v1_event_bus.on(AgentExecutionCompletedEvent)
+            @event_bus.on(AgentExecutionCompletedEvent)
             def on_agent_execution_completed(
                 source: Any, event: AgentExecutionCompletedEvent
             ):
-                console.print(f"👍 Agent '{event.agent}' completed task")
-                console.print(f"   Output: {event.output}")
+                print(f"👍 Agent '{event.agent}' completed task")
+                print(f"   Output: {event.output}")
         """
 
         def decorator(
@@ -75,7 +74,7 @@ class GovindaEventsBus:
                     try:
                         handler(source, event)
                     except Exception as e:
-                        console.print(
+                        print(
                             f"[EventBus Error] Handler '{handler.__name__}' failed for event '{event_type.__name__}': {e}"
                         )
 
@@ -98,10 +97,10 @@ class GovindaEventsBus:
         Useful for testing or temporary event handling.
 
         Usage:
-            with jaygoga_orchestra.v1_event_bus.scoped_handlers():
-                @jaygoga_orchestra.v1_event_bus.on(CrewKickoffStarted)
+            with event_bus.scoped_handlers():
+                @event_bus.on(CrewKickoffStarted)
                 def temp_handler(source, event):
-                    console.print("Temporary handler")
+                    print("Temporary handler")
                 # Do stuff...
             # Handlers are cleared after the context
         """
@@ -112,6 +111,5 @@ class GovindaEventsBus:
         finally:
             self._handlers = previous_handlers
 
-
 # Global instance
-jaygoga_orchestra.v1_event_bus = GovindaEventsBus()
+event_bus = GovindaEventsBus()

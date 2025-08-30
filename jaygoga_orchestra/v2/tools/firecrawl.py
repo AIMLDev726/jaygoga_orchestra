@@ -13,7 +13,6 @@ try:
 except ImportError:
     raise ImportError("`firecrawl-py` not installed. Please install using `pip install firecrawl-py`")
 
-
 class CustomJSONEncoder(json.JSONEncoder):
     """Custom JSON encoder that handles non-serializable types by converting them to strings."""
 
@@ -22,7 +21,6 @@ class CustomJSONEncoder(json.JSONEncoder):
             return super().default(obj)
         except TypeError:
             return str(obj)
-
 
 class FirecrawlTools(Toolkit):
     """

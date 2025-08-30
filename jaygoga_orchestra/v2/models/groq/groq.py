@@ -23,7 +23,6 @@ try:
 except ImportError:
     raise ImportError("`groq` not installed. Please install using `pip install groq`")
 
-
 @dataclass
 class Groq(Model):
     """

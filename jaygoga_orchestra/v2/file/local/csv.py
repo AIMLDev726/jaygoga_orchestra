@@ -7,7 +7,6 @@ from jaygoga_orchestra.v2.file import File
 from jaygoga_orchestra.v2.utils.common import dataclass_to_dict
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 @dataclass
 class CsvFile(File):
     path: str = ""  # type: ignore

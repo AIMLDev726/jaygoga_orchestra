@@ -5,7 +5,6 @@ from typing import List, Optional
 
 from jaygoga_orchestra.v2.memory.v2.db.schema import MemoryRow
 
-
 class MemoryDb(ABC):
     """Base class for the Memory Database."""
 

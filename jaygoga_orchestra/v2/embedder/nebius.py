@@ -6,7 +6,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.embedder.openai import OpenAIEmbedder
 
-
 @dataclass
 class NebiusEmbedder(OpenAIEmbedder):
     id: str = "BAAI/bge-en-icl"

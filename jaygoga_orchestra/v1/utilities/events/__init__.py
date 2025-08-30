@@ -38,7 +38,7 @@ from .flow_events import (
     MethodExecutionFinishedEvent,
     MethodExecutionFailedEvent,
 )
-from .jaygoga_orchestra.v1_event_bus import GovindaEventsBus, jaygoga_orchestra.v1_event_bus
+from .aiflow_event_bus import GovindaEventsBus, event_bus
 from .tool_usage_events import (
     ToolUsageFinishedEvent,
     ToolUsageErrorEvent,
@@ -73,7 +73,7 @@ from .event_listener import EventListener
 __all__ = [
     "EventListener",
     "GovindaEventsBus",
-    "jaygoga_orchestra.v1_event_bus",
+    "event_bus",
     "AgentExecutionStartedEvent",
     "AgentExecutionCompletedEvent",
     "AgentExecutionErrorEvent",

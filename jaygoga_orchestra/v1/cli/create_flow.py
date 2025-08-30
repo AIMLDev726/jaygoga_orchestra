@@ -4,9 +4,6 @@ from pathlib import Path
 
 import click
 
-from jaygoga_orchestra.v1.telemetry import Telemetry
-
-
 def create_flow(name):
     """Create a new flow."""
     folder_name = name.replace(" ", "_").replace("-", "_").lower()

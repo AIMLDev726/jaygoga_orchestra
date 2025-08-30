@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.document.reader.firecrawl_reader import FirecrawlReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 
-
 class FireCrawlKnowledgeBase(AgentKnowledge):
     urls: List[str] = []
     reader: FirecrawlReader = FirecrawlReader()

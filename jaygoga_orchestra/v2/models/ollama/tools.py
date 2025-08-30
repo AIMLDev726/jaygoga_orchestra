@@ -18,7 +18,6 @@ from jaygoga_orchestra.v2.utils.tools import (
     remove_tool_calls_from_string,
 )
 
-
 @dataclass
 class OllamaResponseUsage:
     input_tokens: int = 0
@@ -29,7 +28,6 @@ class OllamaResponseUsage:
     prompt_eval_duration: int = 0
     eval_duration: int = 0
 
-
 @dataclass
 class ToolCall:
     tool_calls: List[Dict[str, Any]] = field(default_factory=list)
@@ -38,7 +36,6 @@ class ToolCall:
     is_closing_tool_call_tag: bool = field(default=False)
     tool_calls_counter: int = field(default=0)
     tool_call_content: str = field(default="")
-
 
 @dataclass
 class OllamaTools(Ollama):
@@ -383,7 +380,6 @@ class OllamaTools(Ollama):
 
     def get_instructions_for_model(self, tools: Optional[List[Any]] = None) -> Optional[List[str]]:
         return self.get_instructions_to_generate_tool_calls(tools)
-
 
 def _parse_tool_calls_from_content(response_content: str) -> List[Dict[str, Any]]:
     """

@@ -24,14 +24,12 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_warning, logger, set_l
 from jaygoga_orchestra.v2.utils.prompts import get_json_output_prompt
 from jaygoga_orchestra.v2.utils.string import parse_response_model_str
 
-
 class MemorySearchResponse(BaseModel):
     """Model for Memory Search Response."""
 
     memory_ids: List[str] = Field(
         ..., description="The IDs of the memories that are most semantically similar to the query."
     )
-
 
 @dataclass
 class TeamMemberInteraction:
@@ -57,7 +55,6 @@ class TeamMemberInteraction:
                 member_name=data["member_name"], task=data["task"], response=TeamRunResponse.from_dict(data["response"])
             )
 
-
 @dataclass
 class TeamContext:
     # List of team member interaction, represented as a request and a response
@@ -78,7 +75,6 @@ class TeamContext:
             ],
             text=data["text"],
         )
-
 
 @dataclass
 class Memory:

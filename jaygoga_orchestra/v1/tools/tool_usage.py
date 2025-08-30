@@ -14,7 +14,7 @@ from json_repair import repair_json
 
 from jaygoga_orchestra.v1.agents.tools_handler import ToolsHandler
 from jaygoga_orchestra.v1.task import Task
-from jaygoga_orchestra.v1.telemetry import Telemetry
+
 from jaygoga_orchestra.v1.tools.structured_tool import CrewStructuredTool
 from jaygoga_orchestra.v1.tools.tool_calling import InstructorToolCalling, ToolCalling
 from jaygoga_orchestra.v1.utilities import I18N, Converter, Printer
@@ -22,7 +22,7 @@ from jaygoga_orchestra.v1.utilities.agent_utils import (
     get_tool_names,
     render_text_description_and_args,
 )
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.tool_usage_events import (
     ToolSelectionErrorEvent,
     ToolUsageErrorEvent,
@@ -45,14 +45,12 @@ OPENAI_BIGGER_MODELS = [
     "o3-mini",
 ]
 
-
 class ToolUsageErrorException(Exception):
     """Exception raised for errors in the tool usage."""
 
     def __init__(self, message: str) -> None:
         self.message = message
         super().__init__(self.message)
-
 
 class ToolUsage:
     """
@@ -80,7 +78,6 @@ class ToolUsage:
     ) -> None:
         self._i18n: I18N = agent.i18n if agent else I18N()
         self._printer: Printer = Printer()
-        self._telemetry: Telemetry = Telemetry()
         self._run_attempts: int = 1
         self._max_parsing_attempts: int = 3
         self._remember_format_after_usages: int = 3
@@ -112,7 +109,7 @@ class ToolUsage:
         if isinstance(calling, ToolUsageErrorException):
             error = calling.message
             if self.agent and self.agent.verbose:
-                self._printer.console.print(content=f"\n\n{error}\n", color="red")
+                self._printer.print(content=f"\n\n{error}\n", color="red")
             if self.task:
                 self.task.increment_tools_errors()
             return error
@@ -124,7 +121,7 @@ class ToolUsage:
             if self.task:
                 self.task.increment_tools_errors()
             if self.agent and self.agent.verbose:
-                self._printer.console.print(content=f"\n\n{error}\n", color="red")
+                self._printer.print(content=f"\n\n{error}\n", color="red")
             return error
 
         if (
@@ -140,7 +137,7 @@ class ToolUsage:
                 if self.task:
                     self.task.increment_tools_errors()
                 if self.agent and self.agent.verbose:
-                    self._printer.console.print(content=f"\n\n{error}\n", color="red")
+                    self._printer.print(content=f"\n\n{error}\n", color="red")
                 return error
 
         return f"{self._use(tool_string=tool_string, tool=tool, calling=calling)}"
@@ -156,7 +153,7 @@ class ToolUsage:
                 result = self._i18n.errors("task_repeated_usage").format(
                     tool_names=self.tools_names
                 )
-                self._telemetry.tool_repeated_usage(
+                tool_repeated_usage(
                     llm=self.function_calling_llm,
                     tool_name=tool.name,
                     attempts=self._run_attempts,
@@ -183,7 +180,7 @@ class ToolUsage:
             if self.task:
                 event_data["task_name"] = self.task.name or self.task.description
                 event_data["task_id"] = str(self.task.id)
-            jaygoga_orchestra.v1_event_bus.emit(self, ToolUsageStartedEvent(**event_data))
+            event_bus.emit(self, ToolUsageStartedEvent(**event_data))
 
         started_at = time.time()
         from_cache = False
@@ -208,7 +205,7 @@ class ToolUsage:
         if usage_limit_error:
             try:
                 result = usage_limit_error
-                self._telemetry.tool_usage_error(llm=self.function_calling_llm)
+                tool_usage_error(llm=self.function_calling_llm)
                 result = self._format_result(result=result)
                 return result
             except Exception:
@@ -253,7 +250,7 @@ class ToolUsage:
                 self.on_tool_error(tool=tool, tool_calling=calling, e=e)
                 self._run_attempts += 1
                 if self._run_attempts > self._max_parsing_attempts:
-                    self._telemetry.tool_usage_error(llm=self.function_calling_llm)
+                    tool_usage_error(llm=self.function_calling_llm)
                     error_message = self._i18n.errors("tool_usage_exception").format(
                         error=e, tool=tool.name, tool_inputs=tool.description
                     )
@@ -263,7 +260,7 @@ class ToolUsage:
                     if self.task:
                         self.task.increment_tools_errors()
                     if self.agent and self.agent.verbose:
-                        self._printer.console.print(
+                        self._printer.print(
                             content=f"\n\n{error_message}\n", color="red"
                         )
                     return error  # type: ignore # No return value expected
@@ -285,7 +282,7 @@ class ToolUsage:
                 self.tools_handler.on_tool_use(
                     calling=calling, output=result, should_cache=should_cache
                 )
-        self._telemetry.tool_usage(
+        tool_usage(
             llm=self.function_calling_llm,
             tool_name=tool.name,
             attempts=self._run_attempts,
@@ -321,7 +318,7 @@ class ToolUsage:
                 hasattr(available_tool, "max_usage_count")
                 and available_tool.max_usage_count is not None
             ):
-                self._printer.console.print(
+                self._printer.print(
                     content=f"Tool '{available_tool.name}' usage: {available_tool.current_usage_count}/{available_tool.max_usage_count}",
                     color="blue",
                 )
@@ -404,7 +401,7 @@ class ToolUsage:
         }
         if tool_name and tool_name != "":
             error = f"Action '{tool_name}' don't exist, these are the only available Actions:\n{self.tools_description}"
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 ToolSelectionErrorEvent(
                     **tool_selection_data,
@@ -414,7 +411,7 @@ class ToolUsage:
             raise Exception(error)
         else:
             error = f"I forgot the Action name, these are the only available Actions: {self.tools_description}"
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 ToolSelectionErrorEvent(
                     **tool_selection_data,
@@ -502,11 +499,11 @@ class ToolUsage:
         except Exception as e:
             self._run_attempts += 1
             if self._run_attempts > self._max_parsing_attempts:
-                self._telemetry.tool_usage_error(llm=self.function_calling_llm)
+                tool_usage_error(llm=self.function_calling_llm)
                 if self.task:
                     self.task.increment_tools_errors()
                 if self.agent and self.agent.verbose:
-                    self._printer.console.print(content=f"\n\n{e}\n", color="red")
+                    self._printer.print(content=f"\n\n{e}\n", color="red")
                 return ToolUsageErrorException(  # type: ignore # Incompatible return value type (got "ToolUsageErrorException", expected "ToolCalling | InstructorToolCalling")
                     f"{self._i18n.errors('tool_usage_error').format(error=e)}\nMoving on then. {self._i18n.slice('format').format(tool_names=self.tools_names)}"
                 )
@@ -549,7 +546,7 @@ class ToolUsage:
         # Attempt 4: Repair JSON
         try:
             repaired_input = str(repair_json(tool_input, skip_json_loads=True))
-            self._printer.console.print(
+            self._printer.print(
                 content=f"Repaired JSON: {repaired_input}", color="blue"
             )
             arguments = json.loads(repaired_input)
@@ -557,7 +554,7 @@ class ToolUsage:
                 return arguments
         except Exception as e:
             error = f"Failed to repair JSON: {e}"
-            self._printer.console.print(content=error, color="red")
+            self._printer.print(content=error, color="red")
 
         error_message = (
             "Tool input must be a valid dictionary in JSON or Python literal format"
@@ -580,7 +577,7 @@ class ToolUsage:
         if self.fingerprint_context:
             tool_selection_data.update(self.fingerprint_context)
 
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             ToolValidateInputErrorEvent(**tool_selection_data, error=final_error),
         )
@@ -592,7 +589,7 @@ class ToolUsage:
         e: Exception,
     ) -> None:
         event_data = self._prepare_event_data(tool, tool_calling)
-        jaygoga_orchestra.v1_event_bus.emit(self, ToolUsageErrorEvent(**{**event_data, "error": e}))
+        event_bus.emit(self, ToolUsageErrorEvent(**{**event_data, "error": e}))
 
     def on_tool_use_finished(
         self,
@@ -615,7 +612,7 @@ class ToolUsage:
         if self.task:
             event_data["task_id"] = str(self.task.id)
             event_data["task_name"] = self.task.name or self.task.description
-        jaygoga_orchestra.v1_event_bus.emit(self, ToolUsageFinishedEvent(**event_data))
+        event_bus.emit(self, ToolUsageFinishedEvent(**event_data))
 
     def _prepare_event_data(
         self, tool: Any, tool_calling: Union[ToolCalling, InstructorToolCalling]

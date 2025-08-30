@@ -6,7 +6,6 @@ import click
 
 from jaygoga_orchestra.v1.cli.utils import get_crews
 
-
 def reset_memories_command(
     long,
     short,

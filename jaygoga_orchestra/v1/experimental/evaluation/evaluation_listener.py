@@ -8,7 +8,7 @@ from collections.abc import Sequence
 from jaygoga_orchestra.v1.agent import Agent
 from jaygoga_orchestra.v1.task import Task
 from jaygoga_orchestra.v1.utilities.events.base_event_listener import BaseEventListener
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import GovindaEventsBus
+from jaygoga_orchestra.v1.utilities.events import GovindaEventsBus
 from jaygoga_orchestra.v1.utilities.events.agent_events import (
     AgentExecutionStartedEvent,
     AgentExecutionCompletedEvent,
@@ -227,10 +227,9 @@ class EvaluationTraceCallback(BaseEventListener):
         trace_key = f"{agent_id}_{task_id}"
         return self.traces.get(trace_key)
 
-
 def create_evaluation_callbacks() -> EvaluationTraceCallback:
-    from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+    from jaygoga_orchestra.v1.utilities.events import event_bus
 
     callback = EvaluationTraceCallback()
-    callback.setup_listeners(jaygoga_orchestra.v1_event_bus)
+    callback.setup_listeners(event_bus)
     return callback

@@ -8,18 +8,15 @@ from jaygoga_orchestra.v1.project.utils import memoize
 
 """Decorators for defining squad components and their behaviors."""
 
-
 def before_kickoff(func):
     """Marks a method to execute before squad execute."""
     func.is_before_kickoff = True
     return func
 
-
 def after_kickoff(func):
     """Marks a method to execute after squad execute."""
     func.is_after_kickoff = True
     return func
-
 
 def task(func):
     """Marks a method as a squad task."""
@@ -34,13 +31,11 @@ def task(func):
 
     return memoize(wrapper)
 
-
 def agent(func):
     """Marks a method as a squad agent."""
     func.is_agent = True
     func = memoize(func)
     return func
-
 
 def llm(func):
     """Marks a method as an LLM provider."""
@@ -48,36 +43,30 @@ def llm(func):
     func = memoize(func)
     return func
 
-
 def output_json(cls):
     """Marks a class as JSON output format."""
     cls.is_output_json = True
     return cls
-
 
 def output_pydantic(cls):
     """Marks a class as Pydantic output format."""
     cls.is_output_pydantic = True
     return cls
 
-
 def tool(func):
     """Marks a method as a squad tool."""
     func.is_tool = True
     return memoize(func)
-
 
 def callback(func):
     """Marks a method as a squad callback."""
     func.is_callback = True
     return memoize(func)
 
-
 def cache_handler(func):
     """Marks a method as a cache handler."""
     func.is_cache_handler = True
     return memoize(func)
-
 
 def squad(func) -> Callable[..., Squad]:
     """Marks a method as the main squad execution point."""

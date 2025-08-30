@@ -1,5 +1,8 @@
 from rich.console import Console
 console = Console()
+from opentelemetry import baggage
+from opentelemetry.context import attach, detach
+
 import asyncio
 import json
 import re
@@ -20,10 +23,7 @@ from typing import (
     cast,
 )
 
-from opentelemetry import baggage
-from opentelemetry.context import attach, detach
-
-from jaygoga_orchestra.v1.utilities.squad.models import CrewContext
+from jaygoga_orchestra.v1.utilities.teams.models import CrewContext
 
 from pydantic import (
     UUID4,
@@ -59,7 +59,7 @@ from jaygoga_orchestra.v1.tools.base_tool import BaseTool, Tool
 from jaygoga_orchestra.v1.types.usage_metrics import UsageMetrics
 from jaygoga_orchestra.v1.utilities import I18N, FileHandler, Logger, RPMController
 from jaygoga_orchestra.v1.utilities.constants import NOT_SPECIFIED, TRAINING_DATA_FILE
-from jaygoga_orchestra.v1.utilities.evaluators.crew_evaluator_handler import CrewEvaluator
+from jaygoga_orchestra.v1.utilities.evaluators.team_evaluator_handler import CrewEvaluator
 from jaygoga_orchestra.v1.utilities.evaluators.task_evaluator import TaskEvaluator
 from jaygoga_orchestra.v1.utilities.events.team_events import (
     CrewKickoffCompletedEvent,
@@ -72,12 +72,11 @@ from jaygoga_orchestra.v1.utilities.events.team_events import (
     CrewTrainFailedEvent,
     CrewTrainStartedEvent,
 )
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.event_listener import EventListener
 from jaygoga_orchestra.v1.utilities.events.listeners.tracing.trace_listener import (
     TraceCollectionListener,
 )
-
 
 from jaygoga_orchestra.v1.utilities.events.listeners.tracing.utils import (
     is_tracing_enabled,
@@ -92,7 +91,6 @@ from jaygoga_orchestra.v1.utilities.task_output_storage_handler import TaskOutpu
 from jaygoga_orchestra.v1.utilities.training_handler import CrewTrainingHandler
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
 
 class Squad(FlowTrackable, BaseModel):
     """
@@ -290,7 +288,7 @@ class Squad(FlowTrackable, BaseModel):
 
         if is_tracing_enabled() or self.tracing:
             trace_listener = TraceCollectionListener()
-            trace_listener.setup_listeners(jaygoga_orchestra.v1_event_bus)
+            trace_listener.setup_listeners(event_bus)
         event_listener.verbose = self.verbose
         event_listener.formatter.verbose = self.verbose
         self._logger = Logger(verbose=self.verbose)
@@ -510,7 +508,7 @@ class Squad(FlowTrackable, BaseModel):
         return md5("|".join(source).encode(), usedforsecurity=False).hexdigest()
 
     @property
-    def fingerconsole.print(self) -> Fingerprint:
+    def fingerprint(self) -> Fingerprint:
         """
         Get the squad's fingerprint.
 
@@ -565,7 +563,7 @@ class Squad(FlowTrackable, BaseModel):
     ) -> None:
         """Trains the squad for a given number of iterations."""
         try:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewTrainStartedEvent(
                     crew_name=self.name,
@@ -592,7 +590,7 @@ class Squad(FlowTrackable, BaseModel):
                         agent_id=str(agent.role), trained_data=result.model_dump()
                     )
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewTrainCompletedEvent(
                     crew_name=self.name,
@@ -601,7 +599,7 @@ class Squad(FlowTrackable, BaseModel):
                 ),
             )
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewTrainFailedEvent(error=str(e), crew_name=self.name),
             )
@@ -625,7 +623,7 @@ class Squad(FlowTrackable, BaseModel):
                     inputs = {}
                 inputs = before_callback(inputs)
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewKickoffStartedEvent(crew_name=self.name, inputs=inputs),
             )
@@ -638,7 +636,7 @@ class Squad(FlowTrackable, BaseModel):
                 self._inputs = inputs
                 self._interpolate_inputs(inputs)
             self._set_tasks_callbacks()
-            self._set_allow_jaygoga_orchestra.v1_trigger_context_for_first_task()
+            self._set_allow_jaygoga_orchestra_v1_trigger_context_for_first_task()
 
             i18n = I18N(prompt_file=self.prompt_file)
 
@@ -675,7 +673,7 @@ class Squad(FlowTrackable, BaseModel):
 
             return result
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewKickoffFailedEvent(error=str(e), crew_name=self.name),
             )
@@ -1068,7 +1066,7 @@ class Squad(FlowTrackable, BaseModel):
         final_string_output = final_task_output.raw
         self._finish_execution(final_string_output)
         self.token_usage = self.calculate_usage_metrics()
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             CrewKickoffCompletedEvent(
                 crew_name=self.name,
@@ -1315,7 +1313,7 @@ class Squad(FlowTrackable, BaseModel):
             if not llm_instance:
                 raise ValueError("Failed to create LLM instance.")
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewTestStartedEvent(
                     crew_name=self.name,
@@ -1334,14 +1332,14 @@ class Squad(FlowTrackable, BaseModel):
 
             evaluator.print_crew_evaluation_result()
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewTestCompletedEvent(
                     crew_name=self.name,
                 ),
             )
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 CrewTestFailedEvent(error=str(e), crew_name=self.name),
             )
@@ -1509,17 +1507,17 @@ class Squad(FlowTrackable, BaseModel):
         for ks in knowledges:
             ks.reset()
 
-    def _set_allow_jaygoga_orchestra.v1_trigger_context_for_first_task(self):
-        jaygoga_orchestra.v1_trigger_payload = self._inputs and self._inputs.get(
-            "jaygoga_orchestra.v1_trigger_payload"
+    def _set_allow_jaygoga_orchestra_v1_trigger_context_for_first_task(self):
+        jaygoga_orchestra_v1_trigger_payload = self._inputs and self._inputs.get(
+            "jaygoga_orchestra_v1_trigger_payload"
         )
         able_to_inject = (
-            self.tasks and self.tasks[0].allow_jaygoga_orchestra.v1_trigger_context is None
+            self.tasks and self.tasks[0].allow_jaygoga_orchestra_v1_trigger_context is None
         )
 
         if (
             self.process == Process.sequential
-            and jaygoga_orchestra.v1_trigger_payload
+            and jaygoga_orchestra_v1_trigger_payload
             and able_to_inject
         ):
-            self.tasks[0].allow_jaygoga_orchestra.v1_trigger_context = True
+            self.tasks[0].allow_jaygoga_orchestra_v1_trigger_context = True

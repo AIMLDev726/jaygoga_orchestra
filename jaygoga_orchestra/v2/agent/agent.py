@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 import asyncio
 from collections import ChainMap, defaultdict, deque
@@ -94,7 +95,6 @@ from jaygoga_orchestra.v2.utils.response import (
 from jaygoga_orchestra.v2.utils.safe_formatter import SafeFormatter
 from jaygoga_orchestra.v2.utils.string import parse_response_model_str
 from jaygoga_orchestra.v2.utils.timer import Timer
-
 
 @dataclass(init=False)
 class Agent:
@@ -342,7 +342,7 @@ class Agent:
 
     # monitoring=True logs Agent information to jaygoga_orchestra.v2.com for monitoring
     monitoring: bool = False
-    # telemetry=True logs minimal telemetry for analytics
+
     # This helps us improve the Agent and provide better support
     telemetry: bool = True
 
@@ -558,7 +558,6 @@ class Agent:
             debug_level = 1
         self.debug_level = debug_level
         self.monitoring = monitoring
-        self.telemetry = telemetry
 
         # --- Params not to be set by user ---
         self.session_metrics: Optional[SessionMetrics] = None
@@ -5884,7 +5883,6 @@ class Agent:
             reasoning_agent = self.reasoning_agent or get_reasoning_agent(
                 reasoning_model=reasoning_model,
                 monitoring=self.monitoring,
-                telemetry=self.telemetry,
                 debug_mode=self.debug_mode,
                 debug_level=self.debug_level,
                 session_state=self.session_state,
@@ -5976,7 +5974,6 @@ class Agent:
                     tools=self.tools,
                     use_json_mode=self.use_json_mode,
                     monitoring=self.monitoring,
-                    telemetry=self.telemetry,
                     debug_mode=self.debug_mode,
                     debug_level=self.debug_level,
                     session_state=self.session_state,
@@ -6113,7 +6110,6 @@ class Agent:
             reasoning_agent = self.reasoning_agent or get_reasoning_agent(
                 reasoning_model=reasoning_model,
                 monitoring=self.monitoring,
-                telemetry=self.telemetry,
                 debug_mode=self.debug_mode,
                 debug_level=self.debug_level,
                 session_state=self.session_state,
@@ -6205,7 +6201,6 @@ class Agent:
                     tools=self.tools,
                     use_json_mode=self.use_json_mode,
                     monitoring=self.monitoring,
-                    telemetry=self.telemetry,
                     debug_mode=self.debug_mode,
                     debug_level=self.debug_level,
                     session_state=self.session_state,
@@ -6914,8 +6909,7 @@ class Agent:
     ###########################################################################
 
     def _log_agent_session(self, session_id: str, user_id: Optional[str] = None):
-        if not (self.telemetry or self.monitoring):
-            return
+            # return
 
         from jaygoga_orchestra.v2.api.agent import AgentSessionCreate, create_agent_session
 
@@ -6969,8 +6963,7 @@ class Agent:
     def _log_agent_run(self, session_id: str, user_id: Optional[str] = None) -> None:
         self.set_monitoring()
 
-        if not self.telemetry and not self.monitoring:
-            return
+            # return
 
         from jaygoga_orchestra.v2.api.agent import AgentRunCreate, create_agent_run
 
@@ -6997,8 +6990,7 @@ class Agent:
     async def _alog_agent_run(self, session_id: str, user_id: Optional[str] = None) -> None:
         self.set_monitoring()
 
-        if not self.telemetry and not self.monitoring:
-            return
+            # return
 
         from jaygoga_orchestra.v2.api.agent import AgentRunCreate, acreate_agent_run
 

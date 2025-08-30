@@ -13,7 +13,6 @@ from .base import BaseKnowledgeSource, Knowledge, KnowledgeStorage, InMemoryKnow
 
 logger = logging.getLogger(__name__)
 
-
 class RagTool(BaseTool):
     """
     RAG (Retrieval-Augmented Generation) tool for document processing and retrieval.

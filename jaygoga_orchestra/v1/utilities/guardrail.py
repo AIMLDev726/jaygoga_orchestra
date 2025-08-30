@@ -49,7 +49,6 @@ class GuardrailResult(BaseModel):
             error=data if not success else None
         )
 
-
 def process_guardrail(output: Any, guardrail: Callable, retry_count: int) -> GuardrailResult:
     """Process the guardrail for the agent output.
 
@@ -70,9 +69,9 @@ def process_guardrail(output: Any, guardrail: Callable, retry_count: int) -> Gua
         LLMGuardrailCompletedEvent,
         LLMGuardrailStartedEvent,
     )
-    from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+    from jaygoga_orchestra.v1.utilities.events import event_bus
 
-    jaygoga_orchestra.v1_event_bus.emit(
+    event_bus.emit(
         None,
         LLMGuardrailStartedEvent(
             guardrail=guardrail, retry_count=retry_count
@@ -82,7 +81,7 @@ def process_guardrail(output: Any, guardrail: Callable, retry_count: int) -> Gua
     result = guardrail(output)
     guardrail_result = GuardrailResult.from_tuple(result)
 
-    jaygoga_orchestra.v1_event_bus.emit(
+    event_bus.emit(
         None,
         LLMGuardrailCompletedEvent(
             success=guardrail_result.success,

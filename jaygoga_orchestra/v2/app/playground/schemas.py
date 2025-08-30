@@ -14,12 +14,10 @@ from jaygoga_orchestra.v2.memory.team import TeamMemory
 from jaygoga_orchestra.v2.memory.v2 import Memory
 from jaygoga_orchestra.v2.team import Team
 
-
 class AgentModel(BaseModel):
     name: Optional[str] = None
     model: Optional[str] = None
     provider: Optional[str] = None
-
 
 class AgentGetResponse(BaseModel):
     agent_id: Optional[str] = None
@@ -72,7 +70,6 @@ class AgentGetResponse(BaseModel):
             instructions=agent.instructions,
         )
 
-
 class AgentRunRequest(BaseModel):
     message: str
     agent_id: str
@@ -82,11 +79,9 @@ class AgentRunRequest(BaseModel):
     user_id: Optional[str] = None
     files: Optional[List[UploadFile]] = None
 
-
 class AgentRenameRequest(BaseModel):
     name: str
     user_id: str
-
 
 class AgentSessionsResponse(BaseModel):
     title: Optional[str] = None
@@ -94,16 +89,13 @@ class AgentSessionsResponse(BaseModel):
     session_name: Optional[str] = None
     created_at: Optional[int] = None
 
-
 class MemoryResponse(BaseModel):
     memory: str
     topics: Optional[List[str]] = None
     last_updated: Optional[datetime] = None
 
-
 class WorkflowRenameRequest(BaseModel):
     name: str
-
 
 class WorkflowRunRequest(BaseModel):
     input: Dict[str, Any]
@@ -111,13 +103,11 @@ class WorkflowRunRequest(BaseModel):
     session_id: Optional[str] = None
     stream: bool = True
 
-
 class WorkflowSessionResponse(BaseModel):
     title: Optional[str] = None
     session_id: Optional[str] = None
     session_name: Optional[str] = None
     created_at: Optional[int] = None
-
 
 class WorkflowGetResponse(BaseModel):
     workflow_id: str
@@ -126,18 +116,15 @@ class WorkflowGetResponse(BaseModel):
     parameters: Optional[Dict[str, Any]] = None
     storage: Optional[str] = None
 
-
 class WorkflowsGetResponse(BaseModel):
     workflow_id: str
     name: str
     description: Optional[str] = None
 
-
 class TeamModel(BaseModel):
     name: Optional[str] = None
     model: Optional[str] = None
     provider: Optional[str] = None
-
 
 class TeamGetResponse(BaseModel):
     team_id: Optional[str] = None
@@ -202,20 +189,17 @@ class TeamGetResponse(BaseModel):
             ],
         )
 
-
 class TeamRunRequest(BaseModel):
     input: Dict[str, Any]
     user_id: Optional[str] = None
     session_id: Optional[str] = None
     files: Optional[List[UploadFile]] = None
 
-
 class TeamSessionResponse(BaseModel):
     title: Optional[str] = None
     session_id: Optional[str] = None
     session_name: Optional[str] = None
     created_at: Optional[int] = None
-
 
 class TeamRenameRequest(BaseModel):
     name: str

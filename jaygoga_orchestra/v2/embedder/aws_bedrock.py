@@ -17,7 +17,6 @@ except ImportError:
     log_error("`boto3` not installed. Please install it via `pip install boto3`.")
     raise
 
-
 @dataclass
 class AwsBedrockEmbedder(Embedder):
     """

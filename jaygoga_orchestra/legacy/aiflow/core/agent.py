@@ -14,7 +14,6 @@ from ..providers.llm_providers import get_provider, LLMResponse
 from ..storage.memory import MemoryManager
 from ..tools.base_tool import BaseTool
 
-
 @dataclass
 class AgentConfig:
     """Configuration for Agent behavior."""
@@ -25,7 +24,6 @@ class AgentConfig:
     max_memory_context: int = 15000
     retry_attempts: int = 3
     retry_delay: float = 1.0
-
 
 class Agent:
     """

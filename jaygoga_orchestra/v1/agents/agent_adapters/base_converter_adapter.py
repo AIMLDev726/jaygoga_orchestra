@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from abc import ABC, abstractmethod
 
-
 class BaseConverterAdapter(ABC):
     """Base class for all converter adapters in Govinda.
 

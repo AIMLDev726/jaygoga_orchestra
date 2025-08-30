@@ -8,11 +8,9 @@ from typing import Any, List, Optional
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 @functools.lru_cache(maxsize=None)
 def warn() -> None:
     logger.warning("PythonTools can run arbitrary code, please provide human supervision.")
-
 
 class PythonTools(Toolkit):
     def __init__(

@@ -11,7 +11,6 @@ try:
 except ImportError:
     raise ImportError("`sentence-transformers` not installed, please run `pip install sentence-transformers`")
 
-
 class SentenceTransformerReranker(Reranker):
     model: str = "BAAI/bge-reranker-v2-m3"
     model_kwargs: Optional[Dict[str, Any]] = None

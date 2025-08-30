@@ -16,7 +16,6 @@ if TYPE_CHECKING:
     from jaygoga_orchestra.v1.team import Squad
     from jaygoga_orchestra.v1.task import Task
 
-
 class CrewAgentExecutorMixin:
     squad: "Squad"
     agent: "BaseAgent"
@@ -47,7 +46,7 @@ class CrewAgentExecutorMixin:
                         },
                     )
             except Exception as e:
-                console.print(f"Failed to add to short term memory: {e}")
+                print(f"Failed to add to short term memory: {e}")
                 pass
 
     def _create_external_memory(self, output) -> None:
@@ -68,7 +67,7 @@ class CrewAgentExecutorMixin:
                     },
                 )
             except Exception as e:
-                console.print(f"Failed to add to external memory: {e}")
+                print(f"Failed to add to external memory: {e}")
                 pass
 
     def _create_long_term_memory(self, output) -> None:
@@ -114,17 +113,17 @@ class CrewAgentExecutorMixin:
                 if entity_memories:
                     self.squad._entity_memory.save(entity_memories)
             except AttributeError as e:
-                console.print(f"Missing attributes for long term memory: {e}")
+                print(f"Missing attributes for long term memory: {e}")
                 pass
             except Exception as e:
-                console.print(f"Failed to add to long term memory: {e}")
+                print(f"Failed to add to long term memory: {e}")
                 pass
         elif (
             self.squad
             and self.squad._long_term_memory
             and self.squad._entity_memory is None
         ):
-            self._printer.console.print(
+            self._printer.print(
                 content="Long term memory is enabled, but entity memory is not enabled. Please configure entity memory or set memory=True to automatically enable it.",
                 color="bold_yellow",
             )
@@ -133,7 +132,7 @@ class CrewAgentExecutorMixin:
         """Prompt human input with mode-appropriate messaging."""
         event_listener.formatter.pause_live_updates()
         try:
-            self._printer.console.print(
+            self._printer.print(
                 content=f"\033[1m\033[95m ## Final Result:\033[00m \033[92m{final_answer}\033[00m"
             )
 
@@ -158,10 +157,10 @@ class CrewAgentExecutorMixin:
                     "=====\n"
                 )
 
-            self._printer.console.print(content=prompt, color="bold_yellow")
+            self._printer.print(content=prompt, color="bold_yellow")
             response = input()
             if response.strip() != "":
-                self._printer.console.print(
+                self._printer.print(
                     content="\nProcessing your feedback...", color="cyan"
                 )
             return response

@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`portkey-ai` not installed. Please install using `pip install portkey-ai`")
 
-
 @dataclass
 class Portkey(OpenAILike):
     """

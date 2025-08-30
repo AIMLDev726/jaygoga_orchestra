@@ -2,12 +2,10 @@ from rich.console import Console
 console = Console()
 from enum import Enum
 
-
 class VectorIndex(Enum):
     HNSW = "hnsw"
     FLAT = "flat"
     DYNAMIC = "dynamic"
-
 
 class Distance(Enum):
     COSINE = "cosine"

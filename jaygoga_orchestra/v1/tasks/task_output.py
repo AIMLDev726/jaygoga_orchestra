@@ -7,7 +7,6 @@ from pydantic import BaseModel, Field, model_validator
 
 from jaygoga_orchestra.v1.tasks.output_format import OutputFormat
 
-
 class TaskOutput(BaseModel):
     """Class that represents the result of a task."""
 

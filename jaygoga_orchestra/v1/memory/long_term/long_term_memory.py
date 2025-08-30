@@ -5,7 +5,7 @@ import time
 
 from jaygoga_orchestra.v1.memory.long_term.long_term_memory_item import LongTermMemoryItem
 from jaygoga_orchestra.v1.memory.memory import Memory
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemoryQueryStartedEvent,
     MemoryQueryCompletedEvent,
@@ -15,7 +15,6 @@ from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemorySaveFailedEvent,
 )
 from jaygoga_orchestra.v1.memory.storage.ltm_sqlite_storage import LTMSQLiteStorage
-
 
 class LongTermMemory(Memory):
     """
@@ -32,7 +31,7 @@ class LongTermMemory(Memory):
         super().__init__(storage=storage)
 
     def save(self, item: LongTermMemoryItem) -> None:  # type: ignore # BUG?: Signature of "save" incompatible with supertype "Memory"
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemorySaveStartedEvent(
                 value=item.task,
@@ -57,7 +56,7 @@ class LongTermMemory(Memory):
                 datetime=item.datetime,
             )
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveCompletedEvent(
                     value=item.task,
@@ -70,7 +69,7 @@ class LongTermMemory(Memory):
                 ),
             )
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveFailedEvent(
                     value=item.task,
@@ -87,7 +86,7 @@ class LongTermMemory(Memory):
         task: str,
         latest_n: int = 3,
     ) -> List[Dict[str, Any]]:  # type: ignore # signature of "search" incompatible with supertype "Memory"
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemoryQueryStartedEvent(
                 query=task,
@@ -102,7 +101,7 @@ class LongTermMemory(Memory):
         try:
             results = self.storage.load(task, latest_n)  # type: ignore # BUG?: "Storage" has no attribute "load"
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryCompletedEvent(
                     query=task,
@@ -117,7 +116,7 @@ class LongTermMemory(Memory):
 
             return results
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryFailedEvent(
                     query=task,

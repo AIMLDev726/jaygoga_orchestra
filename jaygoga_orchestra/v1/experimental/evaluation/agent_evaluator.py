@@ -10,7 +10,7 @@ from jaygoga_orchestra.v1.experimental.evaluation.evaluation_display import Eval
 from jaygoga_orchestra.v1.utilities.events.agent_events import AgentEvaluationStartedEvent, AgentEvaluationCompletedEvent, AgentEvaluationFailedEvent
 from jaygoga_orchestra.v1.experimental.evaluation import BaseEvaluator, create_evaluation_callbacks
 from collections.abc import Sequence
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.utils.console_formatter import ConsoleFormatter
 from jaygoga_orchestra.v1.utilities.events.task_events import TaskCompletedEvent
 from jaygoga_orchestra.v1.utilities.events.agent_events import LiteAgentExecutionCompletedEvent
@@ -54,8 +54,8 @@ class AgentEvaluator:
 
     def _subscribe_to_events(self) -> None:
         from typing import cast
-        jaygoga_orchestra.v1_event_bus.register_handler(TaskCompletedEvent, cast(Any, self._handle_task_completed))
-        jaygoga_orchestra.v1_event_bus.register_handler(LiteAgentExecutionCompletedEvent, cast(Any, self._handle_lite_agent_completed))
+        event_bus.register_handler(TaskCompletedEvent, cast(Any, self._handle_task_completed))
+        event_bus.register_handler(LiteAgentExecutionCompletedEvent, cast(Any, self._handle_lite_agent_completed))
 
     def _handle_task_completed(self, source: Any, event: TaskCompletedEvent) -> None:
         assert event.task is not None
@@ -147,7 +147,7 @@ class AgentEvaluator:
 
     def get_agent_evaluation(self, strategy: AggregationStrategy = AggregationStrategy.SIMPLE_AVERAGE, include_evaluation_feedback: bool = True) -> dict[str, AgentAggregatedEvaluationResult]:
         agent_results = {}
-        with jaygoga_orchestra.v1_event_bus.scoped_handlers():
+        with event_bus.scoped_handlers():
             task_results = self.get_evaluation_results()
             for agent_role, results in task_results.items():
                 if not results:
@@ -163,7 +163,6 @@ class AgentEvaluator:
                 )
 
                 agent_results[agent_role] = aggregated_result
-
 
             if self._execution_state.iterations_results and self._execution_state.iteration == max(self._execution_state.iterations_results.keys(), default=0):
                 self.display_results_with_iterations()
@@ -204,24 +203,24 @@ class AgentEvaluator:
                 self.emit_evaluation_completed_event(agent_role=agent.role, agent_id=str(agent.id), task_id=task_id, metric_category=evaluator.metric_category, score=score)
             except Exception as e:
                 self.emit_evaluation_failed_event(agent_role=agent.role, agent_id=str(agent.id), task_id=task_id, error=str(e))
-                self.console_formatter.console.print(f"Error in {evaluator.metric_category.value} evaluator: {str(e)}")
+                self.console_formatter.print(f"Error in {evaluator.metric_category.value} evaluator: {str(e)}")
 
         return result
 
     def emit_evaluation_started_event(self, agent_role: str, agent_id: str, task_id: str | None = None):
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             AgentEvaluationStartedEvent(agent_role=agent_role, agent_id=agent_id, task_id=task_id, iteration=self._execution_state.iteration)
         )
 
     def emit_evaluation_completed_event(self, agent_role: str, agent_id: str, task_id: str | None = None, metric_category: MetricCategory | None = None, score: EvaluationScore | None = None):
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             AgentEvaluationCompletedEvent(agent_role=agent_role, agent_id=agent_id, task_id=task_id, iteration=self._execution_state.iteration, metric_category=metric_category, score=score)
         )
 
     def emit_evaluation_failed_event(self, agent_role: str, agent_id: str, error: str, task_id: str | None = None):
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             AgentEvaluationFailedEvent(agent_role=agent_role, agent_id=agent_id, task_id=task_id, iteration=self._execution_state.iteration, error=error)
         )

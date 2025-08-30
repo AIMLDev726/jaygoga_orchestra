@@ -7,7 +7,6 @@ from jaygoga_orchestra.v1.agents.agent_adapters.base_converter_adapter import Ba
 from jaygoga_orchestra.v1.utilities.converter import generate_model_description
 from jaygoga_orchestra.v1.utilities.i18n import I18N
 
-
 class OpenAIConverterAdapter(BaseConverterAdapter):
     """
     Adapter for handling structured output conversion in OpenAI agents.

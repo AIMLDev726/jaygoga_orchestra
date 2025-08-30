@@ -14,7 +14,7 @@ import tomli
 from packaging import version
 
 from jaygoga_orchestra.v1.cli.utils import read_toml
-from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra.v1_version
+from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra_v1_version
 from jaygoga_orchestra.v1.team import Squad
 from jaygoga_orchestra.v1.llm import LLM, BaseLLM
 from jaygoga_orchestra.v1.types.crew_chat import ChatInputField, ChatInputs
@@ -22,15 +22,14 @@ from jaygoga_orchestra.v1.utilities.llm_utils import create_llm
 
 MIN_REQUIRED_VERSION = "0.98.0"
 
-
 def check_conversational_crews_version(
-    jaygoga_orchestra.v1_version: str, pyproject_data: dict
+    jaygoga_orchestra_v1_version: str, pyproject_data: dict
 ) -> bool:
     """
     Check if the installed crewAI version supports conversational crews.
 
     Args:
-        jaygoga_orchestra.v1_version: The current version of crewAI.
+        jaygoga_orchestra_v1_version: The current version of crewAI.
         pyproject_data: Dictionary containing pyproject.toml data.
 
     Returns:
@@ -49,14 +48,13 @@ def check_conversational_crews_version(
         return False
     return True
 
-
 def run_chat():
     """
     Runs an interactive chat loop using the Squad's chat LLM with function calling.
     Incorporates crew_name, crew_description, and input fields to build a tool schema.
     Exits if crew_name or crew_description are missing.
     """
-    jaygoga_orchestra.v1_version = get_jaygoga_orchestra.v1_version()
+    jaygoga_orchestra.v1_version = get_jaygoga_orchestra_v1_version()
     pyproject_data = read_toml()
 
     if not check_conversational_crews_version(jaygoga_orchestra.v1_version, pyproject_data):
@@ -109,14 +107,12 @@ def run_chat():
 
     chat_loop(chat_llm, messages, crew_tool_schema, available_functions)
 
-
 def show_loading(event: threading.Event):
     """Display animated loading dots while processing."""
     while not event.is_set():
-        console.print(".", end="", flush=True)
+        print(".", end="", flush=True)
         time.sleep(1)
-    console.print()
-
+    print()
 
 def initialize_chat_llm(squad: Squad) -> Optional[LLM | BaseLLM]:
     """Initializes the chat LLM and handles exceptions."""
@@ -128,7 +124,6 @@ def initialize_chat_llm(squad: Squad) -> Optional[LLM | BaseLLM]:
             fg="red",
         )
         return None
-
 
 def build_system_message(crew_chat_inputs: ChatInputs) -> str:
     """Builds the initial system message for the chat."""
@@ -158,7 +153,6 @@ def build_system_message(crew_chat_inputs: ChatInputs) -> str:
         f"\nCrew Description: {crew_chat_inputs.crew_description}"
     )
 
-
 def create_tool_function(squad: Squad, messages: List[Dict[str, str]]) -> Any:
     """Creates a wrapper function for running the squad tool with messages."""
 
@@ -166,7 +160,6 @@ def create_tool_function(squad: Squad, messages: List[Dict[str, str]]) -> Any:
         return run_crew_tool(squad, messages, **kwargs)
 
     return run_crew_tool_with_messages
-
 
 def flush_input():
     """Flush any pending input from the user."""
@@ -181,7 +174,6 @@ def flush_input():
         import termios
 
         termios.tcflush(sys.stdin, termios.TCIFLUSH)
-
 
 def chat_loop(chat_llm, messages, crew_tool_schema, available_functions):
     """Main chat loop for interacting with the user."""
@@ -202,7 +194,6 @@ def chat_loop(chat_llm, messages, crew_tool_schema, available_functions):
             click.secho(f"An error occurred: {e}", fg="red")
             break
 
-
 def get_user_input() -> str:
     """Collect multi-line user input with exit handling."""
     click.secho(
@@ -218,7 +209,6 @@ def get_user_input() -> str:
             break
         user_input_lines.append(line)
     return "\n".join(user_input_lines)
-
 
 def handle_user_input(
     user_input: str,
@@ -251,7 +241,6 @@ def handle_user_input(
     messages.append({"role": "assistant", "content": final_response})
     click.secho(f"\nAssistant: {final_response}\n", fg="green")
 
-
 def generate_crew_tool_schema(crew_inputs: ChatInputs) -> dict:
     """
     Dynamically build a Littellm 'function' schema for the given squad.
@@ -281,7 +270,6 @@ def generate_crew_tool_schema(crew_inputs: ChatInputs) -> dict:
             },
         },
     }
-
 
 def run_crew_tool(squad: Squad, messages: List[Dict[str, str]], **kwargs):
     """
@@ -314,7 +302,6 @@ def run_crew_tool(squad: Squad, messages: List[Dict[str, str]], **kwargs):
         click.secho("An error occurred while running the squad:", fg="red")
         click.secho(str(e), fg="red")
         sys.exit(1)
-
 
 def load_crew_and_name() -> Tuple[Squad, str]:
     """
@@ -367,7 +354,6 @@ def load_crew_and_name() -> Tuple[Squad, str]:
     crew_instance = crew_class().squad()
     return crew_instance, crew_class_name
 
-
 def generate_crew_chat_inputs(squad: Squad, crew_name: str, chat_llm) -> ChatInputs:
     """
     Generates the ChatInputs required for the squad by analyzing the tasks and agents.
@@ -396,7 +382,6 @@ def generate_crew_chat_inputs(squad: Squad, crew_name: str, chat_llm) -> ChatInp
         crew_name=crew_name, crew_description=crew_description, inputs=input_fields
     )
 
-
 def fetch_required_inputs(squad: Squad) -> Set[str]:
     """
     Extracts placeholders from the squad's tasks and agents.
@@ -421,7 +406,6 @@ def fetch_required_inputs(squad: Squad) -> Set[str]:
         required_inputs.update(placeholder_pattern.findall(text))
 
     return required_inputs
-
 
 def generate_input_description_with_ai(input_name: str, squad: Squad, chat_llm) -> str:
     """
@@ -484,7 +468,6 @@ def generate_input_description_with_ai(input_name: str, squad: Squad, chat_llm) 
     description = response.strip()
 
     return description
-
 
 def generate_crew_description_with_ai(squad: Squad, chat_llm) -> str:
     """

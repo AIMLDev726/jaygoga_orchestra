@@ -4,7 +4,6 @@ import os
 
 from jaygoga_orchestra.v1.utilities.file_handler import PickleHandler
 
-
 class CrewTrainingHandler(PickleHandler):
     def save_trained_data(self, agent_id: str, trained_data: dict) -> None:
         """

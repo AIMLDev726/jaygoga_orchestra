@@ -8,7 +8,6 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from jaygoga_orchestra.v1.knowledge.storage.knowledge_storage import KnowledgeStorage
 
-
 class BaseKnowledgeSource(BaseModel, ABC):
     """Abstract base class for knowledge sources."""
 

@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`openbb` not installed. Please install using `pip install 'openbb'`.")
 
-
 class OpenBBTools(Toolkit):
     def __init__(
         self,

@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.document.reader.s3.text_reader import S3TextReader
 from jaygoga_orchestra.v2.knowledge.s3.base import S3KnowledgeBase
 
-
 class S3TextKnowledgeBase(S3KnowledgeBase):
     formats: List[str] = [".doc", ".docx"]
     reader: S3TextReader = S3TextReader()

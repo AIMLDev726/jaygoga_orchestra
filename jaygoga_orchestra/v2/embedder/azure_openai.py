@@ -15,7 +15,6 @@ try:
 except ImportError:
     raise ImportError("`openai` not installed")
 
-
 @dataclass
 class AzureOpenAIEmbedder(Embedder):
     id: str = "text-embedding-3-small"  # This has to match the model that you deployed at the provided URL

@@ -13,7 +13,6 @@ from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.tools.function import Function
 from jaygoga_orchestra.v2.utils.log import log_debug, log_error, log_warning
 
-
 @dataclass
 class MemoryManager:
     """Model for Memory Manager"""

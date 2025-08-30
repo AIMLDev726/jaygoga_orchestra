@@ -16,7 +16,6 @@ try:
 except ImportError:
     raise ImportError("`pycountry` not installed. Please install using `pip install pycountry`")
 
-
 class GoogleSearchTools(Toolkit):
     """
     GoogleSearch is a Python library for searching Google easily.

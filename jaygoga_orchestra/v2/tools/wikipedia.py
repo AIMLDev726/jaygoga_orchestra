@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.knowledge.wikipedia import WikipediaKnowledgeBase
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info
 
-
 class WikipediaTools(Toolkit):
     def __init__(self, knowledge_base: Optional[WikipediaKnowledgeBase] = None, **kwargs):
         tools = []

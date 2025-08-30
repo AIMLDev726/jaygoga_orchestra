@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.team.team import Team
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_error
 
-
 class ReasoningTools(Toolkit):
     def __init__(
         self,

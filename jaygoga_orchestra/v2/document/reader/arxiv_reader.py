@@ -11,7 +11,6 @@ try:
 except ImportError:
     raise ImportError("The `arxiv` package is not installed. Please install it via `pip install arxiv`.")
 
-
 class ArxivReader(Reader):
     max_results: int = 5  # Top articles
     sort_by: arxiv.SortCriterion = arxiv.SortCriterion.Relevance

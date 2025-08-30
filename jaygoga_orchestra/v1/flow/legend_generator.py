@@ -26,7 +26,6 @@ def get_legend_items(colors):
         },
     ]
 
-
 def generate_legend_items_html(legend_items):
     legend_items_html = ""
     for item in legend_items:

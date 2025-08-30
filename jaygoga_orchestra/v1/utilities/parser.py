@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 import re
 
-
 class YamlParser:
     @staticmethod
     def parse(file):

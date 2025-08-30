@@ -19,7 +19,6 @@ from jaygoga_orchestra.v2.vectordb.base import VectorDb
 from jaygoga_orchestra.v2.vectordb.distance import Distance
 from jaygoga_orchestra.v2.vectordb.search import SearchType
 
-
 class LanceDb(VectorDb):
     """
     LanceDb class for managing vector operations with LanceDb

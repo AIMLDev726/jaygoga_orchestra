@@ -3,7 +3,6 @@ console = Console()
 import re
 from typing import Any, Dict, List, Optional, Union
 
-
 def interpolate_only(
     input_string: Optional[str],
     inputs: Dict[str, Union[str, int, float, Dict[str, Any], List[Any]]],

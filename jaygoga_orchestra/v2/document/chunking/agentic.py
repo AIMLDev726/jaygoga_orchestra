@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.models.base import Model
 from jaygoga_orchestra.v2.models.defaults import DEFAULT_OPENAI_MODEL_ID
 from jaygoga_orchestra.v2.models.message import Message
 
-
 class AgenticChunking(ChunkingStrategy):
     """Chunking strategy that uses an LLM to determine natural breakpoints in the text"""
 

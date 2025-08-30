@@ -9,7 +9,6 @@ from pydantic import BaseModel, Field, HttpUrl
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class JinaReaderToolsConfig(BaseModel):
     api_key: Optional[str] = Field(None, description="API key for Jina Reader")
     base_url: HttpUrl = Field("https://r.jina.ai/", description="Base URL for Jina Reader API")  # type: ignore
@@ -17,7 +16,6 @@ class JinaReaderToolsConfig(BaseModel):
     max_content_length: int = Field(10000, description="Maximum content length in characters")
     timeout: Optional[int] = Field(None, description="Timeout for Jina Reader API requests")
     search_query_content: Optional[bool] = Field(False, description="Toggle full URL content in query search result")
-
 
 class JinaReaderTools(Toolkit):
     def __init__(

@@ -18,7 +18,6 @@ try:
 except ImportError:
     raise ImportError("`replicate` not installed. Please install using `pip install replicate`.")
 
-
 class ReplicateTools(Toolkit):
     def __init__(
         self,

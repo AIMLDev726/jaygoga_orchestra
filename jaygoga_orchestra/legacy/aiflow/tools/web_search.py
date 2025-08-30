@@ -12,7 +12,6 @@ from typing import Dict, Any, List, Optional
 from urllib.parse import quote_plus
 from .base_tool import BaseTool
 
-
 class WebSearchTool(BaseTool):
     """
     Web search tool that provides agents with real-time web search capabilities.
@@ -208,8 +207,6 @@ class WebSearchTool(BaseTool):
                 else:
                     return []
 
-
-    
     async def _search_bing(self, query: str) -> List[Dict[str, Any]]:
         """Search using Bing Web Search API (requires API key)."""
         # This would require a Bing API key

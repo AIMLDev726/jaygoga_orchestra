@@ -12,7 +12,6 @@ from jaygoga_orchestra.v2.models.response import ToolExecution
 from jaygoga_orchestra.v2.reasoning.step import ReasoningStep
 from jaygoga_orchestra.v2.utils.log import log_error
 
-
 @dataclass
 class BaseRunResponseEvent:
     def to_dict(self) -> Dict[str, Any]:
@@ -159,7 +158,6 @@ class BaseRunResponseEvent:
     def is_cancelled(self):
         return False
 
-
 @dataclass
 class RunResponseExtraData:
     references: Optional[List[MessageReferences]] = None
@@ -203,7 +201,6 @@ class RunResponseExtraData:
             reasoning_messages=reasoning_messages,
             references=references,
         )
-
 
 class RunStatus(str, Enum):
     """State of the main run response"""

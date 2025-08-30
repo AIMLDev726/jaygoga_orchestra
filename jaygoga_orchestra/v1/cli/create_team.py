@@ -14,7 +14,6 @@ from jaygoga_orchestra.v1.cli.provider import (
 )
 from jaygoga_orchestra.v1.cli.utils import copy_template, load_env_vars, write_env_file
 
-
 def create_folder_structure(name, parent_folder=None):
     import keyword
     import re
@@ -91,7 +90,6 @@ def create_folder_structure(name, parent_folder=None):
 
     return folder_path, folder_name, class_name
 
-
 def copy_template_files(folder_path, name, class_name, parent_folder):
     package_dir = Path(__file__).parent
     templates_dir = package_dir / "templates" / "squad"
@@ -131,7 +129,6 @@ def copy_template_files(folder_path, name, class_name, parent_folder):
             src_file = templates_dir / file_name
             dst_file = src_folder / file_name
             copy_template(src_file, dst_file, name, class_name, folder_path.name)
-
 
 def create_crew(name, provider=None, skip_provider=False, parent_folder=None):
     folder_path, folder_name, class_name = create_folder_structure(name, parent_folder)

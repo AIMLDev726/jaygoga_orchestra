@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
@@ -17,7 +18,6 @@ from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.run.response import RunResponse
 from jaygoga_orchestra.v2.run.team import TeamRunResponse
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, log_warning
-
 
 @dataclass
 class TeamRun:
@@ -44,20 +44,17 @@ class TeamRun:
         response = TeamRunResponse.from_dict(data.get("response", {})) if data.get("response") else None
         return cls(message=message, member_runs=member_runs, response=response)
 
-
 @dataclass
 class TeamMemberInteraction:
     member_name: str
     task: str
     response: RunResponse
 
-
 @dataclass
 class TeamContext:
     # List of team member interaction, represented as a request and a response
     member_interactions: List[TeamMemberInteraction] = field(default_factory=list)
     text: Optional[str] = None
-
 
 @dataclass
 class TeamMemory:

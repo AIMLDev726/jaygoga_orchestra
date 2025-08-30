@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`bigquery` not installed. Please install using `pip install google-cloud-bigquery`")
 
-
 class GoogleBigQueryTools(Toolkit):
     def __init__(
         self,

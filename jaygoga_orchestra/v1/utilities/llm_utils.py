@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional, Union
 from jaygoga_orchestra.v1.cli.constants import DEFAULT_LLM_MODEL, ENV_VARS, LITELLM_PARAMS
 from jaygoga_orchestra.v1.llm import LLM, BaseLLM
 
-
 def create_llm(
     llm_value: Union[str, LLM, Any, None] = None,
 ) -> Optional[LLM | BaseLLM]:
@@ -34,7 +33,7 @@ def create_llm(
             created_llm = LLM(model=llm_value)
             return created_llm
         except Exception as e:
-            console.print(f"Failed to instantiate LLM with model='{llm_value}': {e}")
+            print(f"Failed to instantiate LLM with model='{llm_value}': {e}")
             return None
 
     # 3) If llm_value is None, parse environment variables or use default
@@ -70,9 +69,8 @@ def create_llm(
         )
         return created_llm
     except Exception as e:
-        console.print(f"Error instantiating LLM from unknown object type: {e}")
+        print(f"Error instantiating LLM from unknown object type: {e}")
         return None
-
 
 def _llm_via_environment_or_fallback() -> Optional[LLM]:
     """
@@ -169,7 +167,7 @@ def _llm_via_environment_or_fallback() -> Optional[LLM]:
                             if key not in ["prompt", "key_name", "default"]:
                                 llm_params[key.lower()] = value
                 else:
-                    console.print(
+                    print(
                         f"Expected env_var to be a dictionary, but got {type(env_var)}"
                     )
 
@@ -181,11 +179,10 @@ def _llm_via_environment_or_fallback() -> Optional[LLM]:
         new_llm = LLM(**llm_params)
         return new_llm
     except Exception as e:
-        console.print(
+        print(
             f"Error instantiating LLM from environment/fallback: {type(e).__name__}: {e}"
         )
         return None
-
 
 def _normalize_key_name(key_name: str) -> str:
     """

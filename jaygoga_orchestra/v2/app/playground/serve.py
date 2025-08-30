@@ -9,9 +9,8 @@ from rich.panel import Panel
 
 from jaygoga_orchestra.v2.api.playground import PlaygroundEndpointCreate, create_playground_endpoint
 from jaygoga_orchestra.v2.cli.console import console
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 def serve_playground_app(
     app: Union[str, FastAPI],
@@ -41,7 +40,7 @@ def serve_playground_app(
     encoded_endpoint = quote(f"{host}:{port}")
 
     # Create a panel with the playground URL
-    url = f"{jaygoga_orchestra.v2_cli_settings.playground_url}?endpoint={encoded_endpoint}"
+    url = f"{jaygoga_orchestra_v2_cli_settings.playground_url}?endpoint={encoded_endpoint}"
     panel = Panel(
         f"[bold green]Playground URL:[/bold green] [link={url}]{url}[/link]",
         title="Agent Playground",
@@ -52,6 +51,6 @@ def serve_playground_app(
     )
 
     # Print the panel
-    console.console.print(panel)
+    print(panel)
 
     uvicorn.run(app=app, host=host, port=port, reload=reload, **kwargs)

@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`opencv-python` package not found. Please install it with `pip install opencv-python`")
 
-
 class OpenCVTools(Toolkit):
     """Tools for capturing images and videos from the webcam using OpenCV"""
 

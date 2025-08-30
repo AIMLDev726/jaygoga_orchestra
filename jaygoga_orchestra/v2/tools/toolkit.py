@@ -6,7 +6,6 @@ from typing import Any, Callable, Dict, List, Optional
 from jaygoga_orchestra.v2.tools.function import Function
 from jaygoga_orchestra.v2.utils.log import log_debug, log_warning, logger
 
-
 class Toolkit:
     def __init__(
         self,

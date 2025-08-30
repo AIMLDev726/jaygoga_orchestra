@@ -4,7 +4,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.infra.app import ContainerContext, InfraApp, InfraResource  # noqa: F401
 
-
 class DbApp(InfraApp):
     db_user: Optional[str] = None
     db_password: Optional[str] = None

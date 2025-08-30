@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.app.base import BaseAPIApp
 from jaygoga_orchestra.v2.app.whatsapp.async_router import get_async_router
 from jaygoga_orchestra.v2.app.whatsapp.sync_router import get_sync_router
 
-
 class WhatsappAPI(BaseAPIApp):
     type = "whatsapp"
 

@@ -14,7 +14,6 @@ except ImportError:
         "The `llama-index-core` package is not installed. Please install it via `pip install llama-index-core`."
     )
 
-
 class LlamaIndexKnowledgeBase(AgentKnowledge):
     retriever: BaseRetriever
     loader: Optional[Callable] = None

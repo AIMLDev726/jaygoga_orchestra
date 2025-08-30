@@ -50,11 +50,10 @@ from jaygoga_orchestra.v1.utilities.events import (
     TaskFailedEvent,
     TaskStartedEvent,
 )
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.i18n import I18N
 from jaygoga_orchestra.v1.utilities.printer import Printer
 from jaygoga_orchestra.v1.utilities.string_utils import interpolate_only
-
 
 class Task(BaseModel):
     """Class that represents a task to be executed.
@@ -75,7 +74,7 @@ class Task(BaseModel):
         output_pydantic: Pydantic model for task output.
         security_config: Security configuration including fingerprinting.
         tools: List of tools/resources limited for task execution.
-        allow_jaygoga_orchestra.v1_trigger_context: Optional flag to control jaygoga_orchestra.v1_trigger_payload injection.
+        allow_jaygoga_orchestra_v1_trigger_context: Optional flag to control jaygoga_orchestra_v1_trigger_payload injection.
                               None (default): Auto-inject for first task only.
                               True: Always inject trigger payload for this task.
                               False: Never inject trigger payload, even for first task.
@@ -175,9 +174,9 @@ class Task(BaseModel):
     end_time: Optional[datetime.datetime] = Field(
         default=None, description="End time of the task execution"
     )
-    allow_jaygoga_orchestra.v1_trigger_context: Optional[bool] = Field(
+    allow_jaygoga_orchestra_v1_trigger_context: Optional[bool] = Field(
         default=None,
-        description="Whether this task should append 'Trigger Payload: {jaygoga_orchestra.v1_trigger_payload}' to the task description when jaygoga_orchestra.v1_trigger_payload exists in squad inputs.",
+        description="Whether this task should append 'Trigger Payload: {jaygoga_orchestra_v1_trigger_payload}' to the task description when jaygoga_orchestra_v1_trigger_payload exists in squad inputs.",
     )
     model_config = {"arbitrary_types_allowed": True}
 
@@ -444,7 +443,7 @@ class Task(BaseModel):
             tools = tools or self.tools or []
 
             self.processed_by_agents.add(agent.role)
-            jaygoga_orchestra.v1_event_bus.emit(self, TaskStartedEvent(context=context, task=self))
+            event_bus.emit(self, TaskStartedEvent(context=context, task=self))
             result = agent.execute_task(
                 task=self,
                 context=context,
@@ -482,7 +481,7 @@ class Task(BaseModel):
                         task_output=task_output.raw,
                     )
                     printer = Printer()
-                    printer.console.print(
+                    printer.print(
                         content=f"Guardrail blocked, retrying, due to: {guardrail_result.error}\n",
                         color="yellow",
                     )
@@ -522,13 +521,13 @@ class Task(BaseModel):
                     )
                 )
                 self._save_file(content)
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self, TaskCompletedEvent(output=task_output, task=self)
             )
             return task_output
         except Exception as e:
             self.end_time = datetime.datetime.now()
-            jaygoga_orchestra.v1_event_bus.emit(self, TaskFailedEvent(error=str(e), task=self))
+            event_bus.emit(self, TaskFailedEvent(error=str(e), task=self))
             raise e  # Re-raise the exception after emitting the event
 
     def _process_guardrail(self, task_output: TaskOutput) -> GuardrailResult:
@@ -538,9 +537,9 @@ class Task(BaseModel):
             LLMGuardrailCompletedEvent,
             LLMGuardrailStartedEvent,
         )
-        from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+        from jaygoga_orchestra.v1.utilities.events import event_bus
 
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             LLMGuardrailStartedEvent(
                 guardrail=self._guardrail, retry_count=self.retry_count
@@ -555,7 +554,7 @@ class Task(BaseModel):
                 success=False, result=None, error=f"Guardrail execution error: {str(e)}"
             )
 
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             LLMGuardrailCompletedEvent(
                 success=guardrail_result.success,
@@ -578,12 +577,12 @@ class Task(BaseModel):
         """
         description = self.description
 
-        should_inject = self.allow_jaygoga_orchestra.v1_trigger_context
+        should_inject = self.allow_jaygoga_orchestra_v1_trigger_context
 
         if should_inject and self.agent:
             squad = getattr(self.agent, "squad", None)
             if squad and hasattr(squad, "_inputs") and squad._inputs:
-                trigger_payload = squad._inputs.get("jaygoga_orchestra.v1_trigger_payload")
+                trigger_payload = squad._inputs.get("jaygoga_orchestra_v1_trigger_payload")
                 if trigger_payload is not None:
                     description += f"\n\nTrigger Payload: {trigger_payload}"
 
@@ -667,7 +666,7 @@ Follow these guidelines:
             try:
                 crew_chat_messages = json.loads(crew_chat_messages_json)
             except json.JSONDecodeError as e:
-                console.print("An error occurred while parsing squad chat messages:", e)
+                print("An error occurred while parsing squad chat messages:", e)
                 raise
 
             conversation_history = "\n".join(
@@ -823,7 +822,7 @@ Follow these guidelines:
         return f"Task(description={self.description}, expected_output={self.expected_output})"
 
     @property
-    def fingerconsole.print(self) -> Fingerprint:
+    def fingerprint(self) -> Fingerprint:
         """Get the fingerprint of the task.
 
         Returns:

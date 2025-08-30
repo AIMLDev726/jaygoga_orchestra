@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.run.v2.workflow import WorkflowRunResponse, WorkflowRu
 from jaygoga_orchestra.v2.utils.log import logger
 from jaygoga_orchestra.v2.utils.timer import Timer
 
-
 def pprint_run_response(
     run_response: Union[
         RunResponse,
@@ -57,7 +56,7 @@ def pprint_run_response(
 
         table = Table(box=ROUNDED, border_style="blue", show_header=False)
         table.add_row(single_response_content)
-        console.console.print(table)
+        print(table)
     else:
         streaming_response_content: str = ""
         with Live(console=console) as live_log:
@@ -93,7 +92,6 @@ def pprint_run_response(
                     table.add_row(formatted_response)  # type: ignore
                 live_log.update(table)
             response_timer.stop()
-
 
 async def apprint_run_response(
     run_response: Union[
@@ -140,7 +138,7 @@ async def apprint_run_response(
 
         table = Table(box=ROUNDED, border_style="blue", show_header=False)
         table.add_row(single_response_content)
-        console.console.print(table)
+        print(table)
     else:
         streaming_response_content: str = ""
         with Live(console=console) as live_log:

@@ -9,7 +9,6 @@ import httpx
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 class PubmedTools(Toolkit):
     def __init__(
         self,

@@ -3,7 +3,6 @@ console = Console()
 import subprocess
 from functools import lru_cache
 
-
 class Repository:
     def __init__(self, path="."):
         self.path = path

@@ -11,12 +11,10 @@ from jaygoga_orchestra.v2.document.reader.pdf_reader import PDFImageReader, PDFR
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_error, log_info, logger
 
-
 class PDFConfig(TypedDict, total=False):
     path: str
     password: Optional[str]
     metadata: Optional[Dict[str, Any]]
-
 
 class PDFKnowledgeBase(AgentKnowledge):
     path: Optional[Union[str, Path, List[PDFConfig]]] = None

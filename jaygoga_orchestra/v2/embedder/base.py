@@ -3,7 +3,6 @@ console = Console()
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Tuple
 
-
 @dataclass
 class Embedder:
     """Base class for managing embedders"""

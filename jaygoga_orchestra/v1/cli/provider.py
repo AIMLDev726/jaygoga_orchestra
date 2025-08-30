@@ -12,7 +12,6 @@ import requests
 
 from jaygoga_orchestra.v1.cli.constants import JSON_URL, MODELS, PROVIDERS
 
-
 def select_choice(prompt_message, choices):
     """
     Presents a list of choices to the user and prompts them to select one.
@@ -53,7 +52,6 @@ def select_choice(prompt_message, choices):
             fg="red",
         )
 
-
 def select_provider(provider_models):
     """
     Presents a list of providers to the user and prompts them to select one.
@@ -81,7 +79,6 @@ def select_provider(provider_models):
 
     return provider.lower() if provider else False
 
-
 def select_model(provider, provider_models):
     """
     Presents a list of models for a given provider to the user and prompts them to select one.
@@ -108,7 +105,6 @@ def select_model(provider, provider_models):
         f"Select a model to use for {provider.capitalize()}:", available_models
     )
     return selected_model
-
 
 def load_provider_data(cache_file, cache_expiry):
     """
@@ -139,7 +135,6 @@ def load_provider_data(cache_file, cache_expiry):
         )
     return fetch_provider_data(cache_file)
 
-
 def read_cache_file(cache_file):
     """
     Reads and returns the JSON content from a cache file. Returns None if the file contains invalid JSON.
@@ -155,7 +150,6 @@ def read_cache_file(cache_file):
             return json.load(f)
     except json.JSONDecodeError:
         return None
-
 
 def fetch_provider_data(cache_file):
     """
@@ -182,7 +176,6 @@ def fetch_provider_data(cache_file):
         click.secho("Error parsing provider data. Invalid JSON format.", fg="red")
     return None
 
-
 def download_data(response):
     """
     Downloads data from a given HTTP response and returns the JSON content.
@@ -205,7 +198,6 @@ def download_data(response):
                 progress_bar.update(len(chunk))
     data_content = b"".join(data_chunks)
     return json.loads(data_content.decode("utf-8"))
-
 
 def get_provider_data():
     """

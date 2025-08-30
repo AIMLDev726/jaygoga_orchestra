@@ -77,9 +77,9 @@ class ConversationAgent:
                 await self.process_user_message(user_input)
                 
             except KeyboardInterrupt:
-                self.console.print("\n[yellow]💡 Use '/exit' to end conversation gracefully.[/yellow]")
+                self.print("\n[yellow]💡 Use '/exit' to end conversation gracefully.[/yellow]")
             except Exception as e:
-                self.console.print(f"[red]❌ Error: {e}[/red]")
+                self.print(f"[red]❌ Error: {e}[/red]")
     
     def show_conversation_header(self):
         """Display beautiful conversation header."""
@@ -91,8 +91,8 @@ class ConversationAgent:
             border_style="bright_blue",
             padding=(1, 2)
         )
-        self.console.print(header)
-        self.console.print()
+        self.print(header)
+        self.print()
     
     def show_agent_introduction(self):
         """Show agent introduction."""
@@ -107,8 +107,8 @@ class ConversationAgent:
                 border_style="green",
                 padding=(1, 2)
             )
-            self.console.print(intro_panel)
-            self.console.print()
+            self.print(intro_panel)
+            self.print()
     
     async def get_user_input(self) -> str:
         """Get user input with beautiful prompt."""
@@ -142,8 +142,8 @@ class ConversationAgent:
         elif cmd == '/history':
             self.show_conversation_history()
         else:
-            self.console.print(f"[red]Unknown command: {cmd}[/red]")
-            self.console.print("[dim]Type '/help' for available commands.[/dim]")
+            self.print(f"[red]Unknown command: {cmd}[/red]")
+            self.print("[dim]Type '/help' for available commands.[/dim]")
     
     async def process_user_message(self, user_input: str):
         """Process user message and generate AI response."""
@@ -229,8 +229,8 @@ class ConversationAgent:
             border_style="cyan",
             padding=(1, 2)
         )
-        self.console.print(response_panel)
-        self.console.print()
+        self.print(response_panel)
+        self.print()
     
     def show_help(self):
         """Show conversation help."""
@@ -246,13 +246,13 @@ class ConversationAgent:
         help_table.add_row("/history", "Show conversation history")
         help_table.add_row("/exit", "End conversation")
         
-        self.console.print(help_table)
-        self.console.print()
+        self.print(help_table)
+        self.print()
     
     async def show_memory_status(self):
         """Show memory system status."""
         if not self.memory_manager:
-            self.console.print("[yellow]Memory system not initialized.[/yellow]")
+            self.print("[yellow]Memory system not initialized.[/yellow]")
             return
         
         # Get memory statistics
@@ -272,10 +272,10 @@ class ConversationAgent:
                 title="🧠 Memory System",
                 border_style="magenta"
             )
-            self.console.print(memory_panel)
+            self.print(memory_panel)
             
         except Exception as e:
-            self.console.print(f"[red]Error accessing memory: {e}[/red]")
+            self.print(f"[red]Error accessing memory: {e}[/red]")
     
     async def clear_conversation(self):
         """Clear conversation history."""
@@ -283,14 +283,14 @@ class ConversationAgent:
             self.conversation_history.clear()
             self.console.clear()
             self.show_conversation_header()
-            self.console.print("[green]✅ Conversation history cleared.[/green]")
+            self.print("[green]✅ Conversation history cleared.[/green]")
         else:
-            self.console.print("[dim]Conversation history kept.[/dim]")
+            self.print("[dim]Conversation history kept.[/dim]")
     
     async def save_conversation(self):
         """Save conversation to file."""
         if not self.conversation_history:
-            self.console.print("[yellow]No conversation to save.[/yellow]")
+            self.print("[yellow]No conversation to save.[/yellow]")
             return
         
         filename = f"conversation_{self.session_id}.json"
@@ -316,14 +316,14 @@ class ConversationAgent:
             with open(filename, 'w', encoding='utf-8') as f:
                 json.dump(conversation_data, f, indent=2, ensure_ascii=False)
             
-            self.console.print(f"[green]✅ Conversation saved to: {filename}[/green]")
+            self.print(f"[green]✅ Conversation saved to: {filename}[/green]")
         except Exception as e:
-            self.console.print(f"[red]❌ Error saving conversation: {e}[/red]")
+            self.print(f"[red]❌ Error saving conversation: {e}[/red]")
     
     async def show_agent_details(self):
         """Show detailed agent information."""
         if not self.current_agent:
-            self.console.print("[yellow]No agent loaded.[/yellow]")
+            self.print("[yellow]No agent loaded.[/yellow]")
             return
         
         agent_table = Table(title=f"🤖 {self.current_agent.name} Details")
@@ -335,12 +335,12 @@ class ConversationAgent:
         agent_table.add_row("Goal", self.current_agent.goal)
         agent_table.add_row("ID", self.current_agent.id)
         
-        self.console.print(agent_table)
+        self.print(agent_table)
     
     def show_conversation_history(self):
         """Show conversation history."""
         if not self.conversation_history:
-            self.console.print("[yellow]No conversation history.[/yellow]")
+            self.print("[yellow]No conversation history.[/yellow]")
             return
         
         history_panel = Panel(
@@ -350,7 +350,7 @@ class ConversationAgent:
             title="📜 History",
             border_style="blue"
         )
-        self.console.print(history_panel)
+        self.print(history_panel)
         
         # Show recent messages
         recent_messages = self.conversation_history[-5:] if len(self.conversation_history) > 5 else self.conversation_history
@@ -358,9 +358,9 @@ class ConversationAgent:
         for msg in recent_messages:
             timestamp = msg["timestamp"].strftime("%H:%M:%S")
             if msg["type"] == "user":
-                self.console.print(f"[dim]{timestamp}[/dim] [bold blue]You:[/bold blue] {msg['content'][:100]}...")
+                self.print(f"[dim]{timestamp}[/dim] [bold blue]You:[/bold blue] {msg['content'][:100]}...")
             else:
-                self.console.print(f"[dim]{timestamp}[/dim] [bold cyan]AI:[/bold cyan] {msg['content'][:100]}...")
+                self.print(f"[dim]{timestamp}[/dim] [bold cyan]AI:[/bold cyan] {msg['content'][:100]}...")
     
     async def end_conversation(self):
         """End conversation gracefully."""
@@ -382,15 +382,13 @@ class ConversationAgent:
             border_style="green",
             padding=(1, 2)
         )
-        self.console.print(Align.center(goodbye_panel))
-
+        self.print(Align.center(goodbye_panel))
 
 # Standalone conversation launcher
 async def start_conversation_mode(agent_config: Optional[Dict[str, Any]] = None):
     """Start a standalone conversation session."""
     conv_agent = ConversationAgent(agent_config)
     await conv_agent.start_conversation()
-
 
 if __name__ == "__main__":
     # Example usage

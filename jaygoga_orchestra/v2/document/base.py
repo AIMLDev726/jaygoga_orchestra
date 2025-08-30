@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional
 
 from jaygoga_orchestra.v2.embedder import Embedder
 
-
 @dataclass
 class Document:
     """Dataclass for managing a document"""

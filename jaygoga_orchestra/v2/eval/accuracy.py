@@ -19,11 +19,9 @@ from jaygoga_orchestra.v2.utils.log import logger, set_log_level_to_debug, set_l
 if TYPE_CHECKING:
     from rich.console import Console
 
-
 class AccuracyAgentResponse(BaseModel):
     accuracy_score: int = Field(..., description="Accuracy Score between 1 and 10 assigned to the Agent's answer.")
     accuracy_reason: str = Field(..., description="Detailed reasoning for the accuracy score.")
-
 
 @dataclass
 class AccuracyEvaluation:
@@ -55,8 +53,7 @@ class AccuracyEvaluation:
         results_table.add_row("Expected Output", self.expected_output)
         results_table.add_row("Accuracy Score", f"{str(self.score)}/10")
         results_table.add_row("Accuracy Reason", Markdown(self.reason))
-        console.console.print(results_table)
-
+        print(results_table)
 
 @dataclass
 class AccuracyResult:
@@ -103,7 +100,7 @@ class AccuracyResult:
         summary_table.add_row("Minimum Score", f"{self.min_score:.2f}")
         summary_table.add_row("Maximum Score", f"{self.max_score:.2f}")
         summary_table.add_row("Standard Deviation", f"{self.std_dev_score:.2f}")
-        console.console.print(summary_table)
+        print(summary_table)
 
     def print_results(self, console: Optional["Console"] = None):
         from rich.box import ROUNDED
@@ -127,8 +124,7 @@ class AccuracyResult:
             results_table.add_row("Expected Output", result.expected_output)
             results_table.add_row("Accuracy Score", f"{str(result.score)}/10")
             results_table.add_row("Accuracy Reason", result.reason)
-        console.console.print(results_table)
-
+        print(results_table)
 
 @dataclass
 class AccuracyEval:

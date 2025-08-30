@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from typing import Optional
 
-
 def remove_indent(s: Optional[str]) -> Optional[str]:
     """
     Remove the indent from a string.

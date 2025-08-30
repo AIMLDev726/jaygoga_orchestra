@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 """Core exceptions for RAG module."""
 
-
 class ClientMethodMismatchError(TypeError):
     """Raised when a method is called with the wrong client type.
 

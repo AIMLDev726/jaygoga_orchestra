@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.chunking.fixed import FixedSizeChunking
 from jaygoga_orchestra.v2.document.chunking.strategy import ChunkingStrategy
 
-
 @dataclass
 class Reader:
     """Base class for reading documents"""

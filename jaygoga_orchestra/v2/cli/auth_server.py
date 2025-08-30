@@ -5,8 +5,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Optional
 from urllib.parse import parse_qs, quote, urlparse
 
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
-
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 
 class CliAuthRequestHandler(BaseHTTPRequestHandler):
     """Request Handler to accept the CLI auth token after the web based auth flow.
@@ -141,9 +140,9 @@ class CliAuthRequestHandler(BaseHTTPRequestHandler):
 
     def _store_token(self, auth_token: str):
         """Store the given token in a temporary file."""
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.parent.mkdir(parents=True, exist_ok=True)
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.touch(exist_ok=True)
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.write_text(json.dumps({"AuthToken": auth_token}))
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.parent.mkdir(parents=True, exist_ok=True)
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.touch(exist_ok=True)
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.write_text(json.dumps({"AuthToken": auth_token}))
 
     def do_GET(self):
         """Redirect to the provided redirect_uri after storing the auth token."""
@@ -180,16 +179,15 @@ class CliAuthRequestHandler(BaseHTTPRequestHandler):
         # )
         # logger.debug("Data: {}".format(decoded_post_data))
         # logger.info("type: {}".format(type(post_data)))
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.parent.mkdir(parents=True, exist_ok=True)
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.touch(exist_ok=True)
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.write_text(decoded_post_data)
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.parent.mkdir(parents=True, exist_ok=True)
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.touch(exist_ok=True)
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.write_text(decoded_post_data)
         # TODO: Add checks before shutting down the server
         self.server.running = False  # type: ignore
         self._set_response()
 
     def log_message(self, format, *args):
         pass
-
 
 class CliAuthServer:
     """
@@ -215,7 +213,6 @@ class CliAuthServer:
     def shut_down(self):
         self._thread.close()  # type: ignore
 
-
 def check_port(port: int):
     import socket
 
@@ -223,16 +220,14 @@ def check_port(port: int):
         try:
             return s.connect_ex(("localhost", port)) == 0
         except Exception as e:
-            console.print(f"Error occurred: {e}")
+            print(f"Error occurred: {e}")
             return False
-
 
 def get_port_for_auth_server():
     starting_port = 9191
     for port in range(starting_port, starting_port + 100):
         if not check_port(port):
             return port
-
 
 def get_auth_token_from_web_flow(port: int) -> Optional[str]:
     """
@@ -243,9 +238,9 @@ def get_auth_token_from_web_flow(port: int) -> Optional[str]:
     server = CliAuthServer(port)
     server.run()
 
-    if jaygoga_orchestra.v2_cli_settings.tmp_token_path.exists() and jaygoga_orchestra.v2_cli_settings.tmp_token_path.is_file():
-        auth_token_str = jaygoga_orchestra.v2_cli_settings.tmp_token_path.read_text()
+    if jaygoga_orchestra_v2_cli_settings.tmp_token_path.exists() and jaygoga_orchestra_v2_cli_settings.tmp_token_path.is_file():
+        auth_token_str = jaygoga_orchestra_v2_cli_settings.tmp_token_path.read_text()
         auth_token_json = json.loads(auth_token_str)
-        jaygoga_orchestra.v2_cli_settings.tmp_token_path.unlink()
+        jaygoga_orchestra_v2_cli_settings.tmp_token_path.unlink()
         return auth_token_json.get("AuthToken", None)
     return None

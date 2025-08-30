@@ -14,7 +14,6 @@ from jaygoga_orchestra.v1.llm import LLM
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
 from jaygoga_orchestra.v1.utilities.logger import Logger
 
-
 class HallucinationGuardrail:
     """Placeholder for the HallucinationGuardrail feature.
 

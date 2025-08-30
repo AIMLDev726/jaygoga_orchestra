@@ -23,7 +23,6 @@ try:
 except ImportError:
     raise ImportError("`sqlalchemy` not installed")
 
-
 class SingleStoreStorage(Storage):
     def __init__(
         self,

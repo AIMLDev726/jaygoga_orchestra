@@ -20,7 +20,6 @@ try:
 except ImportError:
     raise ImportError("`boto3` not installed. Please install using `pip install boto3`.")
 
-
 class DynamoDbStorage(Storage):
     def __init__(
         self,

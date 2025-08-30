@@ -17,7 +17,6 @@ from jaygoga_orchestra.v2.app.settings import APIAppSettings
 from jaygoga_orchestra.v2.team.team import Team
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info
 
-
 class BaseAPIApp(ABC):
     type: Optional[str] = None
 

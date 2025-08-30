@@ -11,7 +11,6 @@ try:
 except ImportError:
     raise ImportError("`linkup-sdk` not installed. Please install using `pip install linkup-sdk`")
 
-
 class LinkupTools(Toolkit):
     def __init__(
         self,

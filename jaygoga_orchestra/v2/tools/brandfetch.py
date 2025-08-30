@@ -14,7 +14,6 @@ except ImportError:
 
 from jaygoga_orchestra.v2.tools import Toolkit
 
-
 class BrandfetchTools(Toolkit):
     """
     Brandfetch API toolkit for retrieving brand data and searching brands.

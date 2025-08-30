@@ -30,7 +30,6 @@ from jaygoga_orchestra.v2.run.response import RunEvent, RunResponseContentEvent,
 from jaygoga_orchestra.v2.run.team import RunResponseContentEvent as TeamRunResponseContentEvent
 from jaygoga_orchestra.v2.run.team import TeamRunEvent, TeamRunResponseEvent
 
-
 @dataclass
 class EventBuffer:
     """Buffer to manage event ordering constraints, relevant when mapping Govinda responses to AG-UI events."""
@@ -68,8 +67,7 @@ class EventBuffer:
 
         return False
 
-
-def convert_agui_messages_to_jaygoga_orchestra.v2_messages(messages: List[AGUIMessage]) -> List[Message]:
+def convert_agui_messages_to_jaygoga_orchestra_v2_messages(messages: List[AGUIMessage]) -> List[Message]:
     """Convert AG-UI messages to Govinda messages."""
     result = []
     for msg in messages:
@@ -90,7 +88,6 @@ def convert_agui_messages_to_jaygoga_orchestra.v2_messages(messages: List[AGUIMe
             result.append(Message(role="user", content=msg.content))
     return result
 
-
 def extract_team_response_chunk_content(response: TeamRunResponseContentEvent) -> str:
     """Given a response stream chunk, find and extract the content."""
 
@@ -110,7 +107,6 @@ def extract_team_response_chunk_content(response: TeamRunResponseContentEvent) -
 
     return str(response.content) + members_response
 
-
 def extract_response_chunk_content(response: RunResponseContentEvent) -> str:
     """Given a response stream chunk, find and extract the content."""
     if hasattr(response, "messages") and response.messages:  # type: ignore
@@ -119,7 +115,6 @@ def extract_response_chunk_content(response: RunResponseContentEvent) -> str:
                 return str(msg.content)
 
     return str(response.content) if response.content else ""
-
 
 def _create_events_from_chunk(
     chunk: Union[RunResponseEvent, TeamRunResponseEvent],
@@ -212,7 +207,6 @@ def _create_events_from_chunk(
 
     return events_to_emit, message_started
 
-
 def _create_completion_events(
     chunk: Union[RunResponseEvent, TeamRunResponseEvent],
     event_buffer: EventBuffer,
@@ -270,7 +264,6 @@ def _create_completion_events(
 
     return events_to_emit
 
-
 def _emit_event_logic(event: BaseEvent, event_buffer: EventBuffer) -> List[BaseEvent]:
     """Process an event through the buffer and return events to actually emit."""
     events_to_emit = []
@@ -320,8 +313,7 @@ def _emit_event_logic(event: BaseEvent, event_buffer: EventBuffer) -> List[BaseE
 
     return events_to_emit
 
-
-def stream_jaygoga_orchestra.v2_response_as_agui_events(
+def stream_jaygoga_orchestra_v2_response_as_agui_events(
     response_stream: Iterator[Union[RunResponseEvent, TeamRunResponseEvent]], thread_id: str, run_id: str
 ) -> Iterator[BaseEvent]:
     """Map the Govinda response stream to AG-UI format, handling event ordering constraints."""
@@ -354,9 +346,8 @@ def stream_jaygoga_orchestra.v2_response_as_agui_events(
                 for emit_event in events_to_emit:
                     yield emit_event
 
-
 # Async version - thin wrapper
-async def async_stream_jaygoga_orchestra.v2_response_as_agui_events(
+async def async_stream_jaygoga_orchestra_v2_response_as_agui_events(
     response_stream: AsyncIterator[Union[RunResponseEvent, TeamRunResponseEvent]],
     thread_id: str,
     run_id: str,

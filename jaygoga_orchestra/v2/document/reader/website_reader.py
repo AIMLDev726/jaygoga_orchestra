@@ -18,7 +18,6 @@ try:
 except ImportError:
     raise ImportError("The `bs4` package is not installed. Please install it via `pip install beautifulsoup4`.")
 
-
 @dataclass
 class WebsiteReader(Reader):
     """Reader for Websites"""

@@ -19,7 +19,6 @@ try:
 except ImportError:
     raise ImportError("`ollama` not installed. Please install using `pip install ollama`")
 
-
 @dataclass
 class Ollama(Model):
     """

@@ -22,7 +22,6 @@ try:
 except ImportError:
     raise ImportError("`sqlalchemy` not installed. Please install it using `pip install sqlalchemy pymysql`")
 
-
 class MySQLStorage(Storage):
     def __init__(
         self,

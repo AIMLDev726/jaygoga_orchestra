@@ -23,7 +23,6 @@ except ImportError:
         "`google-cloud-firestore` not installed. Please install it using `pip install google-cloud-firestore`"
     )
 
-
 class FirestoreMemoryDb(MemoryDb):
     def __init__(
         self,

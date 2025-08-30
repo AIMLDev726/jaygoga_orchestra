@@ -19,7 +19,6 @@ try:
 except ImportError:
     raise ImportError("`ibm-watsonx-ai` is not installed. Please install it using `pip install ibm-watsonx-ai`.")
 
-
 @dataclass
 class WatsonX(Model):
     """

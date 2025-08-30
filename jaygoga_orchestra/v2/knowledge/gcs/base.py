@@ -7,7 +7,6 @@ from google.cloud import storage
 from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 
-
 class GCSKnowledgeBase(AgentKnowledge):
     bucket: Optional[storage.Bucket] = None
     bucket_name: Optional[str] = None

@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`sqlalchemy` not installed")
 
-
 class SQLTools(Toolkit):
     def __init__(
         self,

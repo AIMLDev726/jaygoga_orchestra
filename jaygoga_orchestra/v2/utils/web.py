@@ -5,7 +5,6 @@ from pathlib import Path
 
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def open_html_file(file_path: Path):
     """
     Opens the specified HTML file in the default web browser.

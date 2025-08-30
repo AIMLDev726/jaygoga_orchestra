@@ -5,7 +5,6 @@ from typing import Any, Dict, Optional
 
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 def read_yaml_file(file_path: Optional[Path]) -> Optional[Dict[str, Any]]:
     if file_path is not None and file_path.exists() and file_path.is_file():
         import yaml
@@ -17,7 +16,6 @@ def read_yaml_file(file_path: Optional[Path]) -> Optional[Dict[str, Any]]:
         else:
             logger.error(f"Invalid file: {file_path}")
     return None
-
 
 def write_yaml_file(file_path: Optional[Path], data: Optional[Dict[str, Any]], **kwargs) -> None:
     if file_path is not None and data is not None:

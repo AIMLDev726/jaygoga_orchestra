@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`tweepy` not installed. Please install using `pip install tweepy`.")
 
-
 class XTools(Toolkit):
     def __init__(
         self,

@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`openai` not installed")
 
-
 class LangDBEmbedder(Embedder):
     model: str = "text-embedding-ada-002"
     dimensions: int = 1536

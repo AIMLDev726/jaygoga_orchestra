@@ -8,12 +8,11 @@ from jaygoga_orchestra.v2.api.api import api, invalid_response
 from jaygoga_orchestra.v2.api.routes import ApiRoutes
 from jaygoga_orchestra.v2.api.schemas.user import EmailPasswordAuthSchema, UserSchema
 from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def user_ping() -> bool:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return False
 
     logger.debug("--**-- Ping user api")
@@ -29,15 +28,14 @@ def user_ping() -> bool:
             logger.debug(f"Could not ping user api: {e}")
     return False
 
-
 def authenticate_and_get_user(auth_token: str, existing_user: Optional[UserSchema] = None) -> Optional[UserSchema]:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return None
 
     from jaygoga_orchestra.v2.cli.credentials import read_auth_token
 
     logger.debug("--**-- Getting user")
-    auth_header = {jaygoga_orchestra.v2_cli_settings.auth_token_header: auth_token}
+    auth_header = {jaygoga_orchestra_v2_cli_settings.auth_token_header: auth_token}
     anon_user = None
     if existing_user is not None:
         if existing_user.email == "anon":
@@ -63,9 +61,8 @@ def authenticate_and_get_user(auth_token: str, existing_user: Optional[UserSchem
             logger.debug(f"Could not authenticate user: {e}")
     return None
 
-
 def sign_in_user(sign_in_data: EmailPasswordAuthSchema) -> Optional[UserSchema]:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return None
 
     from jaygoga_orchestra.v2.cli.credentials import save_auth_token
@@ -77,7 +74,7 @@ def sign_in_user(sign_in_data: EmailPasswordAuthSchema) -> Optional[UserSchema]:
             if invalid_response(r):
                 return None
 
-            jaygoga_orchestra.v2_auth_token = r.headers.get(jaygoga_orchestra.v2_cli_settings.auth_token_header)
+            jaygoga_orchestra.v2_auth_token = r.headers.get(jaygoga_orchestra_v2_cli_settings.auth_token_header)
             if jaygoga_orchestra.v2_auth_token is None:
                 logger.error("Could not authenticate user")
                 return None
@@ -95,13 +92,12 @@ def sign_in_user(sign_in_data: EmailPasswordAuthSchema) -> Optional[UserSchema]:
             logger.debug(f"Could not sign in user: {e}")
     return None
 
-
 def user_is_authenticated() -> bool:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return False
 
     logger.debug("--**-- Checking if user is authenticated")
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
     if jaygoga_orchestra.v2_config is None:
         return False
     user: Optional[UserSchema] = jaygoga_orchestra.v2_config.user
@@ -126,9 +122,8 @@ def user_is_authenticated() -> bool:
             logger.debug(f"Could not check if user is authenticated: {e}")
     return False
 
-
 def create_anon_user() -> Optional[UserSchema]:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return None
 
     from jaygoga_orchestra.v2.cli.credentials import save_auth_token
@@ -144,7 +139,7 @@ def create_anon_user() -> Optional[UserSchema]:
             if invalid_response(r):
                 return None
 
-            jaygoga_orchestra.v2_auth_token = r.headers.get(jaygoga_orchestra.v2_cli_settings.auth_token_header)
+            jaygoga_orchestra.v2_auth_token = r.headers.get(jaygoga_orchestra_v2_cli_settings.auth_token_header)
             if jaygoga_orchestra.v2_auth_token is None:
                 logger.debug("Could not create anon user")
                 return None

@@ -49,7 +49,6 @@ from jaygoga_orchestra.v2.utils.log import logger
 from jaygoga_orchestra.v2.workflow.v2.workflow import Workflow as WorkflowV2
 from jaygoga_orchestra.v2.workflow.workflow import Workflow
 
-
 async def chat_response_streamer(
     agent: Agent,
     message: str,
@@ -84,7 +83,6 @@ async def chat_response_streamer(
         yield error_response.to_json()
         return
 
-
 async def agent_acontinue_run_streamer(
     agent: Agent,
     run_id: Optional[str] = None,
@@ -113,7 +111,6 @@ async def agent_acontinue_run_streamer(
         )
         yield error_response.to_json()
         return
-
 
 async def team_chat_response_streamer(
     team: Team,
@@ -149,7 +146,6 @@ async def team_chat_response_streamer(
         yield error_response.to_json()
         return
 
-
 async def workflow_response_streamer(
     workflow: WorkflowV2,
     body: WorkflowRunRequest,
@@ -173,7 +169,6 @@ async def workflow_response_streamer(
         )
         yield error_response.to_json()
         return
-
 
 def get_async_playground_router(
     agents: Optional[List[Agent]] = None,

@@ -5,7 +5,6 @@ from typing import Any, Dict, List, Optional
 
 from jaygoga_orchestra.v2.document import Document
 
-
 class VectorDb(ABC):
     """Base class for Vector Databases"""
 

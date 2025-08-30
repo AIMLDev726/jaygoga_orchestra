@@ -5,11 +5,9 @@ import hmac
 import os
 from typing import Optional
 
-
 def is_development_mode() -> bool:
     """Check if the application is running in development mode."""
     return os.getenv("APP_ENV", "development").lower() == "development"
-
 
 def get_app_secret() -> str:
     """
@@ -22,7 +20,6 @@ def get_app_secret() -> str:
         raise ValueError("WHATSAPP_APP_SECRET environment variable is not set in production mode")
 
     return app_secret
-
 
 def validate_webhook_signature(payload: bytes, signature_header: Optional[str]) -> bool:
     """
@@ -38,7 +35,7 @@ def validate_webhook_signature(payload: bytes, signature_header: Optional[str]) 
     """
     # In development mode, we can bypass signature validation
     if is_development_mode():
-        console.print("WARNING: Bypassing signature validation in development mode")
+        print("WARNING: Bypassing signature validation in development mode")
         return True
 
     if not signature_header or not signature_header.startswith("sha256="):

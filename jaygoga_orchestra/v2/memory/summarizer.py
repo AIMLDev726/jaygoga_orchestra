@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.models.base import Model
 from jaygoga_orchestra.v2.models.message import Message
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class MemorySummarizer(BaseModel):
     model: Optional[Model] = None
     use_structured_outputs: bool = False

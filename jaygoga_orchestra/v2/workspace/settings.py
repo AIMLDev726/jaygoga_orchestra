@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from pathlib import Path
 from typing import List, Optional
@@ -9,7 +10,6 @@ from pydantic import Field, ValidationInfo, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from jaygoga_orchestra.v2.api.schemas.workspace import WorkspaceSchema
-
 
 class WorkspaceSettings(BaseSettings):
     """Workspace settings that can be used by any resource in the workspace."""

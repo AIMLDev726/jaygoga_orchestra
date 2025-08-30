@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from typing import Optional, Tuple
 
-
 def parse_resource_filter(
     resource_filter: str,
 ) -> Tuple[Optional[str], Optional[str], Optional[str], Optional[str], Optional[str]]:

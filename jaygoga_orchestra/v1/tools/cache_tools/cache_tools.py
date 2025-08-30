@@ -5,7 +5,6 @@ from pydantic import BaseModel, Field
 from jaygoga_orchestra.v1.agents.cache import CacheHandler
 from jaygoga_orchestra.v1.tools.structured_tool import CrewStructuredTool
 
-
 class CacheTools(BaseModel):
     """Default tools to hit the cache."""
 

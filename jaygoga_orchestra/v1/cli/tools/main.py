@@ -24,7 +24,6 @@ from jaygoga_orchestra.v1.cli.utils import (
 
 console = Console()
 
-
 class ToolCommand(BaseCommand, PlusAPIMixin):
     """
     A class to handle tool repository related operations for Govinda projects.
@@ -59,7 +58,7 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
         try:
             self.login()
             subprocess.run(["git", "init"], check=True)
-            console.console.print(
+            print(
                 f"[green]Created custom tool [bold]{folder_name}[/bold]. Run [bold]cd {project_root}[/bold] to start working.[/green]"
             )
         finally:
@@ -67,7 +66,7 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
 
     def publish(self, is_public: bool, force: bool = False):
         if not git.Repository().is_synced() and not force:
-            console.console.print(
+            print(
                 "[bold red]Failed to publish tool.[/bold red]\n"
                 "Local changes need to be resolved before publishing. Please do the following:\n"
                 "* [bold]Commit[/bold] your changes.\n"
@@ -86,11 +85,11 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
         project_description = get_project_description(require=False)
         encoded_tarball = None
 
-        console.console.print("[bold blue]Discovering tools from your project...[/bold blue]")
+        print("[bold blue]Discovering tools from your project...[/bold blue]")
         available_exports = extract_available_exports()
 
         if available_exports:
-            console.console.print(
+            print(
                 f"[green]Found these tools to publish: {', '.join([e['name'] for e in available_exports])}[/green]"
             )
         self._print_current_organization()
@@ -106,7 +105,7 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
                 (f for f in os.listdir(temp_build_dir) if f.endswith(".tar.gz")), None
             )
             if not tarball_filename:
-                console.console.print(
+                print(
                     "Project build failed. Please ensure that the command `uv build --sdist` completes successfully.",
                     style="bold red",
                 )
@@ -118,7 +117,7 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
 
             encoded_tarball = base64.b64encode(tarball_contents).decode("utf-8")
 
-        console.console.print("[bold blue]Publishing tool to repository...[/bold blue]")
+        print("[bold blue]Publishing tool to repository...[/bold blue]")
         publish_response = self.plus_api_client.publish_tool(
             handle=project_name,
             is_public=is_public,
@@ -131,7 +130,7 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
         self._validate_response(publish_response)
 
         published_handle = publish_response.json()["handle"]
-        console.console.print(
+        print(
             f"Successfully published `{published_handle}` ({project_version}).\n\n"
             + "⚠️ Security checks are running in the background. Your tool will be available once these are complete.\n"
             + f"You can monitor the status or access your tool here:\nhttps://app.jaygoga_orchestra.v1.com/jaygoga_orchestra.v1_plus/tools/{published_handle}",
@@ -143,26 +142,26 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
         get_response = self.plus_api_client.get_tool(handle)
 
         if get_response.status_code == 404:
-            console.console.print(
+            print(
                 "No tool found with this name. Please ensure the tool was published and you have access to it.",
                 style="bold red",
             )
             raise SystemExit
         elif get_response.status_code != 200:
-            console.console.print(
+            print(
                 "Failed to get tool details. Please try again later.", style="bold red"
             )
             raise SystemExit
 
         self._add_package(get_response.json())
 
-        console.console.print(f"Successfully installed {handle}", style="bold green")
+        print(f"Successfully installed {handle}", style="bold green")
 
     def login(self) -> None:
         login_response = self.plus_api_client.login_to_tool_repository()
 
         if login_response.status_code != 200:
-            console.console.print(
+            print(
                 "Authentication failed. Verify access to the tool repository, or try `jaygoga_orchestra.v1 login`. ",
                 style="bold red",
             )
@@ -212,13 +211,13 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
 
     def _ensure_not_in_project(self):
         if os.path.isfile("./pyproject.toml"):
-            console.console.print(
+            print(
                 "[bold red]Oops! It looks like you're inside a project.[/bold red]"
             )
-            console.console.print(
+            print(
                 "You can't create a new tool while inside an existing project."
             )
-            console.console.print(
+            print(
                 "[bold yellow]Tip:[/bold yellow] Navigate to a different directory and try again."
             )
             raise SystemExit
@@ -240,12 +239,12 @@ class ToolCommand(BaseCommand, PlusAPIMixin):
     def _print_current_organization(self) -> None:
         settings = Settings()
         if settings.org_uuid:
-            console.console.print(
+            print(
                 f"Current organization: {settings.org_name} ({settings.org_uuid})",
                 style="bold blue",
             )
         else:
-            console.console.print(
+            print(
                 "No organization currently set. We recommend setting one before using: `jaygoga_orchestra.v1 org switch <org_id>` command.",
                 style="yellow",
             )

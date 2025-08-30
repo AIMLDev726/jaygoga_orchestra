@@ -4,7 +4,6 @@ import subprocess
 
 import click
 
-
 def kickoff_flow() -> None:
     """
     Kickoff the flow by running a command in the UV environment.

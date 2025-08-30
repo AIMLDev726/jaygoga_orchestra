@@ -13,7 +13,6 @@ from jaygoga_orchestra.v2.models.response import ToolExecution
 from jaygoga_orchestra.v2.run.base import BaseRunResponseEvent, RunResponseExtraData, RunStatus
 from jaygoga_orchestra.v2.run.response import RunEvent, RunResponse, RunResponseEvent, run_response_event_from_dict
 
-
 class TeamRunEvent(str, Enum):
     """Events that can be sent by the run() functions"""
 
@@ -39,7 +38,6 @@ class TeamRunEvent(str, Enum):
 
     output_model_response_started = "TeamOutputModelResponseStarted"
     output_model_response_completed = "TeamOutputModelResponseCompleted"
-
 
 @dataclass
 class BaseTeamRunResponseEvent(BaseRunResponseEvent):
@@ -73,7 +71,6 @@ class BaseTeamRunResponseEvent(BaseRunResponseEvent):
 
         return event
 
-
 @dataclass
 class RunResponseStartedEvent(BaseTeamRunResponseEvent):
     """Event sent when the run starts"""
@@ -81,7 +78,6 @@ class RunResponseStartedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.run_started.value
     model: str = ""
     model_provider: str = ""
-
 
 @dataclass
 class RunResponseContentEvent(BaseTeamRunResponseEvent):
@@ -96,13 +92,11 @@ class RunResponseContentEvent(BaseTeamRunResponseEvent):
     image: Optional[ImageArtifact] = None  # Image attached to the response
     extra_data: Optional[RunResponseExtraData] = None
 
-
 @dataclass
 class IntermediateRunResponseContentEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.run_intermediate_response_content.value
     content: Optional[Any] = None
     content_type: str = "str"
-
 
 @dataclass
 class RunResponseCompletedEvent(BaseTeamRunResponseEvent):
@@ -119,33 +113,27 @@ class RunResponseCompletedEvent(BaseTeamRunResponseEvent):
     extra_data: Optional[RunResponseExtraData] = None
     member_responses: List[Union["TeamRunResponse", RunResponse]] = field(default_factory=list)
 
-
 @dataclass
 class RunResponseErrorEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.run_error.value
     content: Optional[str] = None
-
 
 @dataclass
 class RunResponseCancelledEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.run_cancelled.value
     reason: Optional[str] = None
 
-
 @dataclass
 class MemoryUpdateStartedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.memory_update_started.value
-
 
 @dataclass
 class MemoryUpdateCompletedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.memory_update_completed.value
 
-
 @dataclass
 class ReasoningStartedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.reasoning_started.value
-
 
 @dataclass
 class ReasoningStepEvent(BaseTeamRunResponseEvent):
@@ -154,19 +142,16 @@ class ReasoningStepEvent(BaseTeamRunResponseEvent):
     content_type: str = "str"
     reasoning_content: str = ""
 
-
 @dataclass
 class ReasoningCompletedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.reasoning_completed.value
     content: Optional[Any] = None
     content_type: str = "str"
 
-
 @dataclass
 class ToolCallStartedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.tool_call_started.value
     tool: Optional[ToolExecution] = None
-
 
 @dataclass
 class ToolCallCompletedEvent(BaseTeamRunResponseEvent):
@@ -177,26 +162,21 @@ class ToolCallCompletedEvent(BaseTeamRunResponseEvent):
     videos: Optional[List[VideoArtifact]] = None  # Videos produced by the tool call
     audio: Optional[List[AudioArtifact]] = None  # Audio produced by the tool call
 
-
 @dataclass
 class ParserModelResponseStartedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.parser_model_response_started.value
-
 
 @dataclass
 class ParserModelResponseCompletedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.parser_model_response_completed.value
 
-
 @dataclass
 class OutputModelResponseStartedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.output_model_response_started.value
 
-
 @dataclass
 class OutputModelResponseCompletedEvent(BaseTeamRunResponseEvent):
     event: str = TeamRunEvent.output_model_response_completed.value
-
 
 TeamRunResponseEvent = Union[
     RunResponseStartedEvent,
@@ -239,7 +219,6 @@ TEAM_RUN_EVENT_TYPE_REGISTRY = {
     TeamRunEvent.output_model_response_completed.value: OutputModelResponseCompletedEvent,
 }
 
-
 def team_run_response_event_from_dict(data: dict) -> BaseTeamRunResponseEvent:
     event_type = data.get("event", "")
     if event_type in {e.value for e in RunEvent}:
@@ -249,7 +228,6 @@ def team_run_response_event_from_dict(data: dict) -> BaseTeamRunResponseEvent:
     if not event_class:
         raise ValueError(f"Unknown team event type: {event_type}")
     return event_class.from_dict(data)  # type: ignore
-
 
 @dataclass
 class TeamRunResponse:

@@ -4,7 +4,6 @@ from typing import Any, List, Optional, Tuple
 
 from jaygoga_orchestra.v2.infra.base import InfraBase
 
-
 class InfraResources(InfraBase):
     """InfraResources is a group of InfraResource and InfraApp objects
     that are managed together.

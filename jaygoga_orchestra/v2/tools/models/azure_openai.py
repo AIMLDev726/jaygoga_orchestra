@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.media import ImageArtifact
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class AzureOpenAITools(Toolkit):
     """Toolkit for Azure OpenAI services.
 

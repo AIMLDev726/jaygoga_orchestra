@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from enum import Enum
 
-
 class Distance(str, Enum):
     cosine = "cosine"
     l2 = "l2"

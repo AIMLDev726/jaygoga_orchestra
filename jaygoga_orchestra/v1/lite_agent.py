@@ -17,7 +17,6 @@ from typing import (
     get_origin,
 )
 
-
 try:
     from typing import Self
 except ImportError:
@@ -70,13 +69,12 @@ from jaygoga_orchestra.v1.utilities.events.agent_events import (
     LiteAgentExecutionErrorEvent,
     LiteAgentExecutionStartedEvent,
 )
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 
 from jaygoga_orchestra.v1.utilities.llm_utils import create_llm
 from jaygoga_orchestra.v1.utilities.printer import Printer
 from jaygoga_orchestra.v1.utilities.token_counter_callback import TokenCalcHandler
 from jaygoga_orchestra.v1.utilities.tool_utils import execute_tool_and_check_finality
-
 
 class LiteAgentOutput(BaseModel):
     """Class that represents the result of a LiteAgent execution."""
@@ -103,7 +101,6 @@ class LiteAgentOutput(BaseModel):
         if self.pydantic:
             return str(self.pydantic)
         return self.raw
-
 
 class LiteAgent(FlowTrackable, BaseModel):
     """
@@ -325,13 +322,13 @@ class LiteAgent(FlowTrackable, BaseModel):
             return self._execute_core(agent_info=agent_info)
 
         except Exception as e:
-            self._printer.console.print(
+            self._printer.print(
                 content="Agent failed to reach a final answer. This is likely a bug - please report it.",
                 color="red",
             )
             handle_unknown_error(self._printer, e)
             # Emit error event
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=LiteAgentExecutionErrorEvent(
                     agent_info=agent_info,
@@ -342,7 +339,7 @@ class LiteAgent(FlowTrackable, BaseModel):
 
     def _execute_core(self, agent_info: Dict[str, Any]) -> LiteAgentOutput:
         # Emit event for agent execution start
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=LiteAgentExecutionStartedEvent(
                 agent_info=agent_info,
@@ -361,7 +358,7 @@ class LiteAgent(FlowTrackable, BaseModel):
                 if isinstance(result, BaseModel):
                     formatted_result = result
             except Exception as e:
-                self._printer.console.print(
+                self._printer.print(
                     content=f"Failed to parse output into response format: {str(e)}",
                     color="yellow",
                 )
@@ -393,7 +390,7 @@ class LiteAgent(FlowTrackable, BaseModel):
                     )
                 self._guardrail_retry_count += 1
                 if self.verbose:
-                    self._printer.console.print(
+                    self._printer.print(
                         f"Guardrail failed. Retrying ({self._guardrail_retry_count}/{self.guardrail_max_retries})..."
                         f"\n{guardrail_result.error}"
                     )
@@ -419,7 +416,7 @@ class LiteAgent(FlowTrackable, BaseModel):
             output.usage_metrics = usage_metrics.model_dump() if usage_metrics else None
 
         # Emit completion event
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=LiteAgentExecutionCompletedEvent(
                 agent_info=agent_info,
@@ -586,7 +583,7 @@ class LiteAgent(FlowTrackable, BaseModel):
 
     def _show_logs(self, formatted_answer: Union[AgentAction, AgentFinish]):
         """Show logs for the agent's execution."""
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             AgentLogsExecutionEvent(
                 agent_role=self.role,

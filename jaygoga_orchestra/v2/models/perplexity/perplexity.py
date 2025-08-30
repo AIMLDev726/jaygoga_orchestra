@@ -23,7 +23,6 @@ except ModuleNotFoundError:
 
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 
-
 @dataclass
 class Perplexity(OpenAILike):
     """

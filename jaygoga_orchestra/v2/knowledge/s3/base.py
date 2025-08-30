@@ -7,7 +7,6 @@ from jaygoga_orchestra.v2.aws.resource.s3.object import S3Object  # type: ignore
 from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 
-
 class S3KnowledgeBase(AgentKnowledge):
     # Provide either bucket or bucket_name
     bucket: Optional[S3Bucket] = None

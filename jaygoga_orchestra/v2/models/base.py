@@ -35,7 +35,6 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_error, log_warning
 from jaygoga_orchestra.v2.utils.timer import Timer
 from jaygoga_orchestra.v2.utils.tools import get_function_call_for_tool_call, get_function_call_for_tool_execution
 
-
 @dataclass
 class MessageData:
     response_role: Optional[Literal["system", "user", "assistant", "tool"]] = None
@@ -53,7 +52,6 @@ class MessageData:
 
     extra: Optional[Dict[str, Any]] = None
 
-
 def _log_messages(messages: List[Message]) -> None:
     """
     Log messages for debugging.
@@ -61,7 +59,6 @@ def _log_messages(messages: List[Message]) -> None:
     for m in messages:
         # Don't log metrics for input messages
         m.log(metrics=False)
-
 
 def _add_usage_metrics_to_assistant_message(assistant_message: Message, response_usage: Any) -> None:
     """
@@ -188,7 +185,6 @@ def _add_usage_metrics_to_assistant_message(assistant_message: Message, response
         assistant_message.metrics.input_audio_tokens + assistant_message.metrics.output_audio_tokens
     )
 
-
 def _handle_agent_exception(a_exc: AgentRunException, additional_messages: Optional[List[Message]] = None) -> None:
     """Handle AgentRunException and collect additional messages."""
     if additional_messages is None:
@@ -222,7 +218,6 @@ def _handle_agent_exception(a_exc: AgentRunException, additional_messages: Optio
     if a_exc.stop_execution:
         for m in additional_messages:
             m.stop_after_tool_call = True
-
 
 @dataclass
 class Model(ABC):

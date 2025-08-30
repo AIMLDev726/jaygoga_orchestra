@@ -5,7 +5,6 @@ from typing import List, Optional
 
 from jaygoga_orchestra.v2.models.message import Message
 
-
 @dataclass
 class RunMessages:
     """Container for messages used in an Agent run.

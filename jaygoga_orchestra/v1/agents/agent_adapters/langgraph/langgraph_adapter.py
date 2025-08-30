@@ -16,7 +16,7 @@ from jaygoga_orchestra.v1.tools.agent_tools.agent_tools import AgentTools
 from jaygoga_orchestra.v1.tools.base_tool import BaseTool
 from jaygoga_orchestra.v1.utilities import Logger
 from jaygoga_orchestra.v1.utilities.converter import Converter
-from jaygoga_orchestra.v1.utilities.events import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.agent_events import (
     AgentExecutionCompletedEvent,
     AgentExecutionErrorEvent,
@@ -31,7 +31,6 @@ try:
     LANGGRAPH_AVAILABLE = True
 except ImportError:
     LANGGRAPH_AVAILABLE = False
-
 
 class LangGraphAgentAdapter(BaseAgentAdapter):
     """Adapter for LangGraph agents to work with Govinda."""
@@ -142,7 +141,7 @@ class LangGraphAgentAdapter(BaseAgentAdapter):
                     task=task_prompt, context=context
                 )
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionStartedEvent(
                     agent=self,
@@ -179,7 +178,7 @@ class LangGraphAgentAdapter(BaseAgentAdapter):
                 self._converter_adapter.post_process_result(final_answer)
                 or "Task execution completed but no clear answer was provided."
             )
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionCompletedEvent(
                     agent=self, task=task, output=final_answer
@@ -190,7 +189,7 @@ class LangGraphAgentAdapter(BaseAgentAdapter):
 
         except Exception as e:
             self._logger.log("error", f"Error executing LangGraph task: {str(e)}")
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=AgentExecutionErrorEvent(
                     agent=self,

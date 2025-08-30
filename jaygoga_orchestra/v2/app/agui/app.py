@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.app.agui.async_router import get_async_agui_router
 from jaygoga_orchestra.v2.app.agui.sync_router import get_sync_agui_router
 from jaygoga_orchestra.v2.app.base import BaseAPIApp
 
-
 class AGUIApp(BaseAPIApp):
     type = "agui"
 

@@ -6,7 +6,6 @@ from qdrant_client import QdrantClient as SyncQdrantClientBase
 from jaygoga_orchestra.v1.rag.qdrant.client import QdrantClient
 from jaygoga_orchestra.v1.rag.qdrant.config import QdrantConfig
 
-
 def create_client(config: QdrantConfig) -> QdrantClient:
     """Create a Qdrant client from configuration.
 

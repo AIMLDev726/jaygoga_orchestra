@@ -5,7 +5,6 @@ import json
 from jaygoga_orchestra.v1.agents.agent_adapters.base_converter_adapter import BaseConverterAdapter
 from jaygoga_orchestra.v1.utilities.converter import generate_model_description
 
-
 class LangGraphConverterAdapter(BaseConverterAdapter):
     """Adapter for handling structured output conversion in LangGraph agents"""
 

@@ -10,7 +10,6 @@ try:
 except ImportError:
     raise ImportError("`moviepy` not installed. Please install using `pip install moviepy ffmpeg`")
 
-
 class MoviePyVideoTools(Toolkit):
     """Tool for processing video files, extracting audio, transcribing and adding captions"""
 

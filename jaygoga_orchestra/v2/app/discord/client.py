@@ -15,8 +15,7 @@ try:
     import discord
 
 except (ImportError, ModuleNotFoundError):
-    console.print("`discord.py` not installed. Please install using `pip install discord.py`")
-
+    print("`discord.py` not installed. Please install using `pip install discord.py`")
 
 class RequiresConfirmationView(discord.ui.View):
     def __init__(self):
@@ -49,7 +48,6 @@ class RequiresConfirmationView(discord.ui.View):
 
     async def on_timeout(self):
         log_warning("Agent Timeout Error")
-
 
 class DiscordClient:
     def __init__(

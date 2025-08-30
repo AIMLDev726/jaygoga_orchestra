@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`openai` not installed")
 
-
 @dataclass
 class OpenAIEmbedder(Embedder):
     id: str = "text-embedding-3-small"

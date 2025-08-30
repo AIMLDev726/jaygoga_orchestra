@@ -15,7 +15,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 @dataclass
 class CLIContext:
     """Context object for CLI commands."""
@@ -77,7 +76,6 @@ class CLIContext:
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
 
-
 class BaseCLICommand(ABC):
     """Abstract base class for CLI commands."""
     
@@ -137,7 +135,6 @@ class BaseCLICommand(ABC):
                 color = "" if context.no_color else "\033[93m"
                 reset = "" if context.no_color else "\033[0m"
                 print(f"{color}⚠ {message}{reset}")
-
 
 class CLIUtils:
     """Utility functions for CLI operations."""
@@ -252,9 +249,9 @@ class {task_name}(aiflow.Task):
             
             "project_config": '''{
   "name": "{project_name}",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "AIFlow project: {project_description}",
-  "aiflow_version": "1.0.1",
+  "aiflow_version": "1.0.2",
   "python_version": ">=3.8",
   "dependencies": [
     "aiflow>=1.0.0"

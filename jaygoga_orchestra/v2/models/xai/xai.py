@@ -17,7 +17,6 @@ try:
 except (ImportError, ModuleNotFoundError):
     raise ImportError("`openai` not installed. Please install using `pip install openai`")
 
-
 @dataclass
 class xAI(OpenAILike):
     """

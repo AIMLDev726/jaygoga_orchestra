@@ -8,13 +8,11 @@ from typing_extensions import Unpack, Required, TypedDict
 from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
 
-
 from jaygoga_orchestra.v1.rag.types import (
     EmbeddingFunction,
     BaseRecord,
     SearchResult,
 )
-
 
 class BaseCollectionParams(TypedDict):
     """Base parameters for collection operations.
@@ -30,7 +28,6 @@ class BaseCollectionParams(TypedDict):
         ]
     ]
 
-
 class BaseCollectionAddParams(BaseCollectionParams):
     """Parameters for adding documents to a collection.
 
@@ -42,7 +39,6 @@ class BaseCollectionAddParams(BaseCollectionParams):
     """
 
     documents: list[BaseRecord]
-
 
 class BaseCollectionSearchParams(BaseCollectionParams, total=False):
     """Parameters for searching within a collection.
@@ -61,7 +57,6 @@ class BaseCollectionSearchParams(BaseCollectionParams, total=False):
     limit: int
     metadata_filter: dict[str, Any]
     score_threshold: float
-
 
 @runtime_checkable
 class BaseClient(Protocol):
@@ -315,7 +310,7 @@ class BaseClient(Protocol):
             ...     score_threshold=0.7
             ... )
             >>> for result in results:
-            ...     console.print(f"{result['id']}: {result['score']:.2f}")
+            ...     print(f"{result['id']}: {result['score']:.2f}")
         """
         ...
 
@@ -354,7 +349,7 @@ class BaseClient(Protocol):
             ...         score_threshold=0.7
             ...     )
             ...     for result in results:
-            ...         console.print(f"{result['id']}: {result['score']:.2f}")
+            ...         print(f"{result['id']}: {result['score']:.2f}")
             ...
             >>> asyncio.run(search_documents())
         """
@@ -378,7 +373,7 @@ class BaseClient(Protocol):
             >>> from jaygoga_orchestra.v1.rag.chromadb.client import ChromaDBClient
             >>> client = ChromaDBClient()
             >>> client.delete_collection(collection_name="old_docs")
-            >>> console.print("Collection 'old_docs' deleted successfully")
+            >>> print("Collection 'old_docs' deleted successfully")
         """
         ...
 
@@ -400,7 +395,7 @@ class BaseClient(Protocol):
             >>> async def delete_old_collection():
             ...     client = ChromaDBClient()
             ...     await client.adelete_collection(collection_name="old_docs")
-            ...     console.print("Collection 'old_docs' deleted successfully")
+            ...     print("Collection 'old_docs' deleted successfully")
             ...
             >>> asyncio.run(delete_old_collection())
         """
@@ -422,7 +417,7 @@ class BaseClient(Protocol):
             >>> from jaygoga_orchestra.v1.rag.chromadb.client import ChromaDBClient
             >>> client = ChromaDBClient()
             >>> client.reset()
-            >>> console.print("Vector database completely reset - all data deleted")
+            >>> print("Vector database completely reset - all data deleted")
         """
         ...
 
@@ -441,7 +436,7 @@ class BaseClient(Protocol):
             >>> async def reset_database():
             ...     client = ChromaDBClient()
             ...     await client.areset()
-            ...     console.print("Vector database completely reset - all data deleted")
+            ...     print("Vector database completely reset - all data deleted")
             ...
             >>> asyncio.run(reset_database())
         """

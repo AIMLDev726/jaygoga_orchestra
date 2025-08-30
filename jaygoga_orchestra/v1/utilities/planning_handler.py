@@ -19,14 +19,12 @@ class PlanPerTask(BaseModel):
         description="The step by step plan on how the agents can execute their tasks using the available tools with mastery",
     )
 
-
 class PlannerTaskPydanticOutput(BaseModel):
     """Output format for task planning results."""
     list_of_plans_per_task: List[PlanPerTask] = Field(
         ...,
         description="Step by step plan on how the agents can execute their tasks using the available tools with mastery",
     )
-
 
 class CrewPlanner:
     """Plans and coordinates the execution of squad tasks."""

@@ -11,7 +11,6 @@ from datetime import datetime
 from dataclasses import dataclass
 import json
 
-
 @dataclass
 class Knowledge:
     """Represents a piece of knowledge with metadata."""
@@ -52,7 +51,6 @@ class Knowledge:
             updated_at=datetime.fromisoformat(data["updated_at"]) if data.get("updated_at") else None
         )
 
-
 class BaseKnowledgeSource(ABC):
     """Abstract base class for knowledge sources."""
     
@@ -79,7 +77,6 @@ class BaseKnowledgeSource(ABC):
             "created_at": self.created_at.isoformat(),
             **self.metadata
         }
-
 
 class KnowledgeStorage(ABC):
     """Abstract base class for knowledge storage systems."""
@@ -108,7 +105,6 @@ class KnowledgeStorage(ABC):
     async def list_sources(self) -> List[str]:
         """List all knowledge sources."""
         pass
-
 
 class InMemoryKnowledgeStorage(KnowledgeStorage):
     """Simple in-memory knowledge storage implementation."""

@@ -1,9 +1,9 @@
-from rich.console import Console
-console = Console()
 from __future__ import annotations
 
-from pydantic_settings import BaseSettings
+from rich.console import Console
+console = Console()
 
+from pydantic_settings import BaseSettings
 
 class APIAppSettings(BaseSettings):
     """App settings for API-based apps that can be set using environment variables.

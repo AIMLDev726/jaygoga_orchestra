@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from pydantic import BaseModel, Field
 
-
 class KnowledgeConfig(BaseModel):
     """Configuration for knowledge retrieval.
 

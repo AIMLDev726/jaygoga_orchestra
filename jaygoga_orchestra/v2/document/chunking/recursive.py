@@ -6,7 +6,6 @@ from typing import List
 from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.chunking.strategy import ChunkingStrategy
 
-
 class RecursiveChunking(ChunkingStrategy):
     """Chunking strategy that recursively splits text into chunks by finding natural break points"""
 

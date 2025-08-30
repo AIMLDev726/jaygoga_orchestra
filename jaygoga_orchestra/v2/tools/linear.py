@@ -8,7 +8,6 @@ import requests
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class LinearTools(Toolkit):
     def __init__(
         self,

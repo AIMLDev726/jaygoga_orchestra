@@ -31,7 +31,6 @@ MODELS_LAB_FETCH_URLS = {
     "GIF": "https://modelslab.com/api/v6/video/fetch",
 }
 
-
 class ModelsLabTools(Toolkit):
     def __init__(
         self,

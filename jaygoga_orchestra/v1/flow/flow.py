@@ -1,9 +1,11 @@
 from rich.console import Console
 console = Console()
-import asyncio
-import copy
+from opentelemetry import baggage
 import inspect
 import logging
+import asyncio
+import copy
+
 from typing import (
     Any,
     Callable,
@@ -17,17 +19,17 @@ from typing import (
     Union,
     cast,
 )
+from opentelemetry.context import attach, detach
+
 from uuid import uuid4
 
-from opentelemetry import baggage
-from opentelemetry.context import attach, detach
 from pydantic import BaseModel, Field, ValidationError
 
 from jaygoga_orchestra.v1.flow.flow_visualizer import plot_flow
 from jaygoga_orchestra.v1.flow.persistence.base import FlowPersistence
 from jaygoga_orchestra.v1.flow.types import FlowExecutionData
 from jaygoga_orchestra.v1.flow.utils import get_possible_return_constants
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.flow_events import (
     FlowCreatedEvent,
     FlowFinishedEvent,
@@ -47,7 +49,6 @@ from jaygoga_orchestra.v1.utilities.printer import Printer
 
 logger = logging.getLogger(__name__)
 
-
 class FlowState(BaseModel):
     """Base model for all flow states, ensuring each state has a unique ID."""
 
@@ -56,7 +57,6 @@ class FlowState(BaseModel):
         description="Unique identifier for the flow state",
     )
 
-
 # Type variables with explicit bounds
 T = TypeVar(
     "T", bound=Union[Dict[str, Any], BaseModel]
@@ -64,7 +64,6 @@ T = TypeVar(
 StateT = TypeVar(
     "StateT", bound=Union[Dict[str, Any], BaseModel]
 )  # State validation type parameter
-
 
 def ensure_state_type(state: Any, expected_type: Type[StateT]) -> StateT:
     """Ensure state matches expected type with proper validation.
@@ -104,7 +103,6 @@ def ensure_state_type(state: Any, expected_type: Type[StateT]) -> StateT:
             )
         return cast(StateT, state)
     raise TypeError(f"Invalid expected_type: {expected_type}")
-
 
 def start(condition: Optional[Union[str, dict, Callable]] = None) -> Callable:
     """
@@ -172,7 +170,6 @@ def start(condition: Optional[Union[str, dict, Callable]] = None) -> Callable:
 
     return decorator
 
-
 def listen(condition: Union[str, dict, Callable]) -> Callable:
     """
     Creates a listener that executes when specified conditions are met.
@@ -231,7 +228,6 @@ def listen(condition: Union[str, dict, Callable]) -> Callable:
         return func
 
     return decorator
-
 
 def router(condition: Union[str, dict, Callable]) -> Callable:
     """
@@ -298,7 +294,6 @@ def router(condition: Union[str, dict, Callable]) -> Callable:
 
     return decorator
 
-
 def or_(*conditions: Union[str, dict, Callable]) -> dict:
     """
     Combines multiple conditions with OR logic for flow control.
@@ -343,7 +338,6 @@ def or_(*conditions: Union[str, dict, Callable]) -> dict:
         else:
             raise ValueError("Invalid condition in or_()")
     return {"type": "OR", "methods": methods}
-
 
 def and_(*conditions: Union[str, dict, Callable]) -> dict:
     """
@@ -390,7 +384,6 @@ def and_(*conditions: Union[str, dict, Callable]) -> dict:
             raise ValueError("Invalid condition in and_()")
     return {"type": "AND", "methods": methods}
 
-
 class FlowMeta(type):
     def __new__(mcs, name, bases, dct):
         cls = super().__new__(mcs, name, bases, dct)
@@ -433,7 +426,6 @@ class FlowMeta(type):
         setattr(cls, "_router_paths", router_paths)
 
         return cls
-
 
 class Flow(Generic[T], metaclass=FlowMeta):
     """Base class for all flows.
@@ -483,12 +475,12 @@ class Flow(Generic[T], metaclass=FlowMeta):
         self.tracing = tracing
         if is_tracing_enabled() or self.tracing:
             trace_listener = TraceCollectionListener()
-            trace_listener.setup_listeners(jaygoga_orchestra.v1_event_bus)
+            trace_listener.setup_listeners(event_bus)
         # Apply any additional kwargs
         if kwargs:
             self._initialize_state(kwargs)
 
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             FlowCreatedEvent(
                 type="flow_created",
@@ -624,7 +616,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
         Example:
             ```python
             flow = MyFlow()
-            console.print(f"Current flow ID: {flow.flow_id}")  # Safely get flow ID
+            print(f"Current flow ID: {flow.flow_id}")  # Safely get flow ID
             ```
         """
         try:
@@ -865,7 +857,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
                     self._initialize_state(filtered_inputs)
 
             # Emit FlowStartedEvent and log the start of the flow.
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 FlowStartedEvent(
                     type="flow_started",
@@ -891,7 +883,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
 
             final_output = self._method_outputs[-1] if self._method_outputs else None
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 FlowFinishedEvent(
                     type="flow_finished",
@@ -922,7 +914,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
         - Triggers execution of any listeners waiting on this start method
         - Part of the flow's initialization sequence
         - Skips execution if method was already completed (e.g., after reload)
-        - Automatically injects jaygoga_orchestra.v1_trigger_payload if available in flow inputs
+        - Automatically injects jaygoga_orchestra_v1_trigger_payload if available in flow inputs
         """
         if start_method_name in self._completed_methods:
             if self._is_execution_resuming:
@@ -944,16 +936,16 @@ class Flow(Generic[T], metaclass=FlowMeta):
     def _inject_trigger_payload_for_start_method(self, original_method: Callable) -> Callable:
         def prepare_kwargs(*args, **kwargs):
             inputs = baggage.get_baggage("flow_inputs") or {}
-            trigger_payload = inputs.get("jaygoga_orchestra.v1_trigger_payload")
+            trigger_payload = inputs.get("jaygoga_orchestra_v1_trigger_payload")
 
             sig = inspect.signature(original_method)
-            accepts_trigger_payload = "jaygoga_orchestra.v1_trigger_payload" in sig.parameters
+            accepts_trigger_payload = "jaygoga_orchestra_v1_trigger_payload" in sig.parameters
 
             if trigger_payload is not None and accepts_trigger_payload:
-                kwargs["jaygoga_orchestra.v1_trigger_payload"] = trigger_payload
+                kwargs["jaygoga_orchestra_v1_trigger_payload"] = trigger_payload
             elif trigger_payload is not None:
                 self._log_flow_event(
-                    f"Trigger payload available but {original_method.__name__} doesn't accept jaygoga_orchestra.v1_trigger_payload parameter",
+                    f"Trigger payload available but {original_method.__name__} doesn't accept jaygoga_orchestra_v1_trigger_payload parameter",
                     color="yellow"
                 )
             return args, kwargs
@@ -979,7 +971,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
             dumped_params = {f"_{i}": arg for i, arg in enumerate(args)} | (
                 kwargs or {}
             )
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 MethodExecutionStartedEvent(
                     type="method_execution_started",
@@ -1002,7 +994,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
             )
 
             self._completed_methods.add(method_name)
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 MethodExecutionFinishedEvent(
                     type="method_execution_finished",
@@ -1015,7 +1007,7 @@ class Flow(Generic[T], metaclass=FlowMeta):
 
             return result
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 MethodExecutionFailedEvent(
                     type="method_execution_failed",
@@ -1245,14 +1237,14 @@ class Flow(Generic[T], metaclass=FlowMeta):
             This method uses the Printer utility for colored console output
             and the standard logging module for log level support.
         """
-        self._printer.console.print(message, color=color)
+        self._printer.print(message, color=color)
         if level == "info":
             logger.info(message)
         elif level == "warning":
             logger.warning(message)
 
     def plot(self, filename: str = "jaygoga_orchestra.v1_flow") -> None:
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             FlowPlotEvent(
                 type="flow_plot",

@@ -13,7 +13,6 @@ try:
 except ImportError:
     raise ImportError("`requests` not installed. Please install using `pip install requests`")
 
-
 class ClickUpTools(Toolkit):
     def __init__(
         self,

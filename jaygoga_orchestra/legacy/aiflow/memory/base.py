@@ -12,7 +12,6 @@ from dataclasses import dataclass
 from enum import Enum
 import json
 
-
 class MemoryType(Enum):
     """Types of memory in the system."""
     SHORT_TERM = "short_term"
@@ -22,14 +21,12 @@ class MemoryType(Enum):
     EPISODIC = "episodic"
     SEMANTIC = "semantic"
 
-
 class MemoryImportance(Enum):
     """Importance levels for memory entries."""
     LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
-
 
 @dataclass
 class MemoryConfig:
@@ -58,7 +55,6 @@ class MemoryConfig:
     enable_compression: bool = True
     enable_indexing: bool = True
     batch_size: int = 100
-
 
 @dataclass
 class MemoryEntry:
@@ -160,7 +156,6 @@ class MemoryEntry:
             expires_at=datetime.fromisoformat(data["expires_at"]) if data.get("expires_at") else None
         )
 
-
 class BaseMemory(ABC):
     """Abstract base class for memory systems."""
     
@@ -214,7 +209,6 @@ class BaseMemory(ABC):
                 "retention_period": getattr(self.config, f"{self.memory_type.value}_retention_days", 0)
             }
         }
-
 
 class InMemoryStorage(BaseMemory):
     """Simple in-memory storage implementation."""

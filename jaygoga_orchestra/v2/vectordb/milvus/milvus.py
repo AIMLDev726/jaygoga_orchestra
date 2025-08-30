@@ -25,7 +25,6 @@ MILVUS_DISTANCE_MAP = {
     Distance.max_inner_product: "IP",
 }
 
-
 class Milvus(VectorDb):
     def __init__(
         self,

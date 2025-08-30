@@ -7,7 +7,6 @@ from pydantic import BaseModel, ConfigDict
 
 from jaygoga_orchestra.v2.workspace.settings import WorkspaceSettings
 
-
 class InfraBase(BaseModel):
     """Base class for all InfraResource, InfraApp and InfraResources objects."""
 

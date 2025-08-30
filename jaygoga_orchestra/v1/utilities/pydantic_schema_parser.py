@@ -4,7 +4,6 @@ from typing import Dict, List, Type, Union, get_args, get_origin
 
 from pydantic import BaseModel
 
-
 class PydanticSchemaParser(BaseModel):
     model: Type[BaseModel]
 

@@ -3,7 +3,6 @@ console = Console()
 from abc import ABC, abstractmethod
 from typing import Any, Dict, List, Optional
 
-
 class BaseKnowledgeStorage(ABC):
     """Abstract base class for knowledge storage implementations."""
 

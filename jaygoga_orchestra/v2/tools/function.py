@@ -14,7 +14,6 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_error, log_exception, 
 
 T = TypeVar("T")
 
-
 def get_entrypoint_docstring(entrypoint: Callable) -> str:
     from inspect import getdoc
 
@@ -35,7 +34,6 @@ def get_entrypoint_docstring(entrypoint: Callable) -> str:
         lines.extend(parsed_doc.long_description.split("\n"))
 
     return "\n".join(lines)
-
 
 @dataclass
 class UserInputField:
@@ -60,7 +58,6 @@ class UserInputField:
             description=data["description"],
             value=data["value"],
         )
-
 
 class Function(BaseModel):
     """Model for storing functions that can be called by an agent."""
@@ -421,12 +418,10 @@ class Function(BaseModel):
         except Exception as e:
             log_error(f"Error writing cache: {e}")
 
-
 class FunctionExecutionResult(BaseModel):
     status: Literal["success", "failure"]
     result: Optional[Any] = None
     error: Optional[str] = None
-
 
 class FunctionCall(BaseModel):
     """Model for Function Calls"""

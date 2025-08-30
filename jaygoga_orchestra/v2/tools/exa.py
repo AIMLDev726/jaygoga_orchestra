@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`exa_py` not installed. Please install using `pip install exa_py`")
 
-
 class ExaTools(Toolkit):
     """
     ExaTools is a toolkit for interfacing with the Exa web search engine, providing

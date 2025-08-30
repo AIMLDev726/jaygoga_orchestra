@@ -13,8 +13,7 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
-
-class Fingerconsole.print(BaseModel):
+class Fingerprint(BaseModel):
     """
     A class for generating and managing unique identifiers for agents.
 

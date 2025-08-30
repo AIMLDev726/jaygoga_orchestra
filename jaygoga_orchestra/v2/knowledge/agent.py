@@ -13,7 +13,6 @@ from jaygoga_orchestra.v2.document.reader.base import Reader
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 from jaygoga_orchestra.v2.vectordb import VectorDb
 
-
 class AgentKnowledge(BaseModel):
     """Base class for Agent knowledge"""
 

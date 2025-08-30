@@ -5,7 +5,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def get_workspace_dir_from_env() -> Optional[Path]:
     from os import getenv
 
@@ -17,7 +16,6 @@ def get_workspace_dir_from_env() -> Optional[Path]:
         return Path(workspace_dir)
     return None
 
-
 def get_workspace_dir_path(ws_root_path: Path) -> Path:
     """
     Get the workspace directory path from the given workspace root path.
@@ -25,7 +23,7 @@ def get_workspace_dir_path(ws_root_path: Path) -> Path:
         1. subdirectory: workspace
         2. In a folder defined by the pyproject.toml file
     """
-    from jaygoga_orchestra.v2.utils.pyproject import read_pyproject_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.utils.pyproject import read_pyproject_jaygoga_orchestra_v2
 
     logger.debug(f"Searching for a workspace directory in {ws_root_path}")
 
@@ -38,7 +36,7 @@ def get_workspace_dir_path(ws_root_path: Path) -> Path:
     # Case 2: Look for a folder defined by the pyproject.toml file
     ws_pyproject_toml = ws_root_path.joinpath("pyproject.toml")
     if ws_pyproject_toml.exists() and ws_pyproject_toml.is_file():
-        jaygoga_orchestra.v2_conf = read_pyproject_jaygoga_orchestra.v2(ws_pyproject_toml)
+        jaygoga_orchestra.v2_conf = read_pyproject_jaygoga_orchestra_v2(ws_pyproject_toml)
         if jaygoga_orchestra.v2_conf is not None:
             jaygoga_orchestra.v2_conf_workspace_dir_str = jaygoga_orchestra.v2_conf.get("workspace", None)
             if jaygoga_orchestra.v2_conf_workspace_dir_str is not None:

@@ -6,7 +6,6 @@ from typing import Any, List, Optional, Union
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class AirflowTools(Toolkit):
     def __init__(
         self, dags_dir: Optional[Union[Path, str]] = None, save_dag: bool = True, read_dag: bool = True, **kwargs

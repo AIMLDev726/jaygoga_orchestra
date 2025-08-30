@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.models.response import ToolExecution
 from jaygoga_orchestra.v2.tools.function import Function, FunctionCall
 from jaygoga_orchestra.v2.utils.functions import get_function_call
 
-
 def get_function_call_for_tool_call(
     tool_call: Dict[str, Any], functions: Optional[Dict[str, Function]] = None
 ) -> Optional[FunctionCall]:
@@ -25,14 +24,12 @@ def get_function_call_for_tool_call(
                 )
     return None
 
-
 def extract_tool_call_from_string(text: str, start_tag: str = "<tool_call>", end_tag: str = "</tool_call>"):
     start_index = text.find(start_tag) + len(start_tag)
     end_index = text.find(end_tag)
 
     # Extracting the content between the tags
     return text[start_index:end_index].strip()
-
 
 def remove_tool_calls_from_string(text: str, start_tag: str = "<tool_call>", end_tag: str = "</tool_call>"):
     """Remove multiple tool calls from a string."""
@@ -41,7 +38,6 @@ def remove_tool_calls_from_string(text: str, start_tag: str = "<tool_call>", end
         end_index = text.find(end_tag) + len(end_tag)
         text = text[:start_index] + text[end_index:]
     return text
-
 
 def extract_tool_from_xml(xml_str):
     # Find tool_name
@@ -75,7 +71,6 @@ def extract_tool_from_xml(xml_str):
 
     return {"tool_name": tool_name, "parameters": arguments}
 
-
 def remove_function_calls_from_string(
     text: str, start_tag: str = "<function_calls>", end_tag: str = "</function_calls>"
 ):
@@ -85,7 +80,6 @@ def remove_function_calls_from_string(
         end_index = text.find(end_tag) + len(end_tag)
         text = text[:start_index] + text[end_index:]
     return text
-
 
 def get_function_call_for_tool_execution(
     tool_execution: ToolExecution,

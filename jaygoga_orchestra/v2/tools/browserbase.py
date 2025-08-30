@@ -19,7 +19,6 @@ except ImportError:
         "`playwright` not installed. Please install using `pip install playwright` and run `playwright install`"
     )
 
-
 class BrowserbaseTools(Toolkit):
     def __init__(
         self,

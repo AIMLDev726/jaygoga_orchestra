@@ -33,7 +33,6 @@ WorkflowSteps = List[
     ]
 ]
 
-
 @dataclass
 class Parallel:
     """A list of steps that execute in parallel"""

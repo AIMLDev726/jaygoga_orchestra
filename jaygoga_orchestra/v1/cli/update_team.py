@@ -7,11 +7,9 @@ import tomli_w
 
 from jaygoga_orchestra.v1.cli.utils import read_toml
 
-
 def update_crew() -> None:
     """Update the pyproject.toml of the Squad project to use uv."""
     migrate_pyproject("pyproject.toml", "pyproject.toml")
-
 
 def migrate_pyproject(input_file, output_file):
     """
@@ -96,23 +94,22 @@ def migrate_pyproject(input_file, output_file):
     # Backup the old pyproject.toml
     backup_file = "pyproject-old.toml"
     shutil.copy2(input_file, backup_file)
-    console.print(f"Original pyproject.toml backed up as {backup_file}")
+    print(f"Original pyproject.toml backed up as {backup_file}")
 
     # Rename the poetry.lock file
     lock_file = "poetry.lock"
     lock_backup = "poetry-old.lock"
     if os.path.exists(lock_file):
         os.rename(lock_file, lock_backup)
-        console.print(f"Original poetry.lock renamed to {lock_backup}")
+        print(f"Original poetry.lock renamed to {lock_backup}")
     else:
-        console.print("No poetry.lock file found to rename.")
+        print("No poetry.lock file found to rename.")
 
     # Write the new pyproject.toml
     with open(output_file, "wb") as f:
         tomli_w.dump(new_pyproject, f)
 
-    console.print(f"Migration complete. New pyproject.toml written to {output_file}")
-
+    print(f"Migration complete. New pyproject.toml written to {output_file}")
 
 def parse_version(version: str) -> str:
     """Parse and convert version specifiers."""

@@ -14,7 +14,6 @@ from .base import BaseMemory, MemoryEntry, MemoryType, MemoryImportance
 
 logger = logging.getLogger(__name__)
 
-
 class MemoryRetrievalStrategy(ABC):
     """Abstract base class for memory retrieval strategies."""
     
@@ -38,7 +37,6 @@ class MemoryRetrievalStrategy(ABC):
             "name": self.name,
             "strategy_type": self.__class__.__name__
         }
-
 
 class RecentMemoryStrategy(MemoryRetrievalStrategy):
     """Strategy that prioritizes recent memories."""
@@ -89,7 +87,6 @@ class RecentMemoryStrategy(MemoryRetrievalStrategy):
         scored_memories.sort(key=lambda x: x[1], reverse=True)
         return [memory for memory, _ in scored_memories[:limit]]
 
-
 class RelevanceMemoryStrategy(MemoryRetrievalStrategy):
     """Strategy that prioritizes relevance to the query."""
     
@@ -136,7 +133,6 @@ class RelevanceMemoryStrategy(MemoryRetrievalStrategy):
         # Sort by score and return top results
         scored_memories.sort(key=lambda x: x[1], reverse=True)
         return [memory for memory, _ in scored_memories[:limit]]
-
 
 class HybridMemoryStrategy(MemoryRetrievalStrategy):
     """Strategy that combines multiple factors for memory retrieval."""
@@ -211,7 +207,6 @@ class HybridMemoryStrategy(MemoryRetrievalStrategy):
         scored_memories.sort(key=lambda x: x[1], reverse=True)
         return [memory for memory, _ in scored_memories[:limit]]
 
-
 class ContextualMemoryStrategy(MemoryRetrievalStrategy):
     """Strategy that considers context for memory retrieval."""
     
@@ -280,7 +275,6 @@ class ContextualMemoryStrategy(MemoryRetrievalStrategy):
         scored_memories.sort(key=lambda x: x[1], reverse=True)
         return [memory for memory, _ in scored_memories[:limit]]
 
-
 class MemoryTypeStrategy(MemoryRetrievalStrategy):
     """Strategy that retrieves from specific memory types in order."""
     
@@ -326,7 +320,6 @@ class MemoryTypeStrategy(MemoryRetrievalStrategy):
         
         scored_memories.sort(key=lambda x: x[1], reverse=True)
         return [memory for memory, _ in scored_memories[:limit]]
-
 
 class StrategyManager:
     """Manager for memory retrieval strategies."""
@@ -386,7 +379,6 @@ class StrategyManager:
             "default_strategy": self.default_strategy,
             "total_strategies": len(self.strategies)
         }
-
 
 def create_default_strategy_manager() -> StrategyManager:
     """Create strategy manager with common strategies."""

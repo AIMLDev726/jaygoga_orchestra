@@ -49,7 +49,6 @@ try:
 except ImportError:
     raise ImportError("`couchbase` not installed. Please install using `pip install couchbase`")
 
-
 class CouchbaseSearch(VectorDb):
     """
     Couchbase Vector Database implementation with FTS (Full Text Search) index support.

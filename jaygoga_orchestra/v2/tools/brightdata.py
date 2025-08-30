@@ -16,7 +16,6 @@ try:
 except ImportError:
     raise ImportError("`requests` not installed.")
 
-
 class BrightDataTools(Toolkit):
     def __init__(
         self,

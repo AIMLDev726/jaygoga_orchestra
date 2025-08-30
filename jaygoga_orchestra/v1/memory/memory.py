@@ -8,7 +8,6 @@ if TYPE_CHECKING:
     from jaygoga_orchestra.v1.agent import Agent
     from jaygoga_orchestra.v1.task import Task
 
-
 class Memory(BaseModel):
     """
     Base class for memory, now supporting agent tags and generic metadata.

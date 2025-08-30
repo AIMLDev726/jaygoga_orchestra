@@ -13,7 +13,6 @@ from typing import Dict, Any, List, Optional, Union
 from pathlib import Path
 from .base_tool import BaseTool
 
-
 class FileOperationTool(BaseTool):
     """
     Professional file operations tool for agents.

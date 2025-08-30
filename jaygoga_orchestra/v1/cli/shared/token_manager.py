@@ -8,7 +8,6 @@ from pathlib import Path
 from typing import Optional
 from cryptography.fernet import Fernet
 
-
 class TokenManager:
     def __init__(self, file_path: str = "tokens.enc") -> None:
         """

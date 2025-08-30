@@ -6,7 +6,6 @@ from typing import List, Optional, Union
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class ShellTools(Toolkit):
     def __init__(self, base_dir: Optional[Union[Path, str]] = None, **kwargs):
         self.base_dir: Optional[Path] = None

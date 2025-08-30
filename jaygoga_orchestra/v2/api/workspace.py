@@ -13,9 +13,8 @@ from jaygoga_orchestra.v2.api.schemas.workspace import (
     WorkspaceSchema,
     WorkspaceUpdate,
 )
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 def get_teams_for_user(user: UserSchema) -> Optional[List[TeamSchema]]:
     logger.debug("--**-- Reading teams for user")
@@ -40,7 +39,6 @@ def get_teams_for_user(user: UserSchema) -> Optional[List[TeamSchema]]:
         except Exception as e:
             logger.debug(f"Could not read teams: {e}")
     return None
-
 
 def create_workspace_for_user(
     user: UserSchema, workspace: WorkspaceCreate, team: Optional[TeamIdentifier] = None
@@ -79,7 +77,6 @@ def create_workspace_for_user(
             logger.debug(f"Could not create workspace: {e}")
     return None
 
-
 def update_workspace_for_user(user: UserSchema, workspace: WorkspaceUpdate) -> Optional[WorkspaceSchema]:
     logger.debug("--**-- Updating workspace for user")
     with api.AuthenticatedClient() as api_client:
@@ -111,7 +108,6 @@ def update_workspace_for_user(user: UserSchema, workspace: WorkspaceUpdate) -> O
         except Exception as e:
             logger.debug(f"Could not update workspace: {e}")
     return None
-
 
 def update_workspace_for_team(
     user: UserSchema, workspace: WorkspaceUpdate, team: TeamIdentifier
@@ -147,9 +143,8 @@ def update_workspace_for_team(
             logger.debug(f"Could not update workspace: {e}")
     return None
 
-
 def log_workspace_event(user: UserSchema, workspace_event: WorkspaceEvent) -> bool:
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return False
 
     logger.debug("--**-- Log workspace event")

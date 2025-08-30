@@ -10,7 +10,6 @@ from jaygoga_orchestra.v2.utils.log import logger
 F = TypeVar("F", bound=Callable[..., Any])
 ToolConfig = TypeVar("ToolConfig", bound=Dict[str, Any])
 
-
 def _is_async_function(func: Callable) -> bool:
     """
     Check if a function is async, even when wrapped by decorators like @staticmethod.
@@ -53,10 +52,8 @@ def _is_async_function(func: Callable) -> bool:
 
     return False
 
-
 @overload
 def tool() -> Callable[[F], Function]: ...
-
 
 @overload
 def tool(
@@ -81,10 +78,8 @@ def tool(
     cache_ttl: int = 3600,
 ) -> Callable[[F], Function]: ...
 
-
 @overload
 def tool(func: F) -> Function: ...
-
 
 def tool(*args, **kwargs) -> Union[Function, Callable[[F], Function]]:
     """Decorator to convert a function into a Function that can be used by an agent.

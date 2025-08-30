@@ -12,7 +12,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-
 class BaseEmbedder(ABC):
     """Abstract base class for text embedders."""
     
@@ -42,7 +41,6 @@ class BaseEmbedder(ABC):
             "dimension": self.dimension,
             "provider": self.__class__.__name__
         }
-
 
 class OpenAIEmbedder(BaseEmbedder):
     """OpenAI embeddings provider."""
@@ -99,7 +97,6 @@ class OpenAIEmbedder(BaseEmbedder):
         except Exception as e:
             logger.error(f"Error embedding batch with OpenAI: {e}")
             raise
-
 
 class CohereEmbedder(BaseEmbedder):
     """Cohere embeddings provider."""
@@ -160,7 +157,6 @@ class CohereEmbedder(BaseEmbedder):
             logger.error(f"Error embedding batch with Cohere: {e}")
             raise
 
-
 class HuggingFaceEmbedder(BaseEmbedder):
     """Hugging Face embeddings provider."""
     
@@ -213,7 +209,6 @@ class HuggingFaceEmbedder(BaseEmbedder):
         except Exception as e:
             logger.error(f"Error embedding batch with Hugging Face: {e}")
             raise
-
 
 class EmbedderManager:
     """Manager for multiple embedders."""
@@ -271,7 +266,6 @@ class EmbedderManager:
             "total_embedders": len(self.embedders)
         }
 
-
 # Factory functions for easy embedder creation
 def create_openai_embedder(
     model_name: str = "text-embedding-3-small",
@@ -280,7 +274,6 @@ def create_openai_embedder(
     """Create OpenAI embedder."""
     return OpenAIEmbedder(model_name, api_key)
 
-
 def create_cohere_embedder(
     model_name: str = "embed-english-v3.0",
     api_key: Optional[str] = None
@@ -288,13 +281,11 @@ def create_cohere_embedder(
     """Create Cohere embedder."""
     return CohereEmbedder(model_name, api_key)
 
-
 def create_huggingface_embedder(
     model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
 ) -> HuggingFaceEmbedder:
     """Create Hugging Face embedder."""
     return HuggingFaceEmbedder(model_name)
-
 
 def create_default_embedder_manager() -> EmbedderManager:
     """Create embedder manager with common embedders."""
@@ -324,7 +315,6 @@ def create_default_embedder_manager() -> EmbedderManager:
         logger.warning(f"Could not create Hugging Face embedder: {e}")
     
     return manager
-
 
 class SimpleEmbedder(BaseEmbedder):
     """Simple embedder for testing and basic functionality."""
@@ -361,7 +351,6 @@ class SimpleEmbedder(BaseEmbedder):
     def get_dimension(self) -> int:
         """Get embedding dimension."""
         return self.dimension
-
 
 def create_default_embedder() -> BaseEmbedder:
     """Create default embedder based on available dependencies."""

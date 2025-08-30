@@ -8,7 +8,6 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_error
 
 T = TypeVar("T")
 
-
 def get_function_call(
     name: str,
     arguments: Optional[str] = None,
@@ -71,7 +70,6 @@ def get_function_call(
             function_call.error = f"Error while parsing function arguments: {e}\n\n Please fix and retry."
             return function_call
     return function_call
-
 
 def cache_result(enable_cache: bool = True, cache_dir: Optional[str] = None, cache_ttl: int = 3600):
     """

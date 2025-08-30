@@ -23,7 +23,6 @@ from jaygoga_orchestra.v2.utils.log import logger
 from jaygoga_orchestra.v2.workflow.v2.workflow import Workflow as WorkflowV2
 from jaygoga_orchestra.v2.workflow.workflow import Workflow
 
-
 def agent_chat_response_streamer(
     agent: Agent,
     message: str,
@@ -51,7 +50,6 @@ def agent_chat_response_streamer(
         error_response = RunResponse(content=str(e), status=RunStatus.error)
         yield error_response.to_json()
         return
-
 
 def team_chat_response_streamer(
     team: Team,
@@ -84,7 +82,6 @@ def team_chat_response_streamer(
         )
         yield error_response.to_json()
         return
-
 
 def workflow_response_streamer(
     workflow: WorkflowV2,
@@ -120,7 +117,6 @@ def workflow_response_streamer(
         )
         yield error_response.to_json()
         return
-
 
 def get_sync_router(
     agents: Optional[List[Agent]] = None, teams: Optional[List[Team]] = None, workflows: Optional[List[Workflow]] = None

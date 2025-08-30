@@ -5,12 +5,10 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import BaseModel, field_validator, model_validator
 
-
 class Media(BaseModel):
     id: str
     original_prompt: Optional[str] = None
     revised_prompt: Optional[str] = None
-
 
 class VideoArtifact(Media):
     url: Optional[str] = None  # Remote location for file (if no inline content)
@@ -32,7 +30,6 @@ class VideoArtifact(Media):
             "eta": self.eta,
         }
         return {k: v for k, v in response_dict.items() if v is not None}
-
 
 class ImageArtifact(Media):
     url: Optional[str] = None  # Remote location for file
@@ -73,7 +70,6 @@ class ImageArtifact(Media):
         }
         return {k: v for k, v in response_dict.items() if v is not None}
 
-
 class AudioArtifact(Media):
     url: Optional[str] = None  # Remote location for file
     base64_audio: Optional[str] = None  # Base64-encoded audio data
@@ -100,7 +96,6 @@ class AudioArtifact(Media):
             "length": self.length,
         }
         return {k: v for k, v in response_dict.items() if v is not None}
-
 
 class Video(BaseModel):
     filepath: Optional[Union[Path, str]] = None  # Absolute local location for video
@@ -160,7 +155,6 @@ class Video(BaseModel):
     @classmethod
     def from_artifact(cls, artifact: VideoArtifact) -> "Video":
         return cls(url=artifact.url, content=artifact.content, format=artifact.mime_type)
-
 
 class Audio(BaseModel):
     content: Optional[Any] = None  # Actual audio bytes content
@@ -231,7 +225,6 @@ class Audio(BaseModel):
     def from_artifact(cls, artifact: AudioArtifact) -> "Audio":
         return cls(url=artifact.url, content=artifact.base64_audio, format=artifact.mime_type)
 
-
 class AudioResponse(BaseModel):
     id: Optional[str] = None
     content: Optional[str] = None  # Base64 encoded
@@ -257,7 +250,6 @@ class AudioResponse(BaseModel):
             "channels": self.channels,
         }
         return {k: v for k, v in response_dict.items() if v is not None}
-
 
 class Image(BaseModel):
     url: Optional[str] = None  # Remote location for image
@@ -332,7 +324,6 @@ class Image(BaseModel):
     @classmethod
     def from_artifact(cls, artifact: ImageArtifact) -> "Image":
         return cls(url=artifact.url, content=artifact.content, format=artifact.mime_type)
-
 
 class File(BaseModel):
     url: Optional[str] = None

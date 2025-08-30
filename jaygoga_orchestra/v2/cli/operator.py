@@ -7,17 +7,15 @@ from typer import launch as typer_launch
 
 from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
 from jaygoga_orchestra.v2.cli.console import print_heading, print_info
-from jaygoga_orchestra.v2.cli.settings import AGNO_CLI_CONFIG_DIR, jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import AGNO_CLI_CONFIG_DIR, jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.infra.resources import InfraResources
 from jaygoga_orchestra.v2.utils.log import logger
 
-
-def delete_jaygoga_orchestra.v2_config() -> None:
+def delete_jaygoga_orchestra_v2_config() -> None:
     from jaygoga_orchestra.v2.utils.filesystem import delete_from_fs
 
     logger.debug("Removing existing Govinda configuration")
     delete_from_fs(AGNO_CLI_CONFIG_DIR)
-
 
 def authenticate_user() -> None:
     """Authenticate the user using credentials from jaygoga_orchestra.v2.com
@@ -42,7 +40,7 @@ def authenticate_user() -> None:
     auth_server_port = get_port_for_auth_server()
     redirect_uri = "http%3A%2F%2Flocalhost%3A{}%2Fauth".format(auth_server_port)
     auth_url = "{}?source=cli&action=signin&redirection_supported=true&redirecturi={}".format(
-        jaygoga_orchestra.v2_cli_settings.cli_auth_url, redirect_uri
+        jaygoga_orchestra_v2_cli_settings.cli_auth_url, redirect_uri
     )
     print_info("\nYour browser will be opened to visit:\n{}".format(auth_url))
     typer_launch(auth_url)
@@ -53,7 +51,7 @@ def authenticate_user() -> None:
         logger.error("Could not authenticate, please set AGNO_API_KEY or try again")
         return
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
     existing_user: Optional[UserSchema] = jaygoga_orchestra.v2_config.user if jaygoga_orchestra.v2_config is not None else None
     # Authenticate the user and claim any workspaces from anon user
     try:
@@ -78,8 +76,7 @@ def authenticate_user() -> None:
 
     print_info("Welcome {}".format(user.email))
 
-
-def initialize_jaygoga_orchestra.v2(reset: bool = False, login: bool = False) -> Optional[AgnoCliConfig]:
+def initialize_jaygoga_orchestra_v2(reset: bool = False, login: bool = False) -> Optional[AgnoCliConfig]:
     """Initialize Govinda on the users machine.
 
     Steps:
@@ -92,7 +89,7 @@ def initialize_jaygoga_orchestra.v2(reset: bool = False, login: bool = False) ->
 
     print_heading("Welcome to Govinda!")
     if reset:
-        delete_jaygoga_orchestra.v2_config()
+        delete_jaygoga_orchestra_v2_config()
 
     logger.debug("Initializing Govinda")
 
@@ -116,7 +113,7 @@ def initialize_jaygoga_orchestra.v2(reset: bool = False, login: bool = False) ->
     else:
         raise Exception("Something went wrong, please try again")
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
     if jaygoga_orchestra.v2_config is None:
         logger.debug("Creating new AgnoCliConfig")
         jaygoga_orchestra.v2_config = AgnoCliConfig()
@@ -134,9 +131,8 @@ def initialize_jaygoga_orchestra.v2(reset: bool = False, login: bool = False) ->
     logger.debug("Govinda initialized")
     return jaygoga_orchestra.v2_config
 
-
 def start_resources(
-    jaygoga_orchestra.v2_config: AgnoCliConfig,
+    jaygoga_orchestra_v2_config: AgnoCliConfig,
     resources_file_path: Path,
     target_env: Optional[str] = None,
     target_infra: Optional[str] = None,
@@ -211,9 +207,8 @@ def start_resources(
     if num_resources_created != num_resources_to_create:
         logger.error("Some resources failed to create, please check logs")
 
-
 def stop_resources(
-    jaygoga_orchestra.v2_config: AgnoCliConfig,
+    jaygoga_orchestra_v2_config: AgnoCliConfig,
     resources_file_path: Path,
     target_env: Optional[str] = None,
     target_infra: Optional[str] = None,
@@ -285,9 +280,8 @@ def stop_resources(
     if num_resources_shutdown != num_resources_to_shutdown:
         logger.error("Some resources failed to delete, please check logs")
 
-
 def patch_resources(
-    jaygoga_orchestra.v2_config: AgnoCliConfig,
+    jaygoga_orchestra_v2_config: AgnoCliConfig,
     resources_file_path: Path,
     target_env: Optional[str] = None,
     target_infra: Optional[str] = None,

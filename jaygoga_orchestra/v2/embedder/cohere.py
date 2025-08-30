@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`cohere` not installed. Please install using `pip install cohere`.")
 
-
 @dataclass
 class CohereEmbedder(Embedder):
     id: str = "embed-english-v3.0"

@@ -35,7 +35,6 @@ try:
 except ImportError:
     raise ImportError("`mistralai` not installed. Please install using `pip install mistralai`")
 
-
 @dataclass
 class MistralChat(Model):
     """

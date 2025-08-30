@@ -8,7 +8,7 @@ from pydantic import PrivateAttr
 from jaygoga_orchestra.v1.memory.memory import Memory
 from jaygoga_orchestra.v1.memory.short_term.short_term_memory_item import ShortTermMemoryItem
 from jaygoga_orchestra.v1.memory.storage.rag_storage import RAGStorage
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemoryQueryStartedEvent,
     MemoryQueryCompletedEvent,
@@ -17,7 +17,6 @@ from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemorySaveCompletedEvent,
     MemorySaveFailedEvent,
 )
-
 
 class ShortTermMemory(Memory):
     """
@@ -60,7 +59,7 @@ class ShortTermMemory(Memory):
         value: Any,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemorySaveStartedEvent(
                 value=value,
@@ -85,7 +84,7 @@ class ShortTermMemory(Memory):
 
             super().save(value=item.data, metadata=item.metadata)
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveCompletedEvent(
                     value=value,
@@ -98,7 +97,7 @@ class ShortTermMemory(Memory):
                 ),
             )
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveFailedEvent(
                     value=value,
@@ -117,7 +116,7 @@ class ShortTermMemory(Memory):
         limit: int = 3,
         score_threshold: float = 0.35,
     ):
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemoryQueryStartedEvent(
                 query=query,
@@ -135,7 +134,7 @@ class ShortTermMemory(Memory):
                 query=query, limit=limit, score_threshold=score_threshold
             )  # type: ignore # BUG? The reference is to the parent class, but the parent class does not have this parameters
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryCompletedEvent(
                     query=query,
@@ -151,7 +150,7 @@ class ShortTermMemory(Memory):
 
             return results
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryFailedEvent(
                     query=query,

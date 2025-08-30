@@ -13,7 +13,6 @@ except ImportError:
 from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.chunking.strategy import ChunkingStrategy
 
-
 class MarkdownChunking(ChunkingStrategy):
     """A chunking strategy that splits markdown based on structure like headers, paragraphs and sections"""
 

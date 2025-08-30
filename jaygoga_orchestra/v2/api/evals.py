@@ -3,13 +3,12 @@ console = Console()
 from jaygoga_orchestra.v2.api.api import api
 from jaygoga_orchestra.v2.api.routes import ApiRoutes
 from jaygoga_orchestra.v2.api.schemas.evals import EvalRunCreate
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.utils.log import log_debug
-
 
 def create_eval_run(eval_run: EvalRunCreate) -> None:
     """Call the API to create an evaluation run."""
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     log_debug("Calling the API to create an evaluation run")
@@ -20,10 +19,9 @@ def create_eval_run(eval_run: EvalRunCreate) -> None:
             log_debug(f"Could not create evaluation run: {e}")
     return
 
-
 async def async_create_eval_run(eval_run: EvalRunCreate) -> None:
     """Call the API to create an evaluation run."""
-    if not jaygoga_orchestra.v2_cli_settings.api_enabled:
+    if not jaygoga_orchestra_v2_cli_settings.api_enabled:
         return
 
     log_debug("Calling the API to create an evaluation run")

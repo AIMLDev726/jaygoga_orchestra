@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from typing import Any, Dict, Optional
 
-
 class ExternalMemoryItem:
     def __init__(
         self,

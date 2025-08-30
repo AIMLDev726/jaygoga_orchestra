@@ -5,7 +5,6 @@ from datetime import datetime, timezone
 from typing import Dict, Any
 import uuid
 
-
 @dataclass
 class TraceEvent:
     """Individual trace event payload"""

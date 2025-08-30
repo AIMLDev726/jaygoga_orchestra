@@ -13,7 +13,6 @@ from datetime import datetime
 
 from .base import BaseCLICommand, CLIContext
 
-
 class ManageCommand(BaseCLICommand):
     """Command for managing AIFlow projects."""
     

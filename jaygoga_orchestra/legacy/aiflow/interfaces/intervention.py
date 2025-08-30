@@ -10,7 +10,6 @@ from typing import Dict, List, Optional, Any
 from datetime import datetime
 from dataclasses import dataclass
 
-
 @dataclass
 class InterventionRequest:
     """Represents a human intervention request."""
@@ -20,7 +19,6 @@ class InterventionRequest:
     intervention_type: str  # 'approval', 'guidance', 'modification'
     response: Optional[str] = None
     approved: Optional[bool] = None
-
 
 class HumanIntervention:
     """
@@ -160,7 +158,6 @@ class HumanIntervention:
                 request.approved = True
                 del self.pending_requests[request_id]
 
-
 class AgentConversation:
     """
     Agent-to-agent conversation system.
@@ -253,7 +250,6 @@ Keep your response concise and focused.
         for agent_conversations in self.active_conversations.values():
             agent_conversations.clear()
 
-
 # Utility functions for intervention management
 async def wait_for_human_input(
     prompt: str,
@@ -266,7 +262,6 @@ async def wait_for_human_input(
         return None
     except asyncio.TimeoutError:
         return None
-
 
 def create_intervention_context(
     agent_name: str,

@@ -4,7 +4,6 @@ from typing import List, Optional, Union
 
 from jaygoga_orchestra.v2.models.message import Message
 
-
 class AgentRunException(Exception):
     def __init__(
         self,
@@ -20,7 +19,6 @@ class AgentRunException(Exception):
         self.messages = messages
         self.stop_execution = stop_execution
 
-
 class RetryAgentRun(AgentRunException):
     """Exception raised when a tool call should be retried."""
 
@@ -34,7 +32,6 @@ class RetryAgentRun(AgentRunException):
         super().__init__(
             exc, user_message=user_message, agent_message=agent_message, messages=messages, stop_execution=False
         )
-
 
 class StopAgentRun(AgentRunException):
     """Exception raised when an agent should stop executing entirely."""
@@ -50,13 +47,11 @@ class StopAgentRun(AgentRunException):
             exc, user_message=user_message, agent_message=agent_message, messages=messages, stop_execution=True
         )
 
-
 class RunCancelledException(Exception):
     """Exception raised when a run is cancelled."""
 
     def __init__(self, message: str = "Operation cancelled by user"):
         super().__init__(message)
-
 
 class AgnoError(Exception):
     """Exception raised when an internal error occurs."""
@@ -69,7 +64,6 @@ class AgnoError(Exception):
     def __str__(self) -> str:
         return str(self.message)
 
-
 class ModelProviderError(AgnoError):
     """Exception raised when a model provider returns an error."""
 
@@ -80,7 +74,6 @@ class ModelProviderError(AgnoError):
         self.model_name = model_name
         self.model_id = model_id
 
-
 class ModelRateLimitError(ModelProviderError):
     """Exception raised when a model provider returns a rate limit error."""
 
@@ -88,7 +81,6 @@ class ModelRateLimitError(ModelProviderError):
         self, message: str, status_code: int = 429, model_name: Optional[str] = None, model_id: Optional[str] = None
     ):
         super().__init__(message, status_code, model_name, model_id)
-
 
 class EvalError(Exception):
     """Exception raised when an evaluation fails."""

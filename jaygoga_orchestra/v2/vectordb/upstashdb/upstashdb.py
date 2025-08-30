@@ -18,7 +18,6 @@ from jaygoga_orchestra.v2.vectordb.base import VectorDb
 
 DEFAULT_NAMESPACE = ""
 
-
 class UpstashVectorDb(VectorDb):
     """
     This class provides an interface to Upstash Vector database with support for both

@@ -33,7 +33,7 @@ class ExperimentResults:
         if filepath:
             with open(filepath, 'w') as f:
                 json.dump(data, f, indent=2)
-            self.display.console.console.print(f"[green]Results saved to {filepath}[/green]")
+            self.display.print(f"[green]Results saved to {filepath}[/green]")
 
         return data
 
@@ -50,14 +50,14 @@ class ExperimentResults:
                 elif isinstance(baseline_data, list):
                     baseline_runs = baseline_data
             except (json.JSONDecodeError, FileNotFoundError) as e:
-                self.display.console.console.print(f"[yellow]Warning: Could not load baseline file: {str(e)}[/yellow]")
+                self.display.print(f"[yellow]Warning: Could not load baseline file: {str(e)}[/yellow]")
 
         if not baseline_runs:
             if save_current:
                 current_data = self.to_json()
                 with open(baseline_filepath, 'w') as f:
                     json.dump([current_data], f, indent=2)
-                self.display.console.console.print(f"[green]Saved current results as new baseline to {baseline_filepath}[/green]")
+                self.display.print(f"[green]Saved current results as new baseline to {baseline_filepath}[/green]")
             return {"is_baseline": True, "changes": {}}
 
         baseline_runs.sort(key=lambda x: x.get("timestamp", ""), reverse=True)
@@ -73,7 +73,7 @@ class ExperimentResults:
             baseline_runs.append(current_data)
             with open(baseline_filepath, 'w') as f:
                 json.dump(baseline_runs, f, indent=2)
-            self.display.console.console.print(f"[green]Added current results to baseline file {baseline_filepath}[/green]")
+            self.display.print(f"[green]Added current results to baseline file {baseline_filepath}[/green]")
 
         return comparison
 

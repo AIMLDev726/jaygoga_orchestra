@@ -10,7 +10,6 @@ from jaygoga_orchestra.v2.infra.context import ContainerContext
 from jaygoga_orchestra.v2.infra.resource import InfraResource
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class InfraApp(InfraBase):
     """Base class for Infrastructure Apps."""
 

@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`mem0ai` package not found. Please install it with `pip install mem0ai`")
 
-
 class Mem0Tools(Toolkit):
     def __init__(
         self,

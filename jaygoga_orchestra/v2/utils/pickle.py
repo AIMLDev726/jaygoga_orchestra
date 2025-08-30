@@ -5,7 +5,6 @@ from typing import Any, Optional
 
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 def pickle_object_to_file(obj: Any, file_path: Path) -> Any:
     """Pickles and saves object to file_path"""
     import pickle
@@ -14,7 +13,6 @@ def pickle_object_to_file(obj: Any, file_path: Path) -> Any:
     if not _obj_parent.exists():
         _obj_parent.mkdir(parents=True, exist_ok=True)
     pickle.dump(obj, file_path.open("wb"))
-
 
 def unpickle_object_from_file(file_path: Path, verify_class: Optional[Any] = None) -> Any:
     """Reads the contents of file_path and unpickles the binary content into an object.

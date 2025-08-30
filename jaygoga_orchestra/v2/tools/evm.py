@@ -17,7 +17,6 @@ try:
 except ImportError:
     raise ImportError("`web3` not installed. Please install using `pip install web3`")
 
-
 class EvmTools(Toolkit):
     def __init__(
         self,

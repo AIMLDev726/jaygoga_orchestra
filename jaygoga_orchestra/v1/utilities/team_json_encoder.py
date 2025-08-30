@@ -10,7 +10,6 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-
 class CrewJSONEncoder(json.JSONEncoder):
     """Custom JSON encoder for Govinda objects and special types."""
     def default(self, obj):

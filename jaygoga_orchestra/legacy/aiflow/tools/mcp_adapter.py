@@ -19,14 +19,12 @@ from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass
 from .base_tool import BaseTool
 
-
 @dataclass
 class StdioServerParameters:
     """Parameters for Stdio MCP server connection."""
     command: str
     args: List[str]
     env: Optional[Dict[str, str]] = None
-
 
 @dataclass
 class SSEServerParameters:
@@ -35,14 +33,12 @@ class SSEServerParameters:
     transport: str = "sse"
     headers: Optional[Dict[str, str]] = None
 
-
 @dataclass
 class StreamableHTTPServerParameters:
     """Parameters for Streamable HTTP MCP server connection."""
     url: str
     transport: str = "streamable-http"
     headers: Optional[Dict[str, str]] = None
-
 
 class MCPTool(BaseTool):
     """Wrapper for MCP server tools."""
@@ -73,7 +69,6 @@ class MCPTool(BaseTool):
     def _get_parameters_schema(self) -> Dict[str, Any]:
         """Get the parameters schema for this MCP tool."""
         return self.schema.get("inputSchema", {})
-
 
 class MCPServerAdapter:
     """

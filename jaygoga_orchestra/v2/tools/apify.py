@@ -15,7 +15,6 @@ try:
 except ImportError:
     raise ImportError("`apify-client` not installed. Please install using `pip install apify-client`")
 
-
 class ApifyTools(Toolkit):
     def __init__(self, actors: Optional[Union[str, List[str]]] = None, apify_api_token: Optional[str] = None):
         """Initialize ApifyTools with specific Actors.
@@ -169,12 +168,10 @@ Returns:
         except Exception as e:
             logger.error(f"Failed to register Apify Actor '{actor_id}': {str(e)}")
 
-
 # Constants
 MAX_DESCRIPTION_LEN = 350
 REQUESTS_TIMEOUT_SECS = 300
 APIFY_API_ENDPOINT_GET_DEFAULT_BUILD = "https://api.apify.com/v2/acts/{actor_id}/builds/default"
-
 
 # Utility functions
 def props_to_json_schema(input_dict, required_fields=None):
@@ -266,7 +263,6 @@ def props_to_json_schema(input_dict, required_fields=None):
 
     return schema
 
-
 def create_apify_client(token: str) -> ApifyClient:
     """Create an Apify client instance with a custom user-agent.
 
@@ -287,7 +283,6 @@ def create_apify_client(token: str) -> ApifyClient:
         http_client.headers["user-agent"] += "; Origin/jaygoga_orchestra.v2"
     return client
 
-
 def actor_id_to_tool_name(actor_id: str) -> str:
     """Turn actor_id into a valid tool name.
 
@@ -299,7 +294,6 @@ def actor_id_to_tool_name(actor_id: str) -> str:
     """
     valid_chars = string.ascii_letters + string.digits + "_-"
     return "apify_actor_" + "".join(char if char in valid_chars else "_" for char in actor_id)
-
 
 def get_actor_latest_build(apify_client: ApifyClient, actor_id: str) -> Dict[str, Any]:
     """Get the latest build of an Actor from the default build tag.
@@ -332,7 +326,6 @@ def get_actor_latest_build(apify_client: ApifyClient, actor_id: str) -> Dict[str
         raise ValueError(f"Failed to get the latest build data of the Actor {actor_id}.")
 
     return data
-
 
 def prune_actor_input_schema(input_schema: Dict[str, Any]) -> Tuple[Dict[str, Any], List[str]]:
     """Get the input schema from the Actor build and trim descriptions.

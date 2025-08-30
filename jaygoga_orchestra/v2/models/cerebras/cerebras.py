@@ -29,7 +29,6 @@ try:
 except (ImportError, ModuleNotFoundError):
     raise ImportError("`cerebras-cloud-sdk` not installed. Please install using `pip install cerebras-cloud-sdk`")
 
-
 @dataclass
 class Cerebras(Model):
     """

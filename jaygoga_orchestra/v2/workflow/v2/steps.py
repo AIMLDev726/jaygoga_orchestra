@@ -28,7 +28,6 @@ WorkflowSteps = List[
     ]
 ]
 
-
 @dataclass
 class Steps:
     """A pipeline of steps that execute in order"""

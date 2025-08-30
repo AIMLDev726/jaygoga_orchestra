@@ -7,7 +7,6 @@ from pydantic import BaseModel, Field, InstanceOf, model_validator
 
 from jaygoga_orchestra.v1.flow import Flow
 
-
 class FlowTrackable(BaseModel):
     """Mixin that tracks the Flow instance that instantiated the object, e.g. a
     Flow instance that created a Squad or Agent.

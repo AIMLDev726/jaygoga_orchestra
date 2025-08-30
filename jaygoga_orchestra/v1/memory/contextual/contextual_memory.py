@@ -13,7 +13,6 @@ if TYPE_CHECKING:
     from jaygoga_orchestra.v1.agent import Agent
     from jaygoga_orchestra.v1.task import Task
 
-
 class ContextualMemory:
     def __init__(
         self,

@@ -16,7 +16,6 @@ from .strategies import StrategyManager, create_default_strategy_manager
 
 logger = logging.getLogger(__name__)
 
-
 class AdvancedMemoryManager:
     """
     Advanced memory manager that coordinates multiple memory types and strategies.
@@ -395,7 +394,6 @@ class AdvancedMemoryManager:
                 break
             except Exception as e:
                 logger.error(f"Error in periodic consolidation: {e}")
-
 
 # Legacy compatibility
 class MemoryManager:

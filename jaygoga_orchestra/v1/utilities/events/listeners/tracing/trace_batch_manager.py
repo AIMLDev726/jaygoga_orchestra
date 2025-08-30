@@ -8,7 +8,7 @@ from dataclasses import dataclass, field
 from jaygoga_orchestra.v1.utilities.constants import CREWAI_BASE_URL
 from jaygoga_orchestra.v1.cli.authentication.token import AuthError, get_auth_token
 
-from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra.v1_version
+from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra_v1_version
 from jaygoga_orchestra.v1.cli.plus_api import PlusAPI
 from rich.console import Console
 from rich.panel import Panel
@@ -18,12 +18,11 @@ from logging import getLogger
 
 logger = getLogger(__name__)
 
-
 @dataclass
 class TraceBatch:
     """Batch of events to send to backend"""
 
-    version: str = field(default_factory=get_jaygoga_orchestra.v1_version)
+    version: str = field(default_factory=get_jaygoga_orchestra_v1_version)
     batch_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_context: Dict[str, str] = field(default_factory=dict)
     execution_metadata: Dict[str, Any] = field(default_factory=dict)
@@ -37,7 +36,6 @@ class TraceBatch:
             "execution_metadata": self.execution_metadata,
             "events": [event.to_dict() for event in self.events],
         }
-
 
 class TraceBatchManager:
     """Single responsibility: Manage batches and event buffering"""
@@ -137,7 +135,7 @@ class TraceBatchManager:
                     title="Trace Batch Initialization",
                     border_style="green",
                 )
-                console.console.print(panel)
+                print(panel)
             else:
                 logger.warning(
                     f"Trace batch initialization returned status {response.status_code}. Continuing without tracing."
@@ -253,7 +251,7 @@ class TraceBatchManager:
                     title="Trace Batch Finalization",
                     border_style="green",
                 )
-                console.console.print(panel)
+                print(panel)
 
             else:
                 logger.error(

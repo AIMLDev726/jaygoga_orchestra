@@ -3,7 +3,6 @@ console = Console()
 from pathlib import Path
 from typing import Dict, Optional
 
-
 def get_python_objects_from_module(module_path: Path) -> Dict:
     """Returns a dictionary of python objects from a module"""
     import importlib.util

@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 import collections.abc
 import inspect
@@ -24,7 +25,6 @@ from jaygoga_orchestra.v2.storage.session.workflow import WorkflowSession
 from jaygoga_orchestra.v2.utils.common import nested_model_dump
 from jaygoga_orchestra.v2.utils.log import log_debug, log_warning, logger, set_log_level_to_debug, set_log_level_to_info
 from jaygoga_orchestra.v2.utils.merge_dict import merge_dictionaries
-
 
 @dataclass(init=False)
 class Workflow:
@@ -63,9 +63,8 @@ class Workflow:
     debug_mode: bool = False
     # monitoring=True logs Workflow information to jaygoga_orchestra.v2.com for monitoring
     monitoring: bool = field(default_factory=lambda: getenv("AGNO_MONITOR", "false").lower() == "true")
-    # telemetry=True logs minimal telemetry for analytics
+
     # This helps us improve the Workflow and provide better support
-    telemetry: bool = field(default_factory=lambda: getenv("AGNO_TELEMETRY", "true").lower() == "true")
 
     # --- Run Info: DO NOT SET ---
     run_id: Optional[str] = None
@@ -113,7 +112,6 @@ class Workflow:
 
         self.debug_mode = debug_mode
         self.monitoring = monitoring
-        self.telemetry = telemetry
 
         self.run_id = None
         self.run_input = None
@@ -405,7 +403,7 @@ class Workflow:
         # Override telemetry if environment variable is set
         telemetry_env = getenv("AGNO_TELEMETRY")
         if telemetry_env is not None:
-            self.telemetry = telemetry_env.lower() == "true"
+            pass
 
     def initialize_memory(self) -> None:
         if self.memory is None:

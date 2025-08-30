@@ -5,8 +5,7 @@ from typing import Dict, Optional
 
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
-def read_pyproject_jaygoga_orchestra.v2(pyproject_file: Path) -> Optional[Dict]:
+def read_pyproject_jaygoga_orchestra_v2(pyproject_file: Path) -> Optional[Dict]:
     log_debug(f"Reading {pyproject_file}")
     try:
         import tomli

@@ -8,7 +8,6 @@ from dataclasses import field
 from pydantic import ConfigDict
 from pydantic.dataclasses import dataclass as pyd_dataclass
 
-
 @pyd_dataclass(config=ConfigDict(extra="forbid"))
 class _MissingProvider:
     """Base class for missing provider configurations.

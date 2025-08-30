@@ -12,7 +12,6 @@ from typing import Any, List, Optional
 from jaygoga_orchestra.v2.tools.toolkit import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class SpiderTools(Toolkit):
     def __init__(
         self,

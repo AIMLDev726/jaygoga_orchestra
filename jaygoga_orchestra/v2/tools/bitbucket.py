@@ -10,7 +10,6 @@ import requests
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class BitbucketTools(Toolkit):
     def __init__(
         self,

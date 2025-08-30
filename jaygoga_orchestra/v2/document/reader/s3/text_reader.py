@@ -18,7 +18,6 @@ try:
 except ImportError:
     raise ImportError("`textract` not installed. Please install it via `pip install textract`.")
 
-
 class S3TextReader(Reader):
     """Reader for text files on S3"""
 

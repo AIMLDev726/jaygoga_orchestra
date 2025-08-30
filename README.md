@@ -99,15 +99,9 @@ intelligence_team = Team(
     collaboration_mode="adaptive"
 )
 
-# Create intelligent workflow
-analysis_workflow = Workflow(
-    team=intelligence_team,
-    name="Comprehensive Business Analysis",
-    description="End-to-end analysis from raw data to strategic insights"
-)
 
 # Execute with dynamic adaptation
-results = analysis_workflow.run(
+results = intelligence_team.run(
     task="Analyze our Q4 performance data and provide strategic recommendations for Q1",
     context={"data_source": "sales_db", "priority": "high", "deadline": "2024-01-15"}
 )
@@ -252,9 +246,7 @@ content_team = Team([
     Agent(name="SEOOptimizer", model="gpt-3.5-turbo")
 ])
 
-# Dynamic content workflow
-content_flow = Workflow(team=content_team)
-result = content_flow.run("Create a viral blog post about AI trends")
+result = content_team.run("Create a viral blog post about AI trends")
 ```
 
 ## 🎨 Why JayGoga-Orchestra?

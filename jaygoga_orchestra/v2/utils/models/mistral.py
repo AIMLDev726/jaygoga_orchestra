@@ -21,7 +21,6 @@ try:
 except ImportError:
     raise ImportError("`mistralai` not installed. Please install using `pip install mistralai`")
 
-
 def _format_image_for_message(image: Image) -> Optional[ImageURLChunk]:
     # Case 1: Image is a URL
     if image.url is not None:
@@ -47,7 +46,6 @@ def _format_image_for_message(image: Image) -> Optional[ImageURLChunk]:
         base64_image = base64.b64encode(image.content).decode("utf-8")
         return ImageURLChunk(image_url=f"data:image/jpeg;base64,{base64_image}")
     return None
-
 
 def format_messages(messages: List[Message]) -> List[MistralMessage]:
     mistral_messages: List[MistralMessage] = []

@@ -11,7 +11,6 @@ from typing import Dict, Any, List, Tuple, Optional
 from pathlib import Path
 from datetime import datetime
 
-
 class HallucinationDetector:
     """Detects and prevents hallucination in agent outputs."""
     
@@ -84,7 +83,6 @@ class HallucinationDetector:
                 issues.append("Repetitive content detected - possible generated text")
         
         return len(issues) > 0, issues
-
 
 class OutputValidator:
     """Validates specific types of outputs for authenticity."""
@@ -222,7 +220,6 @@ class OutputValidator:
             return False, "Response appears to be simulated AI refusal"
         
         return True, "Valid LLM response"
-
 
 class ResultValidationSystem:
     """Complete result validation system for AIFlow."""

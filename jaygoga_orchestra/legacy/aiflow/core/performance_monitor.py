@@ -13,7 +13,6 @@ from datetime import datetime, timedelta
 from dataclasses import dataclass, asdict
 from pathlib import Path
 
-
 @dataclass
 class TaskMetrics:
     """Real task execution metrics."""
@@ -30,7 +29,6 @@ class TaskMetrics:
     error_message: Optional[str] = None
     validation_passed: bool = False
 
-
 @dataclass
 class AgentMetrics:
     """Real agent performance metrics."""
@@ -43,7 +41,6 @@ class AgentMetrics:
     average_response_time: float = 0.0
     success_rate: float = 0.0
     last_activity: Optional[float] = None
-
 
 @dataclass
 class TeamMetrics:
@@ -62,7 +59,6 @@ class TeamMetrics:
     files_created: List[str] = None
     api_calls_made: int = 0
     cache_hits: int = 0
-
 
 class ResultValidator:
     """Validates results to prevent hallucination and simulation."""
@@ -155,7 +151,6 @@ class ResultValidator:
                 return False, f"Demo/fake data detected in search results: {url}"
         
         return True, "Valid web search results"
-
 
 class PerformanceMonitor:
     """

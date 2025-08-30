@@ -33,7 +33,6 @@ from jaygoga_orchestra.v1.rag.core.base_client import (
 )
 from jaygoga_orchestra.v1.rag.types import SearchResult
 
-
 class ChromaDBClient(BaseClient):
     """ChromaDB implementation of the BaseClient protocol.
 

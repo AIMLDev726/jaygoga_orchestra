@@ -56,7 +56,6 @@ from jaygoga_orchestra.v1.utilities.events.llm_guardrail_events import (
 )
 from jaygoga_orchestra.v1.utilities.serialization import to_serializable
 
-
 from .trace_batch_manager import TraceBatchManager
 
 from jaygoga_orchestra.v1.utilities.events.memory_events import (
@@ -69,8 +68,7 @@ from jaygoga_orchestra.v1.utilities.events.memory_events import (
 )
 
 from jaygoga_orchestra.v1.cli.authentication.token import AuthError, get_auth_token
-from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra.v1_version
-
+from jaygoga_orchestra.v1.cli.version import get_jaygoga_orchestra_v1_version
 
 class TraceCollectionListener(BaseEventListener):
     """
@@ -123,15 +121,15 @@ class TraceCollectionListener(BaseEventListener):
             "trace_id": str(uuid.uuid4()),
         }
 
-    def setup_listeners(self, jaygoga_orchestra.v1_event_bus):
+    def setup_listeners(self, event_bus):
         """Setup event listeners - delegates to specific handlers"""
 
         if self._listeners_setup:
             return
 
-        self._register_flow_event_handlers(jaygoga_orchestra.v1_event_bus)
-        self._register_context_event_handlers(jaygoga_orchestra.v1_event_bus)
-        self._register_action_event_handlers(jaygoga_orchestra.v1_event_bus)
+        self._register_flow_event_handlers(event_bus)
+        self._register_context_event_handlers(event_bus)
+        self._register_action_event_handlers(event_bus)
 
         self._listeners_setup = True
 
@@ -303,7 +301,7 @@ class TraceCollectionListener(BaseEventListener):
         execution_metadata = {
             "crew_name": getattr(event, "crew_name", "Unknown Squad"),
             "execution_start": event.timestamp if hasattr(event, "timestamp") else None,
-            "jaygoga_orchestra.v1_version": get_jaygoga_orchestra.v1_version(),
+            "jaygoga_orchestra.v1_version": get_jaygoga_orchestra_v1_version(),
         }
 
         self.batch_manager.batch_owner_type = "squad"
@@ -317,7 +315,7 @@ class TraceCollectionListener(BaseEventListener):
         execution_metadata = {
             "flow_name": getattr(event, "flow_name", "Unknown Flow"),
             "execution_start": event.timestamp if hasattr(event, "timestamp") else None,
-            "jaygoga_orchestra.v1_version": get_jaygoga_orchestra.v1_version(),
+            "jaygoga_orchestra.v1_version": get_jaygoga_orchestra_v1_version(),
             "execution_type": "flow",
         }
 
@@ -353,7 +351,7 @@ class TraceCollectionListener(BaseEventListener):
             user_context = self._get_user_context()
             execution_metadata = {
                 "crew_name": getattr(source, "name", "Unknown Squad"),
-                "jaygoga_orchestra.v1_version": get_jaygoga_orchestra.v1_version(),
+                "jaygoga_orchestra.v1_version": get_jaygoga_orchestra_v1_version(),
             }
             self.batch_manager.initialize_batch(user_context, execution_metadata)
 

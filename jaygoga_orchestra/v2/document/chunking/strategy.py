@@ -5,7 +5,6 @@ from typing import List
 
 from jaygoga_orchestra.v2.document.base import Document
 
-
 class ChunkingStrategy(ABC):
     """Base class for chunking strategies"""
 

@@ -17,7 +17,6 @@ import os
 import jaygoga_orchestra
 from datetime import datetime
 
-
 async def main():
     """
     Professional business intelligence workflow with real tools and validation.
@@ -240,7 +239,6 @@ async def main():
         # Cleanup
         await team.cleanup()
         print("\n🧹 Cleanup completed")
-
 
 if __name__ == "__main__":
     print("🔧 AIFLOW PROFESSIONAL BUSINESS INTELLIGENCE")

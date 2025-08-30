@@ -6,7 +6,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.embedder.openai import OpenAIEmbedder
 
-
 @dataclass
 class TogetherEmbedder(OpenAIEmbedder):
     id: str = "togethercomputer/m2-bert-80M-32k-retrieval"

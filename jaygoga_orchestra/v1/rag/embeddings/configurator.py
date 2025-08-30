@@ -6,7 +6,6 @@ from typing import Any, Dict, Optional, cast
 from chromadb import Documents, EmbeddingFunction, Embeddings
 from chromadb.api.types import validate_embedding_function
 
-
 class EmbeddingConfigurator:
     def __init__(self):
         self.embedding_functions = {
@@ -214,7 +213,7 @@ class EmbeddingConfigurator:
                     embeddings = embedding.embed_documents(input)
                     return cast(Embeddings, embeddings)
                 except Exception as e:
-                    console.print("Error during Watson embedding:", e)
+                    print("Error during Watson embedding:", e)
                     raise e
 
         return WatsonEmbeddingFunction()

@@ -4,7 +4,6 @@ from typing import Any, Dict, Optional
 
 from jaygoga_orchestra.v1.utilities.events.base_events import BaseEvent
 
-
 class MemoryBaseEvent(BaseEvent):
     """Base event for memory operations"""
 
@@ -21,7 +20,6 @@ class MemoryBaseEvent(BaseEvent):
         self._set_agent_params(data)
         self._set_task_params(data)
 
-
 class MemoryQueryStartedEvent(MemoryBaseEvent):
     """Event emitted when a memory query is started"""
 
@@ -29,7 +27,6 @@ class MemoryQueryStartedEvent(MemoryBaseEvent):
     query: str
     limit: int
     score_threshold: Optional[float] = None
-
 
 class MemoryQueryCompletedEvent(MemoryBaseEvent):
     """Event emitted when a memory query is completed successfully"""
@@ -41,7 +38,6 @@ class MemoryQueryCompletedEvent(MemoryBaseEvent):
     score_threshold: Optional[float] = None
     query_time_ms: float
 
-
 class MemoryQueryFailedEvent(MemoryBaseEvent):
     """Event emitted when a memory query fails"""
 
@@ -51,7 +47,6 @@ class MemoryQueryFailedEvent(MemoryBaseEvent):
     score_threshold: Optional[float] = None
     error: str
 
-
 class MemorySaveStartedEvent(MemoryBaseEvent):
     """Event emitted when a memory save operation is started"""
 
@@ -59,7 +54,6 @@ class MemorySaveStartedEvent(MemoryBaseEvent):
     value: Optional[str] = None
     metadata: Optional[Dict[str, Any]] = None
     agent_role: Optional[str] = None
-
 
 class MemorySaveCompletedEvent(MemoryBaseEvent):
     """Event emitted when a memory save operation is completed successfully"""
@@ -70,7 +64,6 @@ class MemorySaveCompletedEvent(MemoryBaseEvent):
     agent_role: Optional[str] = None
     save_time_ms: float
 
-
 class MemorySaveFailedEvent(MemoryBaseEvent):
     """Event emitted when a memory save operation fails"""
 
@@ -80,13 +73,11 @@ class MemorySaveFailedEvent(MemoryBaseEvent):
     agent_role: Optional[str] = None
     error: str
 
-
 class MemoryRetrievalStartedEvent(MemoryBaseEvent):
     """Event emitted when memory retrieval for a task prompt starts"""
 
     type: str = "memory_retrieval_started"
     task_id: Optional[str] = None
-
 
 class MemoryRetrievalCompletedEvent(MemoryBaseEvent):
     """Event emitted when memory retrieval for a task prompt completes successfully"""

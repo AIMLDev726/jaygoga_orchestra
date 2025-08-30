@@ -13,7 +13,6 @@ if TYPE_CHECKING:
     from jaygoga_orchestra.v2.eval.performance import PerformanceResult
     from jaygoga_orchestra.v2.eval.reliability import ReliabilityResult
 
-
 def log_eval_run(
     run_id: str,
     run_data: dict,
@@ -44,7 +43,6 @@ def log_eval_run(
     except Exception as e:
         log_debug(f"Could not create agent event: {e}")
 
-
 async def async_log_eval_run(
     run_id: str,
     run_data: dict,
@@ -74,7 +72,6 @@ async def async_log_eval_run(
         )
     except Exception as e:
         log_debug(f"Could not create agent event: {e}")
-
 
 def store_result_in_file(
     file_path: str,

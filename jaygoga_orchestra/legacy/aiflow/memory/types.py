@@ -13,7 +13,6 @@ from .base import BaseMemory, MemoryEntry, MemoryType, MemoryImportance, MemoryC
 
 logger = logging.getLogger(__name__)
 
-
 class ShortTermMemory(InMemoryStorage):
     """
     Short-term memory for temporary information storage.
@@ -78,7 +77,6 @@ class ShortTermMemory(InMemoryStorage):
         all_entries.sort(key=lambda x: x.created_at, reverse=True)
         
         return all_entries[:limit]
-
 
 class LongTermMemory(InMemoryStorage):
     """
@@ -170,7 +168,6 @@ class LongTermMemory(InMemoryStorage):
         )
         
         return await self.store(entry)
-
 
 class EntityMemory(InMemoryStorage):
     """
@@ -291,7 +288,6 @@ class EntityMemory(InMemoryStorage):
     async def get_all_entities(self) -> Dict[str, str]:
         """Get all entities and their types."""
         return self._entity_types.copy()
-
 
 class ExternalMemory(InMemoryStorage):
     """

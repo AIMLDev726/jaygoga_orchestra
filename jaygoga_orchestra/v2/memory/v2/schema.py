@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-
 @dataclass
 class UserMemory:
     """Model for User Memories"""
@@ -31,7 +30,6 @@ class UserMemory:
         if last_updated:
             data["last_updated"] = datetime.fromisoformat(last_updated)
         return cls(**data)
-
 
 @dataclass
 class SessionSummary:

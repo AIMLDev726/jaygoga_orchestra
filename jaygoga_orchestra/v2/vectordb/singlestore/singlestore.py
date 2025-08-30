@@ -24,7 +24,6 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 from jaygoga_orchestra.v2.vectordb.base import VectorDb
 from jaygoga_orchestra.v2.vectordb.distance import Distance
 
-
 class SingleStore(VectorDb):
     def __init__(
         self,

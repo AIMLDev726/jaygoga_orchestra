@@ -24,7 +24,6 @@ from jaygoga_orchestra.tools import (
     StreamableHTTPServerParameters
 )
 
-
 async def main():
     """
     Demonstrate AIFlow's MCP integration capabilities.
@@ -236,7 +235,6 @@ async def main():
         await team.cleanup()
         print("✅ MCP cleanup completed")
 
-
 async def demonstrate_mcp_adapter_direct():
     """
     Demonstrate direct MCP adapter usage (like Govinda's MCPServerAdapter).
@@ -285,7 +283,6 @@ async def demonstrate_mcp_adapter_direct():
                 
     except Exception as e:
         print(f"❌ HTTP MCP error: {e}")
-
 
 if __name__ == "__main__":
     print("🔌 AIFLOW MCP INTEGRATION")

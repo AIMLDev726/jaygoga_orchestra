@@ -7,7 +7,6 @@ from typing import Any, Dict, Optional, Union
 
 from pydantic import BaseModel
 
-
 class FlowPersistence(abc.ABC):
     """Abstract base class for flow state persistence.
     

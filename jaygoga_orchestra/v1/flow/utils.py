@@ -21,7 +21,6 @@ import textwrap
 from collections import defaultdict, deque
 from typing import Any, Deque, Dict, List, Optional, Set, Union
 
-
 def get_possible_return_constants(function: Any) -> Optional[List[str]]:
     try:
         source = inspect.getsource(function)
@@ -29,7 +28,7 @@ def get_possible_return_constants(function: Any) -> Optional[List[str]]:
         # Can't get source code
         return None
     except Exception as e:
-        console.print(f"Error retrieving source code for function {function.__name__}: {e}")
+        print(f"Error retrieving source code for function {function.__name__}: {e}")
         return None
 
     try:
@@ -38,16 +37,16 @@ def get_possible_return_constants(function: Any) -> Optional[List[str]]:
         # Parse the source code into an AST
         code_ast = ast.parse(source)
     except IndentationError as e:
-        console.print(f"IndentationError while parsing source code of {function.__name__}: {e}")
-        console.print(f"Source code:\n{source}")
+        print(f"IndentationError while parsing source code of {function.__name__}: {e}")
+        print(f"Source code:\n{source}")
         return None
     except SyntaxError as e:
-        console.print(f"SyntaxError while parsing source code of {function.__name__}: {e}")
-        console.print(f"Source code:\n{source}")
+        print(f"SyntaxError while parsing source code of {function.__name__}: {e}")
+        print(f"Source code:\n{source}")
         return None
     except Exception as e:
-        console.print(f"Unexpected error while parsing source code of {function.__name__}: {e}")
-        console.print(f"Source code:\n{source}")
+        print(f"Unexpected error while parsing source code of {function.__name__}: {e}")
+        print(f"Source code:\n{source}")
         return None
 
     return_values = set()
@@ -94,7 +93,6 @@ def get_possible_return_constants(function: Any) -> Optional[List[str]]:
     ReturnVisitor().visit(code_ast)
 
     return list(return_values) if return_values else None
-
 
 def calculate_node_levels(flow: Any) -> Dict[str, int]:
     """
@@ -173,7 +171,6 @@ def calculate_node_levels(flow: Any) -> Dict[str, int]:
 
     return levels
 
-
 def count_outgoing_edges(flow: Any) -> Dict[str, int]:
     """
     Count the number of outgoing edges for each method in the flow.
@@ -198,7 +195,6 @@ def count_outgoing_edges(flow: Any) -> Dict[str, int]:
                 counts[trigger] += 1
     return counts
 
-
 def build_ancestor_dict(flow: Any) -> Dict[str, Set[str]]:
     """
     Build a dictionary mapping each node to its ancestor nodes.
@@ -219,7 +215,6 @@ def build_ancestor_dict(flow: Any) -> Dict[str, Set[str]]:
         if node not in visited:
             dfs_ancestors(node, ancestors, visited, flow)
     return ancestors
-
 
 def dfs_ancestors(
     node: str, ancestors: Dict[str, Set[str]], visited: Set[str], flow: Any
@@ -265,7 +260,6 @@ def dfs_ancestors(
                     ancestors[listener_name].update(ancestors[node])
                     dfs_ancestors(listener_name, ancestors, visited, flow)
 
-
 def is_ancestor(
     node: str, ancestor_candidate: str, ancestors: Dict[str, Set[str]]
 ) -> bool:
@@ -287,7 +281,6 @@ def is_ancestor(
         True if ancestor_candidate is an ancestor of node, False otherwise.
     """
     return ancestor_candidate in ancestors.get(node, set())
-
 
 def build_parent_children_dict(flow: Any) -> Dict[str, List[str]]:
     """
@@ -332,7 +325,6 @@ def build_parent_children_dict(flow: Any) -> Dict[str, List[str]]:
 
     return parent_children
 
-
 def get_child_index(
     parent: str, child: str, parent_children: Dict[str, List[str]]
 ) -> int:
@@ -356,7 +348,6 @@ def get_child_index(
     children = parent_children.get(parent, [])
     children.sort()
     return children.index(child)
-
 
 def process_router_paths(flow, current, current_level, levels, queue):
     """

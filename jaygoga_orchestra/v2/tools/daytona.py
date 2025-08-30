@@ -54,7 +54,6 @@ DEFAULT_INSTRUCTIONS = dedent(
     """
 )
 
-
 class DaytonaTools(Toolkit):
     def __init__(
         self,

@@ -5,7 +5,6 @@ from typing import Any, Optional
 
 from pydantic import BaseModel, Field
 
-
 class OutputConverter(BaseModel, ABC):
     """
     Abstract base class for converting task results into structured formats.

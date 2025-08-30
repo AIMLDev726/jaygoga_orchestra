@@ -27,7 +27,6 @@ try:
 except ImportError:
     raise ImportError("`trafilatura` not installed. Please install using `pip install trafilatura`")
 
-
 class TrafilaturaTools(Toolkit):
     """
     TrafilaturaTools is a toolkit for web scraping and text extraction.

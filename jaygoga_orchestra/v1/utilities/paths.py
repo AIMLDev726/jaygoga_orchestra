@@ -20,7 +20,6 @@ def db_storage_path() -> str:
     data_dir.mkdir(parents=True, exist_ok=True)
     return str(data_dir)
 
-
 def get_project_directory_name():
     """Returns the current project directory name."""
     project_directory_name = os.environ.get("CREWAI_STORAGE_DIR")

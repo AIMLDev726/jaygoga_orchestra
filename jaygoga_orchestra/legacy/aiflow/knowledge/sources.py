@@ -14,7 +14,6 @@ from .readers import PDFReader, JSONReader, TextReader
 
 logger = logging.getLogger(__name__)
 
-
 class PDFKnowledgeBase(BaseKnowledgeSource):
     """Knowledge base for PDF documents."""
     
@@ -70,7 +69,6 @@ class PDFKnowledgeBase(BaseKnowledgeSource):
             return len(self._knowledge_cache)
         return 0
 
-
 class JSONKnowledgeBase(BaseKnowledgeSource):
     """Knowledge base for JSON documents."""
     
@@ -120,7 +118,6 @@ class JSONKnowledgeBase(BaseKnowledgeSource):
         """Refresh knowledge from JSON document."""
         self._knowledge_cache = None
         return await self.load()
-
 
 class TextKnowledgeBase(BaseKnowledgeSource):
     """Knowledge base for text documents."""
@@ -175,7 +172,6 @@ class TextKnowledgeBase(BaseKnowledgeSource):
         self._knowledge_cache = None
         return await self.load()
 
-
 class URLKnowledgeBase(BaseKnowledgeSource):
     """Knowledge base for web URLs."""
     
@@ -229,7 +225,6 @@ class URLKnowledgeBase(BaseKnowledgeSource):
         """Refresh knowledge from URL."""
         self._knowledge_cache = None
         return await self.load()
-
 
 class MultiSourceKnowledgeBase(BaseKnowledgeSource):
     """Knowledge base that combines multiple sources."""

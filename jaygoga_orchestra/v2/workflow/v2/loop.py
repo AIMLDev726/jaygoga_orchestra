@@ -32,7 +32,6 @@ WorkflowSteps = List[
     ]
 ]
 
-
 @dataclass
 class Loop:
     """A loop of steps that execute in order"""

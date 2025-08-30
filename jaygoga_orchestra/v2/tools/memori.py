@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`memorisdk` package not found. Please install it with `pip install memorisdk`")
 
-
 class MemoriTools(Toolkit):
     """
     Memori ToolKit for Govinda Agents and Teams, providing persistent memory capabilities.
@@ -338,7 +337,6 @@ class MemoriTools(Toolkit):
         except Exception as e:
             log_error(f"Failed to disable memory system: {e}")
             return False
-
 
 def create_memori_search_tool(memori_toolkit: MemoriTools):
     """

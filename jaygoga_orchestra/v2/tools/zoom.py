@@ -11,7 +11,6 @@ import requests
 from jaygoga_orchestra.v2.tools.toolkit import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class ZoomTools(Toolkit):
     def __init__(
         self,

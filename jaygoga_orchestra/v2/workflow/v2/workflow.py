@@ -91,7 +91,6 @@ WorkflowSteps = Union[
     ],
 ]
 
-
 @dataclass
 class Workflow:
     """Pipeline-based workflow execution"""
@@ -1800,7 +1799,7 @@ class Workflow:
             title="Workflow Information",
             border_style="cyan",
         )
-        console.console.print(workflow_panel)  # type: ignore
+        print(workflow_panel)  # type: ignore
 
         # Start timer
         response_timer = Timer()
@@ -1839,7 +1838,7 @@ class Workflow:
                                         title=f"Step {i + 1}.{j + 1}: {sub_step_output.step_name} (Completed)",
                                         border_style="orange3",
                                     )
-                                    console.console.print(step_panel)  # type: ignore
+                                    print(step_panel)  # type: ignore
                         else:
                             # This is a regular single step
                             if step_output.content:
@@ -1849,7 +1848,7 @@ class Workflow:
                                     title=f"Step {i + 1}: {step_output.step_name} (Completed)",
                                     border_style="orange3",
                                 )
-                                console.console.print(step_panel)  # type: ignore
+                                print(step_panel)  # type: ignore
 
                 # For callable functions, show the content directly since there are no step_responses
                 elif show_step_details and callable(self.steps) and workflow_response.content:
@@ -1858,7 +1857,7 @@ class Workflow:
                         title="Custom Function (Completed)",
                         border_style="orange3",
                     )
-                    console.console.print(step_panel)  # type: ignore
+                    print(step_panel)  # type: ignore
 
                 # Show final summary
                 if workflow_response.extra_data:
@@ -1873,14 +1872,14 @@ class Workflow:
                         title="Execution Summary",
                         border_style="blue",
                     )
-                    console.console.print(summary_panel)  # type: ignore
+                    print(summary_panel)  # type: ignore
 
                 live_log.update("")
 
                 # Final completion message
                 if show_time:
                     completion_text = Text(f"Completed in {response_timer.elapsed:.1f}s", style="bold green")
-                    console.console.print(completion_text)  # type: ignore
+                    print(completion_text)  # type: ignore
 
             except Exception as e:
                 import traceback
@@ -1890,7 +1889,7 @@ class Workflow:
                 error_panel = create_panel(
                     content=f"Workflow execution failed: {str(e)}", title="Execution Error", border_style="red"
                 )
-                console.console.print(error_panel)  # type: ignore
+                print(error_panel)  # type: ignore
 
     def _print_response_stream(
         self,
@@ -1962,7 +1961,7 @@ class Workflow:
             title="Workflow Information",
             border_style="cyan",
         )
-        console.console.print(workflow_panel)  # type: ignore
+        print(workflow_panel)  # type: ignore
 
         # Start timer
         response_timer = Timer()
@@ -2082,7 +2081,7 @@ class Workflow:
                                 title=f"{step_display}: {step_name} (Completed)",
                                 border_style="orange3",
                             )
-                            console.console.print(final_step_panel)  # type: ignore
+                            print(final_step_panel)  # type: ignore
                             step_started_printed = True
 
                     elif isinstance(response, LoopExecutionStartedEvent):
@@ -2147,7 +2146,7 @@ class Workflow:
                                 title=f"Loop {step_name} (Completed)",
                                 border_style="yellow",
                             )
-                            console.console.print(loop_summary_panel)  # type: ignore
+                            print(loop_summary_panel)  # type: ignore
 
                         # Reset context
                         current_primitive_context = None
@@ -2181,7 +2180,7 @@ class Workflow:
                             title=f"{step_display}: {current_step_name}",
                             border_style="cyan",
                         )
-                        console.console.print(parallel_panel)  # type: ignore
+                        print(parallel_panel)  # type: ignore
 
                         status.update(
                             f"Starting parallel execution: {current_step_name} ({response.parallel_step_count} steps)..."
@@ -2270,7 +2269,7 @@ class Workflow:
                                 title=f"Router {step_name} (Completed)",
                                 border_style="purple",
                             )
-                            console.console.print(router_summary_panel)  # type: ignore
+                            print(router_summary_panel)  # type: ignore
 
                         # Reset context
                         current_primitive_context = None
@@ -2316,7 +2315,7 @@ class Workflow:
                                 title=f"Steps {step_name} (Completed)",
                                 border_style="yellow",
                             )
-                            console.console.print(steps_summary_panel)  # type: ignore
+                            print(steps_summary_panel)  # type: ignore
 
                         step_started_printed = True
 
@@ -2335,7 +2334,7 @@ class Workflow:
                                 title="Custom Function (Completed)",
                                 border_style="orange3",
                             )
-                            console.console.print(final_step_panel)  # type: ignore
+                            print(final_step_panel)  # type: ignore
                             step_started_printed = True
 
                         live_log.update(status, refresh=True)
@@ -2353,7 +2352,7 @@ class Workflow:
                                 title="Execution Summary",
                                 border_style="blue",
                             )
-                            console.console.print(summary_panel)  # type: ignore
+                            print(summary_panel)  # type: ignore
 
                     else:
                         # Handle streaming content
@@ -2432,7 +2431,7 @@ class Workflow:
                 # Final completion message
                 if show_time:
                     completion_text = Text(f"Completed in {response_timer.elapsed:.1f}s", style="bold green")
-                    console.console.print(completion_text)  # type: ignore
+                    print(completion_text)  # type: ignore
 
             except Exception as e:
                 import traceback
@@ -2442,7 +2441,7 @@ class Workflow:
                 error_panel = create_panel(
                     content=f"Workflow execution failed: {str(e)}", title="Execution Error", border_style="red"
                 )
-                console.console.print(error_panel)  # type: ignore
+                print(error_panel)  # type: ignore
 
     async def aprint_response(
         self,
@@ -2579,7 +2578,7 @@ class Workflow:
             title="Workflow Information",
             border_style="cyan",
         )
-        console.console.print(workflow_panel)  # type: ignore
+        print(workflow_panel)  # type: ignore
 
         # Start timer
         response_timer = Timer()
@@ -2619,7 +2618,7 @@ class Workflow:
                                         title=f"Step {i + 1}.{j + 1}: {sub_step_output.step_name} (Completed)",
                                         border_style="orange3",
                                     )
-                                    console.console.print(step_panel)  # type: ignore
+                                    print(step_panel)  # type: ignore
                         else:
                             # This is a regular single step
                             if step_output.content:
@@ -2629,7 +2628,7 @@ class Workflow:
                                     title=f"Step {i + 1}: {step_output.step_name} (Completed)",
                                     border_style="orange3",
                                 )
-                                console.console.print(step_panel)  # type: ignore
+                                print(step_panel)  # type: ignore
 
                 # For callable functions, show the content directly since there are no step_responses
                 elif show_step_details and callable(self.steps) and workflow_response.content:
@@ -2638,7 +2637,7 @@ class Workflow:
                         title="Custom Function (Completed)",
                         border_style="orange3",
                     )
-                    console.console.print(step_panel)  # type: ignore
+                    print(step_panel)  # type: ignore
 
                 # Show final summary
                 if workflow_response.extra_data:
@@ -2653,14 +2652,14 @@ class Workflow:
                         title="Execution Summary",
                         border_style="blue",
                     )
-                    console.console.print(summary_panel)  # type: ignore
+                    print(summary_panel)  # type: ignore
 
                 live_log.update("")
 
                 # Final completion message
                 if show_time:
                     completion_text = Text(f"Completed in {response_timer.elapsed:.1f}s", style="bold green")
-                    console.console.print(completion_text)  # type: ignore
+                    print(completion_text)  # type: ignore
 
             except Exception as e:
                 import traceback
@@ -2670,7 +2669,7 @@ class Workflow:
                 error_panel = create_panel(
                     content=f"Workflow execution failed: {str(e)}", title="Execution Error", border_style="red"
                 )
-                console.console.print(error_panel)  # type: ignore
+                print(error_panel)  # type: ignore
 
     async def _aprint_response_stream(
         self,
@@ -2742,7 +2741,7 @@ class Workflow:
             title="Workflow Information",
             border_style="cyan",
         )
-        console.console.print(workflow_panel)  # type: ignore
+        print(workflow_panel)  # type: ignore
 
         # Start timer
         response_timer = Timer()
@@ -2862,7 +2861,7 @@ class Workflow:
                                 title=f"{step_display}: {step_name} (Completed)",
                                 border_style="orange3",
                             )
-                            console.console.print(final_step_panel)  # type: ignore
+                            print(final_step_panel)  # type: ignore
                             step_started_printed = True
 
                     elif isinstance(response, LoopExecutionStartedEvent):
@@ -2927,7 +2926,7 @@ class Workflow:
                                 title=f"Loop {step_name} (Completed)",
                                 border_style="yellow",
                             )
-                            console.console.print(loop_summary_panel)  # type: ignore
+                            print(loop_summary_panel)  # type: ignore
 
                         # Reset context
                         current_primitive_context = None
@@ -2961,7 +2960,7 @@ class Workflow:
                             title=f"{step_display}: {current_step_name}",
                             border_style="cyan",
                         )
-                        console.console.print(parallel_panel)  # type: ignore
+                        print(parallel_panel)  # type: ignore
 
                         status.update(
                             f"Starting parallel execution: {current_step_name} ({response.parallel_step_count} steps)..."
@@ -3050,7 +3049,7 @@ class Workflow:
                                 title=f"Router {step_name} (Completed)",
                                 border_style="purple",
                             )
-                            console.console.print(router_summary_panel)  # type: ignore
+                            print(router_summary_panel)  # type: ignore
 
                         # Reset context
                         current_primitive_context = None
@@ -3096,7 +3095,7 @@ class Workflow:
                                 title=f"Steps {step_name} (Completed)",
                                 border_style="yellow",
                             )
-                            console.console.print(steps_summary_panel)  # type: ignore
+                            print(steps_summary_panel)  # type: ignore
 
                         step_started_printed = True
 
@@ -3115,7 +3114,7 @@ class Workflow:
                                 title="Custom Function (Completed)",
                                 border_style="orange3",
                             )
-                            console.console.print(final_step_panel)  # type: ignore
+                            print(final_step_panel)  # type: ignore
                             step_started_printed = True
 
                         live_log.update(status, refresh=True)
@@ -3133,7 +3132,7 @@ class Workflow:
                                 title="Execution Summary",
                                 border_style="blue",
                             )
-                            console.console.print(summary_panel)  # type: ignore
+                            print(summary_panel)  # type: ignore
 
                     else:
                         if isinstance(response, str):
@@ -3212,7 +3211,7 @@ class Workflow:
                 # Final completion message
                 if show_time:
                     completion_text = Text(f"Completed in {response_timer.elapsed:.1f}s", style="bold green")
-                    console.console.print(completion_text)  # type: ignore
+                    print(completion_text)  # type: ignore
 
             except Exception as e:
                 import traceback
@@ -3222,7 +3221,7 @@ class Workflow:
                 error_panel = create_panel(
                     content=f"Workflow execution failed: {str(e)}", title="Execution Error", border_style="red"
                 )
-                console.console.print(error_panel)  # type: ignore
+                print(error_panel)  # type: ignore
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert workflow to dictionary representation"""

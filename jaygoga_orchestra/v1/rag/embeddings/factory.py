@@ -47,7 +47,6 @@ from chromadb.utils.embedding_functions.text2vec_embedding_function import (
 
 from jaygoga_orchestra.v1.rag.embeddings.types import EmbeddingOptions
 
-
 def get_embedding_function(
     config: EmbeddingOptions | dict | None = None,
 ) -> EmbeddingFunction:

@@ -64,7 +64,6 @@ except ImportError:
         "`google-api-python-client` `google-auth-httplib2` `google-auth-oauthlib` not installed. Please install using `pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib`"
     )
 
-
 def authenticate(func):
     """Decorator to ensure authentication before executing a function."""
 
@@ -77,7 +76,6 @@ def authenticate(func):
         return func(self, *args, **kwargs)
 
     return wrapper
-
 
 class GoogleSheetsTools(Toolkit):
     # Default scopes for Google Sheets API access

@@ -10,7 +10,6 @@ from jaygoga_orchestra.v1.memory.storage.interface import Storage
 
 MAX_AGENT_ID_LENGTH_MEM0 = 255
 
-
 class Mem0Storage(Storage):
     """
     Extends Storage to handle embedding and searching across entities using Mem0.

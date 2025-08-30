@@ -6,7 +6,6 @@ import pickle
 from datetime import datetime
 from typing import Union
 
-
 class FileHandler:
     """Handler for file operations supporting both JSON and text-based logging.
     

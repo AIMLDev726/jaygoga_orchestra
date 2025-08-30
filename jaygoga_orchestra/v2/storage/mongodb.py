@@ -20,7 +20,6 @@ try:
 except ImportError:
     raise ImportError("`pymongo` not installed. Please install it with `pip install pymongo`")
 
-
 class MongoDbStorage(Storage):
     def __init__(
         self,

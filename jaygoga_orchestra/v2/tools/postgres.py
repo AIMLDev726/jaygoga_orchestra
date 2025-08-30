@@ -14,7 +14,6 @@ except ImportError:
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, log_error
 
-
 class PostgresTools(Toolkit):
     def __init__(
         self,

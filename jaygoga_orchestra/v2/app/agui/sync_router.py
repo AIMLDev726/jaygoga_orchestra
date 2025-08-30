@@ -18,11 +18,10 @@ from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 
 from jaygoga_orchestra.v2.agent.agent import Agent
-from jaygoga_orchestra.v2.app.agui.utils import convert_agui_messages_to_jaygoga_orchestra.v2_messages, stream_jaygoga_orchestra.v2_response_as_agui_events
+from jaygoga_orchestra.v2.app.agui.utils import convert_agui_messages_to_jaygoga_orchestra_v2_messages, stream_jaygoga_orchestra_v2_response_as_agui_events
 from jaygoga_orchestra.v2.team.team import Team
 
 logger = logging.getLogger(__name__)
-
 
 def run_agent(agent: Agent, run_input: RunAgentInput) -> Iterator[BaseEvent]:
     """Run the contextual Agent, mapping AG-UI input messages to Govinda format, and streaming the response in AG-UI format."""
@@ -30,7 +29,7 @@ def run_agent(agent: Agent, run_input: RunAgentInput) -> Iterator[BaseEvent]:
 
     try:
         # Preparing the input for the Agent and emitting the run started event
-        messages = convert_agui_messages_to_jaygoga_orchestra.v2_messages(run_input.messages or [])
+        messages = convert_agui_messages_to_jaygoga_orchestra_v2_messages(run_input.messages or [])
         yield RunStartedEvent(type=EventType.RUN_STARTED, thread_id=run_input.thread_id, run_id=run_id)
 
         # Request streaming response from agent
@@ -42,7 +41,7 @@ def run_agent(agent: Agent, run_input: RunAgentInput) -> Iterator[BaseEvent]:
         )
 
         # Stream the response content in AG-UI format
-        for event in stream_jaygoga_orchestra.v2_response_as_agui_events(
+        for event in stream_jaygoga_orchestra_v2_response_as_agui_events(
             response_stream=response_stream, thread_id=run_input.thread_id, run_id=run_id
         ):
             yield event
@@ -52,13 +51,12 @@ def run_agent(agent: Agent, run_input: RunAgentInput) -> Iterator[BaseEvent]:
         logger.error(f"Error running agent: {e}", exc_info=True)
         yield RunErrorEvent(type=EventType.RUN_ERROR, message=str(e))
 
-
 def run_team(team: Team, input: RunAgentInput) -> Iterator[BaseEvent]:
     """Run the contextual Team, mapping AG-UI input messages to Govinda format, and streaming the response in AG-UI format."""
     run_id = input.run_id or str(uuid.uuid4())
     try:
         # Extract the last user message for team execution
-        messages = convert_agui_messages_to_jaygoga_orchestra.v2_messages(input.messages or [])
+        messages = convert_agui_messages_to_jaygoga_orchestra_v2_messages(input.messages or [])
         yield RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input.thread_id, run_id=run_id)
 
         # Request streaming response from team
@@ -70,7 +68,7 @@ def run_team(team: Team, input: RunAgentInput) -> Iterator[BaseEvent]:
         )
 
         # Stream the response content in AG-UI format
-        for event in stream_jaygoga_orchestra.v2_response_as_agui_events(
+        for event in stream_jaygoga_orchestra_v2_response_as_agui_events(
             response_stream=response_stream, thread_id=input.thread_id, run_id=run_id
         ):
             yield event
@@ -78,7 +76,6 @@ def run_team(team: Team, input: RunAgentInput) -> Iterator[BaseEvent]:
     except Exception as e:
         logger.error(f"Error running team: {e}", exc_info=True)
         yield RunErrorEvent(type=EventType.RUN_ERROR, message=str(e))
-
 
 def get_sync_agui_router(agent: Optional[Agent] = None, team: Optional[Team] = None) -> APIRouter:
     """Return an AG-UI compatible FastAPI router."""

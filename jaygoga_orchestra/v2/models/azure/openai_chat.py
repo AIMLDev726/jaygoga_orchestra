@@ -14,7 +14,6 @@ try:
 except ImportError:
     raise ImportError("`openai` not installed. Please install using `pip install openai`")
 
-
 @dataclass
 class AzureOpenAI(OpenAILike):
     """

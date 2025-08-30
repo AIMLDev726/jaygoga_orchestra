@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`google-search-results` not installed.")
 
-
 class SerpApiTools(Toolkit):
     def __init__(
         self,

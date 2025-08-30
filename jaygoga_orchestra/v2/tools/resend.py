@@ -11,7 +11,6 @@ try:
 except ImportError:
     raise ImportError("`resend` not installed. Please install using `pip install resend`.")
 
-
 class ResendTools(Toolkit):
     def __init__(
         self,

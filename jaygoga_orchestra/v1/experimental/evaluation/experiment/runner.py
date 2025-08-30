@@ -43,8 +43,8 @@ class ExperimentRunner:
         identifier = test_case.get("identifier") or md5(str(test_case).encode(), usedforsecurity=False).hexdigest()
 
         try:
-            self.display.console.console.print(f"[dim]Running squad with input: {str(inputs)[:50]}...[/dim]")
-            self.display.console.console.print("\n")
+            self.display.print(f"[dim]Running squad with input: {str(inputs)[:50]}...[/dim]")
+            self.display.print("\n")
             if squad:
                 squad.execute(inputs=inputs)
             else:
@@ -67,7 +67,7 @@ class ExperimentRunner:
             )
 
         except Exception as e:
-            self.display.console.console.print(f"[red]Error running test case: {str(e)}[/red]")
+            self.display.print(f"[red]Error running test case: {str(e)}[/red]")
             return ExperimentResult(
                 identifier=identifier,
                 inputs=inputs,

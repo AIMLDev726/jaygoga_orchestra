@@ -4,7 +4,6 @@ from typing import List
 
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 def run_shell_command(args: List[str], tail: int = 100) -> str:
     log_info(f"Running shell command: {args}")
 

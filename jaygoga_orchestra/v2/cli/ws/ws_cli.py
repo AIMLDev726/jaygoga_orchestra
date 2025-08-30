@@ -32,7 +32,6 @@ Run `ag ws [COMMAND] --help` for more info.
     subcommand_metavar="[COMMAND] [OPTIONS]",
 )
 
-
 @ws_cli.command(short_help="Create a new workspace in the current directory.")
 def create(
     name: Optional[str] = typer.Option(
@@ -77,7 +76,6 @@ def create(
 
     create_workspace(name=name, template=template, url=url)
 
-
 @ws_cli.command(short_help="Setup workspace from the current directory")
 def setup(
     path: Optional[str] = typer.Argument(
@@ -111,7 +109,6 @@ def setup(
     if path is not None:
         ws_root_path = Path(".").joinpath(path).resolve()
     setup_workspace(ws_root_path=ws_root_path)
-
 
 @ws_cli.command(short_help="Create resources for the active workspace")
 def up(
@@ -185,16 +182,16 @@ def up(
         set_log_level_to_debug()
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
     from jaygoga_orchestra.v2.utils.resource_filter import parse_resource_filter
     from jaygoga_orchestra.v2.workspace.config import WorkspaceConfig
     from jaygoga_orchestra.v2.workspace.helpers import get_workspace_dir_path
     from jaygoga_orchestra.v2.workspace.operator import setup_workspace, start_workspace
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
     jaygoga_orchestra.v2_config = cast(AgnoCliConfig, jaygoga_orchestra.v2_config)
@@ -274,7 +271,7 @@ def up(
         target_infra = ws_to_start.workspace_settings.default_infra if ws_to_start.workspace_settings else None
 
     start_workspace(
-        jaygoga_orchestra.v2_config=jaygoga_orchestra.v2_config,
+        jaygoga_orchestra_v2_config=jaygoga_orchestra.v2_config,
         ws_config=ws_to_start,
         target_env=target_env,
         target_infra=target_infra,
@@ -286,7 +283,6 @@ def up(
         force=force,
         pull=pull,
     )
-
 
 @ws_cli.command(short_help="Delete resources for active workspace")
 def down(
@@ -352,16 +348,16 @@ def down(
         set_log_level_to_debug()
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
     from jaygoga_orchestra.v2.utils.resource_filter import parse_resource_filter
     from jaygoga_orchestra.v2.workspace.config import WorkspaceConfig
     from jaygoga_orchestra.v2.workspace.helpers import get_workspace_dir_path
     from jaygoga_orchestra.v2.workspace.operator import setup_workspace, stop_workspace
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 
@@ -440,7 +436,7 @@ def down(
         target_infra = ws_to_stop.workspace_settings.default_infra if ws_to_stop.workspace_settings else None
 
     stop_workspace(
-        jaygoga_orchestra.v2_config=jaygoga_orchestra.v2_config,
+        jaygoga_orchestra_v2_config=jaygoga_orchestra.v2_config,
         ws_config=ws_to_stop,
         target_env=target_env,
         target_infra=target_infra,
@@ -451,7 +447,6 @@ def down(
         auto_confirm=auto_confirm,
         force=force,
     )
-
 
 @ws_cli.command(short_help="Update resources for active workspace")
 def patch(
@@ -521,16 +516,16 @@ def patch(
         set_log_level_to_debug()
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
     from jaygoga_orchestra.v2.utils.resource_filter import parse_resource_filter
     from jaygoga_orchestra.v2.workspace.config import WorkspaceConfig
     from jaygoga_orchestra.v2.workspace.helpers import get_workspace_dir_path
     from jaygoga_orchestra.v2.workspace.operator import setup_workspace, update_workspace
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 
@@ -609,7 +604,7 @@ def patch(
         target_infra = ws_to_patch.workspace_settings.default_infra if ws_to_patch.workspace_settings else None
 
     update_workspace(
-        jaygoga_orchestra.v2_config=jaygoga_orchestra.v2_config,
+        jaygoga_orchestra_v2_config=jaygoga_orchestra.v2_config,
         ws_config=ws_to_patch,
         target_env=target_env,
         target_infra=target_infra,
@@ -621,7 +616,6 @@ def patch(
         force=force,
         pull=pull,
     )
-
 
 @ws_cli.command(short_help="Restart resources for active workspace")
 def restart(
@@ -713,7 +707,6 @@ def restart(
         pull=pull,
     )
 
-
 @ws_cli.command(short_help="Prints active workspace config")
 def config(
     print_debug_log: bool = typer.Option(
@@ -734,14 +727,14 @@ def config(
         set_log_level_to_debug()
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
     from jaygoga_orchestra.v2.utils.load_env import load_env
     from jaygoga_orchestra.v2.workspace.config import WorkspaceConfig
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 
@@ -758,7 +751,6 @@ def config(
         dotenv_dir=active_ws_config.ws_root_path,
     )
     print_info(active_ws_config.model_dump_json(include={"ws_name", "ws_root_path"}, indent=2))
-
 
 @ws_cli.command(short_help="Delete workspace record")
 def delete(
@@ -789,13 +781,13 @@ def delete(
         set_log_level_to_debug()
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
     from jaygoga_orchestra.v2.workspace.operator import delete_workspace
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 

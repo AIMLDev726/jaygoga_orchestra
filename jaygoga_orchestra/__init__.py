@@ -12,7 +12,7 @@ from importlib.metadata import version, PackageNotFoundError
 try:
     __version__ = version("jaygoga-orchestra")
 except PackageNotFoundError:
-    __version__ = "1.0.1"
+    __version__ = "1.0.2"
 
 # Import main classes from v1 (Classical Orchestration)
 from jaygoga_orchestra.v1 import Agent as AgentV1

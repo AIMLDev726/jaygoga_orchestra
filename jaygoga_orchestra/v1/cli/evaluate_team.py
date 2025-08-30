@@ -4,7 +4,6 @@ import subprocess
 
 import click
 
-
 def evaluate_crew(n_iterations: int, model: str) -> None:
     """
     Test and Evaluate the squad by running a command in the UV environment.

@@ -6,7 +6,7 @@ import time
 from jaygoga_orchestra.v1.memory.external.external_memory_item import ExternalMemoryItem
 from jaygoga_orchestra.v1.memory.memory import Memory
 from jaygoga_orchestra.v1.memory.storage.interface import Storage
-from jaygoga_orchestra.v1.utilities.events.jaygoga_orchestra.v1_event_bus import jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import event_bus
 from jaygoga_orchestra.v1.utilities.events.memory_events import (
     MemoryQueryStartedEvent,
     MemoryQueryCompletedEvent,
@@ -18,7 +18,6 @@ from jaygoga_orchestra.v1.utilities.events.memory_events import (
 
 if TYPE_CHECKING:
     from jaygoga_orchestra.v1.memory.storage.mem0_storage import Mem0Storage
-
 
 class ExternalMemory(Memory):
     def __init__(self, storage: Optional[Storage] = None, **data: Any):
@@ -57,7 +56,7 @@ class ExternalMemory(Memory):
         metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
         """Saves a value into the external storage."""
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemorySaveStartedEvent(
                 value=value,
@@ -77,7 +76,7 @@ class ExternalMemory(Memory):
             )
             super().save(value=item.value, metadata=item.metadata)
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveCompletedEvent(
                     value=value,
@@ -89,7 +88,7 @@ class ExternalMemory(Memory):
                 ),
             )
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemorySaveFailedEvent(
                     value=value,
@@ -108,7 +107,7 @@ class ExternalMemory(Memory):
         limit: int = 3,
         score_threshold: float = 0.35,
     ):
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self,
             event=MemoryQueryStartedEvent(
                 query=query,
@@ -126,7 +125,7 @@ class ExternalMemory(Memory):
                 query=query, limit=limit, score_threshold=score_threshold
             )
 
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryCompletedEvent(
                     query=query,
@@ -142,7 +141,7 @@ class ExternalMemory(Memory):
 
             return results
         except Exception as e:
-            jaygoga_orchestra.v1_event_bus.emit(
+            event_bus.emit(
                 self,
                 event=MemoryQueryFailedEvent(
                     query=query,

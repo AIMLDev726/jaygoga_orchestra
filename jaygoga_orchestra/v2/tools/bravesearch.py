@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`brave-search` not installed. Please install using `pip install brave-search`")
 
-
 class BraveSearchTools(Toolkit):
     """
     BraveSearch is a toolkit for searching Brave easily.

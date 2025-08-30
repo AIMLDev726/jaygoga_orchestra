@@ -13,7 +13,6 @@ from jaygoga_orchestra.v2.utils.log import log_debug, log_error, log_info, log_w
 from jaygoga_orchestra.v2.utils.prompts import get_json_output_prompt
 from jaygoga_orchestra.v2.utils.string import parse_response_model_str
 
-
 class SessionSummaryResponse(BaseModel):
     """Model for Session Summary."""
 
@@ -28,7 +27,6 @@ class SessionSummaryResponse(BaseModel):
 
     def to_json(self) -> str:
         return self.model_dump_json(exclude_none=True, indent=2)
-
 
 @dataclass
 class SessionSummarizer:

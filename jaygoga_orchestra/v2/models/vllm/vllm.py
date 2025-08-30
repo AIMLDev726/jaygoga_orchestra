@@ -9,7 +9,6 @@ from pydantic import BaseModel
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 @dataclass
 class vLLM(OpenAILike):
     """

@@ -5,7 +5,6 @@ from typing import Any, Optional
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
 from jaygoga_orchestra.v1.utilities.events.base_events import BaseEvent
 
-
 class TaskStartedEvent(BaseEvent):
     """Event emitted when a task starts"""
 
@@ -24,7 +23,6 @@ class TaskStartedEvent(BaseEvent):
                 and self.task.fingerprint.metadata
             ):
                 self.fingerprint_metadata = self.task.fingerprint.metadata
-
 
 class TaskCompletedEvent(BaseEvent):
     """Event emitted when a task completes"""
@@ -45,7 +43,6 @@ class TaskCompletedEvent(BaseEvent):
             ):
                 self.fingerprint_metadata = self.task.fingerprint.metadata
 
-
 class TaskFailedEvent(BaseEvent):
     """Event emitted when a task fails"""
 
@@ -64,7 +61,6 @@ class TaskFailedEvent(BaseEvent):
                 and self.task.fingerprint.metadata
             ):
                 self.fingerprint_metadata = self.task.fingerprint.metadata
-
 
 class TaskEvaluationEvent(BaseEvent):
     """Event emitted when a task evaluation is completed"""

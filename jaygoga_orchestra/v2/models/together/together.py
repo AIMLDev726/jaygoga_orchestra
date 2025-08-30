@@ -6,7 +6,6 @@ from typing import Optional
 
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 
-
 @dataclass
 class Together(OpenAILike):
     """

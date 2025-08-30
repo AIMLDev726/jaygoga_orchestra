@@ -17,7 +17,6 @@ try:
 except ImportError:
     raise ImportError("`cartesia` not installed. Please install using `pip install cartesia`")
 
-
 class CartesiaTools(Toolkit):
     def __init__(
         self,

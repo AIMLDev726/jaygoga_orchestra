@@ -12,7 +12,6 @@ from dataclasses import dataclass
 from enum import Enum
 import numpy as np
 
-
 class DistanceMetric(Enum):
     """Distance metrics for vector similarity."""
     COSINE = "cosine"
@@ -20,14 +19,12 @@ class DistanceMetric(Enum):
     DOT_PRODUCT = "dot_product"
     MANHATTAN = "manhattan"
 
-
 class IndexType(Enum):
     """Vector index types."""
     HNSW = "hnsw"
     IVF_FLAT = "ivf_flat"
     IVF_PQ = "ivf_pq"
     FLAT = "flat"
-
 
 @dataclass
 class VectorDBConfig:
@@ -56,7 +53,6 @@ class VectorDBConfig:
         if self.index_params is None:
             self.index_params = {}
 
-
 @dataclass
 class SearchResult:
     """Result from vector search."""
@@ -76,7 +72,6 @@ class SearchResult:
             "score": self.score,
             "vector": self.vector
         }
-
 
 class BaseVectorDB(ABC):
     """Abstract base class for vector databases."""
@@ -249,7 +244,6 @@ class BaseVectorDB(ABC):
     def _generate_id(self) -> str:
         """Generate a unique ID."""
         return str(uuid.uuid4())
-
 
 class InMemoryVectorDB(BaseVectorDB):
     """Simple in-memory vector database for testing and development."""

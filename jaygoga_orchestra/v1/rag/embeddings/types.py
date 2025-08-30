@@ -7,7 +7,6 @@ from pydantic import BaseModel, Field, SecretStr
 
 from jaygoga_orchestra.v1.rag.types import EmbeddingFunction
 
-
 EmbeddingProvider = Literal[
     "openai",
     "cohere",
@@ -32,7 +31,6 @@ embedding_functions module. Each provider has specific requirements
 and configuration options.
 """
 
-
 class EmbeddingOptions(BaseModel):
     """Configuration options for embedding providers.
 
@@ -49,7 +47,6 @@ class EmbeddingOptions(BaseModel):
     api_key: SecretStr | None = Field(
         default=None, description="API key for the embedding provider"
     )
-
 
 class EmbeddingConfig(BaseModel):
     """Configuration wrapper for embedding functions.

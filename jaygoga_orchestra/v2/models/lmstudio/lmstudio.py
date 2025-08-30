@@ -4,7 +4,6 @@ from dataclasses import dataclass
 
 from jaygoga_orchestra.v2.models.openai.like import OpenAILike
 
-
 @dataclass
 class LMStudio(OpenAILike):
     """

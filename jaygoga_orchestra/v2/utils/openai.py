@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.utils.log import log_error, log_warning
 # Ensure .webp is recognized
 mimetypes.add_type("image/webp", ".webp")
 
-
 def audio_to_message(audio: Sequence[Audio]) -> List[Dict[str, Any]]:
     """
     Add audio to a message for the model. By default, we use the OpenAI audio format but other Models
@@ -94,7 +93,6 @@ def audio_to_message(audio: Sequence[Audio]) -> List[Dict[str, Any]]:
 
     return audio_messages
 
-
 def _process_bytes_image(image: bytes, image_format: Optional[str] = None) -> Dict[str, Any]:
     """Process bytes image data."""
     base64_image = base64.b64encode(image).decode("utf-8")
@@ -115,7 +113,6 @@ def _process_bytes_image(image: bytes, image_format: Optional[str] = None) -> Di
     image_url = f"data:{mime_type};base64,{base64_image}"
     return {"type": "image_url", "image_url": {"url": image_url}}
 
-
 def _process_image_path(image_path: Union[Path, str]) -> Dict[str, Any]:
     """Process image ( file path)."""
     # Process local file image
@@ -135,7 +132,6 @@ def _process_image_path(image_path: Union[Path, str]) -> Dict[str, Any]:
         log_error(f"Failed to read image file {path}: {e}")
         raise  # Re-raise the exception after logging
 
-
 def _process_image_url(image_url: str) -> Dict[str, Any]:
     """Process image (base64 or URL)."""
 
@@ -143,7 +139,6 @@ def _process_image_url(image_url: str) -> Dict[str, Any]:
         return {"type": "image_url", "image_url": {"url": image_url}}
     else:
         raise ValueError("Image URL must start with 'data:image' or 'http(s)://'.")
-
 
 def process_image(image: Image) -> Optional[Dict[str, Any]]:
     """Process an image based on the format."""
@@ -180,7 +175,6 @@ def process_image(image: Image) -> Optional[Dict[str, Any]]:
         # Depending on policy, you might want to return None or re-raise
         return None  # Return None for unexpected errors as well, preventing crashes
 
-
 def images_to_message(images: Sequence[Image]) -> List[Dict[str, Any]]:
     """
     Add images to a message for the model. By default, we use the OpenAI image format but other Models
@@ -210,7 +204,6 @@ def images_to_message(images: Sequence[Image]) -> List[Dict[str, Any]]:
             continue
 
     return image_messages
-
 
 def _format_file_for_message(file: File) -> Optional[Dict[str, Any]]:
     """

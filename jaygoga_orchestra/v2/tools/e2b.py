@@ -21,7 +21,6 @@ try:
 except ImportError:
     raise ImportError("`e2b_code_interpreter` not installed. Please install using `pip install e2b_code_interpreter`")
 
-
 class E2BTools(Toolkit):
     def __init__(
         self,

@@ -14,7 +14,6 @@ from jaygoga_orchestra.v2.eval.utils import async_log_eval_run, log_eval_run, st
 from jaygoga_orchestra.v2.run.team import TeamRunResponse
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 @dataclass
 class ReliabilityResult:
     eval_status: str
@@ -32,11 +31,10 @@ class ReliabilityResult:
         results_table.add_row("Evaluation Status", self.eval_status)
         results_table.add_row("Failed Tool Calls", str(self.failed_tool_calls))
         results_table.add_row("Passed Tool Calls", str(self.passed_tool_calls))
-        console.console.print(results_table)
+        print(results_table)
 
     def assert_passed(self):
         assert self.eval_status == "PASSED"
-
 
 @dataclass
 class ReliabilityEval:

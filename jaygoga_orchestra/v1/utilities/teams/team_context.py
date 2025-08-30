@@ -1,13 +1,11 @@
 from rich.console import Console
 console = Console()
+from opentelemetry import baggage
 """Context management utilities for tracking squad and task execution context using OpenTelemetry baggage."""
 
 from typing import Optional
 
-from opentelemetry import baggage
-
-from jaygoga_orchestra.v1.utilities.squad.models import CrewContext
-
+from jaygoga_orchestra.v1.utilities.teams.models import CrewContext
 
 def get_team_context() -> Optional[CrewContext]:
     """Get the current squad context from OpenTelemetry baggage.

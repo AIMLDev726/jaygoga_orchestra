@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.media import Audio, AudioResponse, File, Image, ImageA
 from jaygoga_orchestra.v2.utils.log import log_debug, log_error, log_info, log_warning
 from jaygoga_orchestra.v2.utils.timer import Timer
 
-
 class MessageReferences(BaseModel):
     """References added to user message"""
 
@@ -22,13 +21,11 @@ class MessageReferences(BaseModel):
     # Time taken to retrieve the references.
     time: Optional[float] = None
 
-
 class UrlCitation(BaseModel):
     """URL of the citation"""
 
     url: Optional[str] = None
     title: Optional[str] = None
-
 
 class DocumentCitation(BaseModel):
     """Document of the citation"""
@@ -36,7 +33,6 @@ class DocumentCitation(BaseModel):
     document_title: Optional[str] = None
     cited_text: Optional[str] = None
     file_name: Optional[str] = None
-
 
 class Citations(BaseModel):
     """Citations for the message"""
@@ -49,7 +45,6 @@ class Citations(BaseModel):
 
     # Document Citations
     documents: Optional[List[DocumentCitation]] = None
-
 
 @dataclass
 class MessageMetrics:
@@ -161,7 +156,6 @@ class MessageMetrics:
         if other == 0:  # Handle sum() starting value
             return self
         return self + other
-
 
 class Message(BaseModel):
     """Message sent to the Model"""

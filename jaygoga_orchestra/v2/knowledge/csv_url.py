@@ -7,7 +7,6 @@ from jaygoga_orchestra.v2.document.reader.csv_reader import CSVUrlReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class CSVUrlKnowledgeBase(AgentKnowledge):
     urls: Optional[Union[List[str], List[Dict[str, Union[str, Dict[str, Any]]]]]] = None
     formats: List[str] = [".csv"]

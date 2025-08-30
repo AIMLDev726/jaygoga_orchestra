@@ -12,7 +12,6 @@ from jaygoga_orchestra.v2.storage.session.v2.workflow import WorkflowSession as 
 from jaygoga_orchestra.v2.storage.session.workflow import WorkflowSession
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class InMemoryStorage(Storage):
     def __init__(
         self,

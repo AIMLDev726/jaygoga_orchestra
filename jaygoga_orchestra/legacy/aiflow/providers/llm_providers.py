@@ -31,7 +31,6 @@ try:
 except ImportError:
     ANTHROPIC_AVAILABLE = False
 
-
 @dataclass
 class LLMResponse:
     """Standard response format from LLM providers."""
@@ -44,7 +43,6 @@ class LLMResponse:
     def __post_init__(self):
         if self.metadata is None:
             self.metadata = {}
-
 
 class BaseLLMProvider(ABC):
     """Abstract base class for all LLM providers."""
@@ -76,7 +74,6 @@ class BaseLLMProvider(ABC):
     ) -> LLMResponse:
         """Generate a streaming response from the LLM."""
         raise NotImplementedError("Subclasses must implement stream_generate method")
-
 
 class OpenAIProvider(BaseLLMProvider):
     """OpenAI GPT provider implementation."""
@@ -163,7 +160,6 @@ class OpenAIProvider(BaseLLMProvider):
             
         except Exception as e:
             raise Exception(f"OpenAI streaming error: {str(e)}")
-
 
 class GeminiProvider(BaseLLMProvider):
     """Google Gemini provider implementation."""
@@ -254,7 +250,6 @@ class GeminiProvider(BaseLLMProvider):
         except Exception as e:
             raise Exception(f"Gemini streaming error: {str(e)}")
 
-
 class AnthropicProvider(BaseLLMProvider):
     """Anthropic Claude provider implementation."""
     
@@ -340,7 +335,6 @@ class AnthropicProvider(BaseLLMProvider):
         except Exception as e:
             raise Exception(f"Anthropic streaming error: {str(e)}")
 
-
 # Provider registry
 PROVIDERS = {
     # OpenAI models - Latest 2024/2025
@@ -405,7 +399,6 @@ PROVIDERS = {
     "claude-3-haiku-20240307": AnthropicProvider,
 }
 
-
 def get_provider(model: str, api_key: Optional[str] = None) -> BaseLLMProvider:
     """
     Get an LLM provider instance for the specified model.
@@ -426,7 +419,6 @@ def get_provider(model: str, api_key: Optional[str] = None) -> BaseLLMProvider:
     
     provider_class = PROVIDERS[model]
     return provider_class(model=model, api_key=api_key)
-
 
 def list_available_models() -> Dict[str, list]:
     """List all available models by provider."""

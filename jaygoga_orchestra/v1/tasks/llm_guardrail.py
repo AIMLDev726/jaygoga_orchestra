@@ -8,7 +8,6 @@ from jaygoga_orchestra.v1.agent import Agent, LiteAgentOutput
 from jaygoga_orchestra.v1.llm import BaseLLM
 from jaygoga_orchestra.v1.tasks.task_output import TaskOutput
 
-
 class LLMGuardrailResult(BaseModel):
     valid: bool = Field(
         description="Whether the task output complies with the guardrail"
@@ -17,7 +16,6 @@ class LLMGuardrailResult(BaseModel):
         description="A feedback about the task output if it is not valid",
         default=None,
     )
-
 
 class LLMGuardrail:
     """It validates the output of another task using an LLM.

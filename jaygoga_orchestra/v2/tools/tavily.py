@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`tavily-python` not installed. Please install using `pip install tavily-python`")
 
-
 class TavilyTools(Toolkit):
     def __init__(
         self,

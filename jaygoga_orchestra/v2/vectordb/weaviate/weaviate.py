@@ -27,7 +27,6 @@ from jaygoga_orchestra.v2.vectordb.base import VectorDb
 from jaygoga_orchestra.v2.vectordb.search import SearchType
 from jaygoga_orchestra.v2.vectordb.weaviate.index import Distance, VectorIndex
 
-
 class Weaviate(VectorDb):
     """
     Weaviate class for managing vector operations with Weaviate vector database (v4 client).

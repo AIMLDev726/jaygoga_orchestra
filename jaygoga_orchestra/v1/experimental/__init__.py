@@ -20,7 +20,6 @@ from jaygoga_orchestra.v1.experimental.evaluation import (
     ExperimentResult,
 )
 
-
 __all__ = [
     "BaseEvaluator",
     "EvaluationScore",

@@ -6,7 +6,6 @@ from pydantic import BaseModel, Field
 
 from jaygoga_orchestra.v1.utilities.serialization import to_serializable
 
-
 class BaseEvent(BaseModel):
     """Base class for all events"""
 

@@ -45,7 +45,6 @@ from jaygoga_orchestra.v2.run.team import TeamRunResponse
 from jaygoga_orchestra.v2.run.team import ToolCallCompletedEvent as TeamToolCallCompletedEvent
 from jaygoga_orchestra.v2.run.team import ToolCallStartedEvent as TeamToolCallStartedEvent
 
-
 def create_team_run_response_started_event(from_run_response: TeamRunResponse) -> TeamRunResponseStartedEvent:
     return TeamRunResponseStartedEvent(
         session_id=from_run_response.session_id,
@@ -57,7 +56,6 @@ def create_team_run_response_started_event(from_run_response: TeamRunResponse) -
         model_provider=from_run_response.model_provider,  # type: ignore
     )
 
-
 def create_run_response_started_event(from_run_response: RunResponse) -> RunResponseStartedEvent:
     return RunResponseStartedEvent(
         session_id=from_run_response.session_id,
@@ -68,7 +66,6 @@ def create_run_response_started_event(from_run_response: RunResponse) -> RunResp
         model=from_run_response.model,  # type: ignore
         model_provider=from_run_response.model_provider,  # type: ignore
     )
-
 
 def create_team_run_response_completed_event(from_run_response: TeamRunResponse) -> TeamRunResponseCompletedEvent:
     return TeamRunResponseCompletedEvent(
@@ -90,7 +87,6 @@ def create_team_run_response_completed_event(from_run_response: TeamRunResponse)
         member_responses=from_run_response.member_responses,  # type: ignore
     )
 
-
 def create_run_response_completed_event(from_run_response: RunResponse) -> RunResponseCompletedEvent:
     return RunResponseCompletedEvent(
         session_id=from_run_response.session_id,
@@ -110,7 +106,6 @@ def create_run_response_completed_event(from_run_response: RunResponse) -> RunRe
         extra_data=from_run_response.extra_data,  # type: ignore
     )
 
-
 def create_run_response_paused_event(
     from_run_response: RunResponse, tools: Optional[List[ToolExecution]] = None
 ) -> RunResponsePausedEvent:
@@ -124,7 +119,6 @@ def create_run_response_paused_event(
         content=from_run_response.content,
     )
 
-
 def create_run_response_continued_event(from_run_response: RunResponse) -> RunResponseContinuedEvent:
     return RunResponseContinuedEvent(
         session_id=from_run_response.session_id,
@@ -133,7 +127,6 @@ def create_run_response_continued_event(from_run_response: RunResponse) -> RunRe
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_team_run_response_error_event(from_run_response: TeamRunResponse, error: str) -> TeamRunResponseErrorEvent:
     return TeamRunResponseErrorEvent(
@@ -145,7 +138,6 @@ def create_team_run_response_error_event(from_run_response: TeamRunResponse, err
         content=error,
     )
 
-
 def create_run_response_error_event(from_run_response: RunResponse, error: str) -> RunResponseErrorEvent:
     return RunResponseErrorEvent(
         session_id=from_run_response.session_id,
@@ -155,7 +147,6 @@ def create_run_response_error_event(from_run_response: RunResponse, error: str) 
         run_id=from_run_response.run_id,
         content=error,
     )
-
 
 def create_team_run_response_cancelled_event(
     from_run_response: TeamRunResponse, reason: str
@@ -169,7 +160,6 @@ def create_team_run_response_cancelled_event(
         reason=reason,
     )
 
-
 def create_run_response_cancelled_event(from_run_response: RunResponse, reason: str) -> RunResponseCancelledEvent:
     return RunResponseCancelledEvent(
         session_id=from_run_response.session_id,
@@ -180,7 +170,6 @@ def create_run_response_cancelled_event(from_run_response: RunResponse, reason: 
         reason=reason,
     )
 
-
 def create_memory_update_started_event(from_run_response: RunResponse) -> MemoryUpdateStartedEvent:
     return MemoryUpdateStartedEvent(
         session_id=from_run_response.session_id,
@@ -189,7 +178,6 @@ def create_memory_update_started_event(from_run_response: RunResponse) -> Memory
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_team_memory_update_started_event(from_run_response: TeamRunResponse) -> TeamMemoryUpdateStartedEvent:
     return TeamMemoryUpdateStartedEvent(
@@ -200,7 +188,6 @@ def create_team_memory_update_started_event(from_run_response: TeamRunResponse) 
         run_id=from_run_response.run_id,
     )
 
-
 def create_memory_update_completed_event(from_run_response: RunResponse) -> MemoryUpdateCompletedEvent:
     return MemoryUpdateCompletedEvent(
         session_id=from_run_response.session_id,
@@ -209,7 +196,6 @@ def create_memory_update_completed_event(from_run_response: RunResponse) -> Memo
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_team_memory_update_completed_event(from_run_response: TeamRunResponse) -> TeamMemoryUpdateCompletedEvent:
     return TeamMemoryUpdateCompletedEvent(
@@ -220,7 +206,6 @@ def create_team_memory_update_completed_event(from_run_response: TeamRunResponse
         run_id=from_run_response.run_id,
     )
 
-
 def create_reasoning_started_event(from_run_response: RunResponse) -> ReasoningStartedEvent:
     return ReasoningStartedEvent(
         session_id=from_run_response.session_id,
@@ -230,7 +215,6 @@ def create_reasoning_started_event(from_run_response: RunResponse) -> ReasoningS
         run_id=from_run_response.run_id,
     )
 
-
 def create_team_reasoning_started_event(from_run_response: TeamRunResponse) -> TeamReasoningStartedEvent:
     return TeamReasoningStartedEvent(
         session_id=from_run_response.session_id,
@@ -239,7 +223,6 @@ def create_team_reasoning_started_event(from_run_response: TeamRunResponse) -> T
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_reasoning_step_event(
     from_run_response: RunResponse, reasoning_step: ReasoningStep, reasoning_content: str
@@ -255,7 +238,6 @@ def create_reasoning_step_event(
         reasoning_content=reasoning_content,
     )
 
-
 def create_team_reasoning_step_event(
     from_run_response: TeamRunResponse, reasoning_step: ReasoningStep, reasoning_content: str
 ) -> TeamReasoningStepEvent:
@@ -270,7 +252,6 @@ def create_team_reasoning_step_event(
         reasoning_content=reasoning_content,
     )
 
-
 def create_reasoning_completed_event(
     from_run_response: RunResponse, content: Optional[Any] = None, content_type: Optional[str] = None
 ) -> ReasoningCompletedEvent:
@@ -283,7 +264,6 @@ def create_reasoning_completed_event(
         content=content,
         content_type=content_type or "str",
     )
-
 
 def create_team_reasoning_completed_event(
     from_run_response: TeamRunResponse, content: Optional[Any] = None, content_type: Optional[str] = None
@@ -298,7 +278,6 @@ def create_team_reasoning_completed_event(
         content_type=content_type or "str",
     )
 
-
 def create_tool_call_started_event(from_run_response: RunResponse, tool: ToolExecution) -> ToolCallStartedEvent:
     return ToolCallStartedEvent(
         session_id=from_run_response.session_id,
@@ -308,7 +287,6 @@ def create_tool_call_started_event(from_run_response: RunResponse, tool: ToolExe
         run_id=from_run_response.run_id,
         tool=tool,
     )
-
 
 def create_team_tool_call_started_event(
     from_run_response: TeamRunResponse, tool: ToolExecution
@@ -321,7 +299,6 @@ def create_team_tool_call_started_event(
         run_id=from_run_response.run_id,
         tool=tool,
     )
-
 
 def create_tool_call_completed_event(
     from_run_response: RunResponse, tool: ToolExecution, content: Optional[Any] = None
@@ -339,7 +316,6 @@ def create_tool_call_completed_event(
         audio=from_run_response.audio,
     )
 
-
 def create_team_tool_call_completed_event(
     from_run_response: TeamRunResponse, tool: ToolExecution, content: Optional[Any] = None
 ) -> TeamToolCallCompletedEvent:
@@ -355,7 +331,6 @@ def create_team_tool_call_completed_event(
         videos=from_run_response.videos,
         audio=from_run_response.audio,
     )
-
 
 def create_run_response_content_event(
     from_run_response: RunResponse,
@@ -386,7 +361,6 @@ def create_run_response_content_event(
         extra_data=from_run_response.extra_data,
     )
 
-
 def create_team_run_response_content_event(
     from_run_response: TeamRunResponse,
     content: Optional[Any] = None,
@@ -413,7 +387,6 @@ def create_team_run_response_content_event(
         extra_data=from_run_response.extra_data,
     )
 
-
 def create_parser_model_response_started_event(
     from_run_response: RunResponse,
 ) -> ParserModelResponseStartedEvent:
@@ -424,7 +397,6 @@ def create_parser_model_response_started_event(
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_parser_model_response_completed_event(
     from_run_response: RunResponse,
@@ -437,7 +409,6 @@ def create_parser_model_response_completed_event(
         run_id=from_run_response.run_id,
     )
 
-
 def create_team_parser_model_response_started_event(
     from_run_response: TeamRunResponse,
 ) -> TeamParserModelResponseStartedEvent:
@@ -448,7 +419,6 @@ def create_team_parser_model_response_started_event(
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_team_parser_model_response_completed_event(
     from_run_response: TeamRunResponse,
@@ -461,7 +431,6 @@ def create_team_parser_model_response_completed_event(
         run_id=from_run_response.run_id,
     )
 
-
 def create_output_model_response_started_event(from_run_response: RunResponse) -> OutputModelResponseStartedEvent:
     return OutputModelResponseStartedEvent(
         session_id=from_run_response.session_id,
@@ -471,7 +440,6 @@ def create_output_model_response_started_event(from_run_response: RunResponse) -
         run_id=from_run_response.run_id,
     )
 
-
 def create_output_model_response_completed_event(from_run_response: RunResponse) -> OutputModelResponseCompletedEvent:
     return OutputModelResponseCompletedEvent(
         session_id=from_run_response.session_id,
@@ -480,7 +448,6 @@ def create_output_model_response_completed_event(from_run_response: RunResponse)
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_team_output_model_response_started_event(
     from_run_response: TeamRunResponse,
@@ -492,7 +459,6 @@ def create_team_output_model_response_started_event(
         team_session_id=from_run_response.team_session_id,  # type: ignore
         run_id=from_run_response.run_id,
     )
-
 
 def create_team_output_model_response_completed_event(
     from_run_response: TeamRunResponse,

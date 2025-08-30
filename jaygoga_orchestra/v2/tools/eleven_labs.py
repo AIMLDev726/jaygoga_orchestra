@@ -32,7 +32,6 @@ ElevenLabsAudioOutputFormat = Literal[
     "ulaw_8000",  # μ-law format with 8kHz sample rate (for Twilio)
 ]
 
-
 class ElevenLabsTools(Toolkit):
     def __init__(
         self,

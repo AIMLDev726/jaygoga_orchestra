@@ -19,7 +19,6 @@ try:
 except ImportError:
     raise ImportError("`pypdf` not installed. Please install it via `pip install pypdf`.")
 
-
 class S3PDFReader(Reader):
     """Reader for PDF files on S3"""
 

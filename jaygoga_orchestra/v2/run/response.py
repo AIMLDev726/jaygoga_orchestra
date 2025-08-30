@@ -13,7 +13,6 @@ from jaygoga_orchestra.v2.models.response import ToolExecution
 from jaygoga_orchestra.v2.run.base import BaseRunResponseEvent, RunResponseExtraData, RunStatus
 from jaygoga_orchestra.v2.utils.log import logger
 
-
 class RunEvent(str, Enum):
     """Events that can be sent by the run() functions"""
 
@@ -43,7 +42,6 @@ class RunEvent(str, Enum):
     output_model_response_started = "OutputModelResponseStarted"
     output_model_response_completed = "OutputModelResponseCompleted"
 
-
 @dataclass
 class BaseAgentRunResponseEvent(BaseRunResponseEvent):
     created_at: int = field(default_factory=lambda: int(time()))
@@ -70,7 +68,6 @@ class BaseAgentRunResponseEvent(BaseRunResponseEvent):
     def tools_awaiting_external_execution(self):
         return [t for t in self.tools if t.external_execution_required] if self.tools else []
 
-
 @dataclass
 class RunResponseStartedEvent(BaseAgentRunResponseEvent):
     """Event sent when the run starts"""
@@ -78,7 +75,6 @@ class RunResponseStartedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.run_started.value
     model: str = ""
     model_provider: str = ""
-
 
 @dataclass
 class RunResponseContentEvent(BaseAgentRunResponseEvent):
@@ -94,13 +90,11 @@ class RunResponseContentEvent(BaseAgentRunResponseEvent):
     image: Optional[ImageArtifact] = None  # Image attached to the response
     extra_data: Optional[RunResponseExtraData] = None
 
-
 @dataclass
 class IntermediateRunResponseContentEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.run_intermediate_response_content.value
     content: Optional[Any] = None
     content_type: str = "str"
-
 
 @dataclass
 class RunResponseCompletedEvent(BaseAgentRunResponseEvent):
@@ -116,7 +110,6 @@ class RunResponseCompletedEvent(BaseAgentRunResponseEvent):
     response_audio: Optional[AudioResponse] = None  # Model audio response
     extra_data: Optional[RunResponseExtraData] = None
 
-
 @dataclass
 class RunResponsePausedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.run_paused.value
@@ -126,17 +119,14 @@ class RunResponsePausedEvent(BaseAgentRunResponseEvent):
     def is_paused(self):
         return True
 
-
 @dataclass
 class RunResponseContinuedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.run_continued.value
-
 
 @dataclass
 class RunResponseErrorEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.run_error.value
     content: Optional[str] = None
-
 
 @dataclass
 class RunResponseCancelledEvent(BaseAgentRunResponseEvent):
@@ -147,21 +137,17 @@ class RunResponseCancelledEvent(BaseAgentRunResponseEvent):
     def is_cancelled(self):
         return True
 
-
 @dataclass
 class MemoryUpdateStartedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.memory_update_started.value
-
 
 @dataclass
 class MemoryUpdateCompletedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.memory_update_completed.value
 
-
 @dataclass
 class ReasoningStartedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.reasoning_started.value
-
 
 @dataclass
 class ReasoningStepEvent(BaseAgentRunResponseEvent):
@@ -170,19 +156,16 @@ class ReasoningStepEvent(BaseAgentRunResponseEvent):
     content_type: str = "str"
     reasoning_content: str = ""
 
-
 @dataclass
 class ReasoningCompletedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.reasoning_completed.value
     content: Optional[Any] = None
     content_type: str = "str"
 
-
 @dataclass
 class ToolCallStartedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.tool_call_started.value
     tool: Optional[ToolExecution] = None
-
 
 @dataclass
 class ToolCallCompletedEvent(BaseAgentRunResponseEvent):
@@ -193,26 +176,21 @@ class ToolCallCompletedEvent(BaseAgentRunResponseEvent):
     videos: Optional[List[VideoArtifact]] = None  # Videos produced by the tool call
     audio: Optional[List[AudioArtifact]] = None  # Audio produced by the tool call
 
-
 @dataclass
 class ParserModelResponseStartedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.parser_model_response_started.value
-
 
 @dataclass
 class ParserModelResponseCompletedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.parser_model_response_completed.value
 
-
 @dataclass
 class OutputModelResponseStartedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.output_model_response_started.value
 
-
 @dataclass
 class OutputModelResponseCompletedEvent(BaseAgentRunResponseEvent):
     event: str = RunEvent.output_model_response_completed.value
-
 
 RunResponseEvent = Union[
     RunResponseStartedEvent,
@@ -235,7 +213,6 @@ RunResponseEvent = Union[
     OutputModelResponseStartedEvent,
     OutputModelResponseCompletedEvent,
 ]
-
 
 # Map event string to dataclass
 RUN_EVENT_TYPE_REGISTRY = {
@@ -260,14 +237,12 @@ RUN_EVENT_TYPE_REGISTRY = {
     RunEvent.output_model_response_completed.value: OutputModelResponseCompletedEvent,
 }
 
-
 def run_response_event_from_dict(data: dict) -> BaseRunResponseEvent:
     event_type = data.get("event", "")
     cls = RUN_EVENT_TYPE_REGISTRY.get(event_type)
     if not cls:
         raise ValueError(f"Unknown event type: {event_type}")
     return cls.from_dict(data)  # type: ignore
-
 
 @dataclass
 class RunResponse:

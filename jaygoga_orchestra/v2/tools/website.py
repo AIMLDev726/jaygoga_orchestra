@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.knowledge.website import WebsiteKnowledgeBase
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 class WebsiteTools(Toolkit):
     def __init__(self, knowledge_base: Optional[Union[WebsiteKnowledgeBase, CombinedKnowledgeBase]] = None, **kwargs):
         self.knowledge_base: Optional[Union[WebsiteKnowledgeBase, CombinedKnowledgeBase]] = knowledge_base

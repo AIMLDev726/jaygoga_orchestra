@@ -32,8 +32,7 @@ except ImportError as e:
 
 except Exception as e:
     # Catch-all for unexpected errors
-    console.print(f"An unexpected error occurred: {e}")
-
+    print(f"An unexpected error occurred: {e}")
 
 @dataclass
 class OllamaEmbedder(Embedder):

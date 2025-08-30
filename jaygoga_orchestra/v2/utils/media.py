@@ -7,14 +7,12 @@ from typing import List
 
 import httpx
 
-
 class SampleDataFileExtension(str, Enum):
     DOCX = "docx"
     PDF = "pdf"
     TXT = "txt"
     JSON = "json"
     CSV = "csv"
-
 
 def download_image(url: str, output_path: str) -> bool:
     """
@@ -31,7 +29,7 @@ def download_image(url: str, output_path: str) -> bool:
         # Check if the response contains image content
         content_type = response.headers.get("Content-Type")
         if not content_type or not content_type.startswith("image"):
-            console.print(f"URL does not point to an image. Content-Type: {content_type}")
+            print(f"URL does not point to an image. Content-Type: {content_type}")
             return False
 
         path = Path(output_path)
@@ -43,16 +41,15 @@ def download_image(url: str, output_path: str) -> bool:
                 if chunk:
                     file.write(chunk)
 
-        console.print(f"Image successfully downloaded and saved to '{output_path}'.")
+        print(f"Image successfully downloaded and saved to '{output_path}'.")
         return True
 
     except httpx.HTTPError as e:
-        console.print(f"Error downloading the image: {e}")
+        print(f"Error downloading the image: {e}")
         return False
     except IOError as e:
-        console.print(f"Error saving the image to '{output_path}': {e}")
+        print(f"Error saving the image to '{output_path}': {e}")
         return False
-
 
 def download_video(url: str, output_path: str) -> str:
     """Download video from URL"""
@@ -63,7 +60,6 @@ def download_video(url: str, output_path: str) -> str:
         for chunk in response.iter_bytes(chunk_size=8192):
             f.write(chunk)
     return output_path
-
 
 def download_file(url: str, output_path: str) -> None:
     """
@@ -91,7 +87,6 @@ def download_file(url: str, output_path: str) -> None:
     except httpx.HTTPError as e:
         raise Exception(f"Failed to download file from {url}: {str(e)}")
 
-
 def save_base64_data(base64_data: str, output_path: str) -> bool:
     """
     Saves base64 string to the specified path as bytes.
@@ -110,11 +105,10 @@ def save_base64_data(base64_data: str, output_path: str) -> bool:
         with open(path, "wb") as file:
             file.write(decoded_data)
 
-        console.print(f"Data successfully saved to '{path}'.")
+        print(f"Data successfully saved to '{path}'.")
         return True
     except Exception as e:
         raise Exception(f"An unexpected error occurred while saving data to '{output_path}': {e}")
-
 
 def download_knowledge_filters_sample_data(
     num_files: int = 5, file_extension: SampleDataFileExtension = SampleDataFileExtension.DOCX

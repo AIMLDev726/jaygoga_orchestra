@@ -22,7 +22,6 @@ from jaygoga_orchestra.v1.utilities.paths import db_storage_path
 from jaygoga_orchestra.v1.utilities.chromadb import create_persistent_client
 from jaygoga_orchestra.v1.utilities.logger_utils import suppress_logging
 
-
 class KnowledgeStorage(BaseKnowledgeStorage):
     """
     Extends Storage to handle embeddings for memory entries, improving

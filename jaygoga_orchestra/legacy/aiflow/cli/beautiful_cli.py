@@ -56,8 +56,8 @@ class BeautifulCLI:
     def show_banner(self):
         """Display the beautiful AIFlow banner."""
         banner_text = Text(AIFLOW_BANNER, style="bold cyan")
-        self.console.print(Align.center(banner_text))
-        self.console.print()
+        self.print(Align.center(banner_text))
+        self.print()
         
     def show_welcome(self):
         """Show welcome message with available commands."""
@@ -76,8 +76,8 @@ class BeautifulCLI:
             border_style="bright_blue",
             padding=(1, 2)
         )
-        self.console.print(welcome_panel)
-        self.console.print()
+        self.print(welcome_panel)
+        self.print()
 
     async def start_interactive_session(self):
         """Start the main interactive CLI session."""
@@ -99,9 +99,9 @@ class BeautifulCLI:
                 await self.handle_command(command)
                 
             except KeyboardInterrupt:
-                self.console.print("\n[yellow]Use 'exit' to quit gracefully.[/yellow]")
+                self.print("\n[yellow]Use 'exit' to quit gracefully.[/yellow]")
             except Exception as e:
-                self.console.print(f"[red]Error: {e}[/red]")
+                self.print(f"[red]Error: {e}[/red]")
 
     async def handle_command(self, command: str):
         """Handle user commands with beautiful output."""
@@ -125,12 +125,12 @@ class BeautifulCLI:
         elif cmd == "help":
             self.show_help(args)
         else:
-            self.console.print(f"[red]Unknown command: {cmd}[/red]")
-            self.console.print("[dim]Type 'help' for available commands.[/dim]")
+            self.print(f"[red]Unknown command: {cmd}[/red]")
+            self.print("[dim]Type 'help' for available commands.[/dim]")
 
     async def start_chat_session(self, args: List[str]):
         """Start an interactive chat session with AI agents."""
-        self.console.print(Panel(
+        self.print(Panel(
             "[bold green]🤖 Starting AI Chat Session[/bold green]\n\n"
             "You can now chat with AI agents. Type your message and press Enter.\n"
             "Commands: [yellow]/exit[/yellow] to end, [yellow]/clear[/yellow] to clear history",
@@ -172,14 +172,14 @@ class BeautifulCLI:
                     border_style="cyan",
                     padding=(1, 2)
                 )
-                self.console.print(response_panel)
+                self.print(response_panel)
                 
                 chat_history.append({"user": user_input, "assistant": response})
                 
             except KeyboardInterrupt:
                 break
         
-        self.console.print("[green]Chat session ended.[/green]")
+        self.print("[green]Chat session ended.[/green]")
 
     async def handle_task_command(self, args: List[str]):
         """Handle task-related commands."""
@@ -197,11 +197,11 @@ class BeautifulCLI:
             task_id = args[1] if len(args) > 1 else None
             await self.run_task(task_id)
         else:
-            self.console.print(f"[red]Unknown task command: {subcommand}[/red]")
+            self.print(f"[red]Unknown task command: {subcommand}[/red]")
 
     async def create_task_interactive(self):
         """Interactive task creation with beautiful prompts."""
-        self.console.print(Panel(
+        self.print(Panel(
             "[bold cyan]📋 Task Creation Wizard[/bold cyan]\n\n"
             "Let's create a new task step by step!",
             border_style="cyan"
@@ -230,13 +230,13 @@ class BeautifulCLI:
         task_table.add_row("Agent", agent_name)
         task_table.add_row("Created", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         
-        self.console.print(task_table)
+        self.print(task_table)
         
         if Confirm.ask("[bold]Create this task?[/bold]"):
             # Save task (implement actual saving logic)
-            self.console.print("[green]✅ Task created successfully![/green]")
+            self.print("[green]✅ Task created successfully![/green]")
         else:
-            self.console.print("[yellow]Task creation cancelled.[/yellow]")
+            self.print("[yellow]Task creation cancelled.[/yellow]")
 
     async def handle_team_command(self, args: List[str]):
         """Handle team orchestration commands."""
@@ -253,11 +253,11 @@ class BeautifulCLI:
         elif subcommand == "status":
             await self.show_team_status()
         else:
-            self.console.print(f"[red]Unknown team command: {subcommand}[/red]")
+            self.print(f"[red]Unknown team command: {subcommand}[/red]")
 
     async def run_team_interactive(self):
         """Run a team with beautiful progress tracking."""
-        self.console.print(Panel(
+        self.print(Panel(
             "[bold magenta]🚀 Team Execution[/bold magenta]\n\n"
             "Starting team orchestration...",
             border_style="magenta"
@@ -287,7 +287,7 @@ class BeautifulCLI:
                     progress.update(task3, advance=1)
         
         # Show completion
-        self.console.print(Panel(
+        self.print(Panel(
             "[bold green]✅ Team execution completed successfully![/bold green]\n\n"
             "📄 Results saved to: [cyan]results.md[/cyan]\n"
             "📊 Performance report: [cyan]team_performance.json[/cyan]",
@@ -310,12 +310,12 @@ class BeautifulCLI:
             help_table.add_row("create", "Create projects/agents", "create project")
             help_table.add_row("status", "Show system status", "status")
             
-            self.console.print(help_table)
+            self.print(help_table)
         else:
             # Show specific help for commands
             command = args[0].lower()
             if command == "chat":
-                self.console.print(Panel(
+                self.print(Panel(
                     "[bold cyan]💬 Chat Command Help[/bold cyan]\n\n"
                     "Start an interactive conversation with AI agents.\n\n"
                     "[yellow]Usage:[/yellow] chat\n"
@@ -337,7 +337,7 @@ class BeautifulCLI:
             border_style="green",
             padding=(1, 2)
         )
-        self.console.print(Align.center(goodbye_panel))
+        self.print(Align.center(goodbye_panel))
 
     def show_task_help(self):
         """Show task command help."""
@@ -349,7 +349,7 @@ class BeautifulCLI:
         task_table.add_row("task list", "List all tasks")
         task_table.add_row("task run <id>", "Execute a specific task")
         
-        self.console.print(task_table)
+        self.print(task_table)
 
     def show_team_help(self):
         """Show team command help."""
@@ -361,7 +361,7 @@ class BeautifulCLI:
         team_table.add_row("team run", "Execute team orchestration")
         team_table.add_row("team status", "Show team status")
         
-        self.console.print(team_table)
+        self.print(team_table)
 
     async def show_status(self):
         """Show beautiful system status."""
@@ -377,8 +377,7 @@ class BeautifulCLI:
             border_style="green"
         )
         
-        self.console.print(system_panel)
-
+        self.print(system_panel)
 
 # CLI Entry Points
 @click.group()
@@ -399,8 +398,8 @@ def chat(message):
     """Quick chat with AI agents"""
     cli = BeautifulCLI()
     if message:
-        console.print(f"[bold blue]You:[/bold blue] {message}")
-        console.print(Panel(
+        print(f"[bold blue]You:[/bold blue] {message}")
+        print(Panel(
             f"I understand you said: '{message}'. This is a demo response!",
             title="🤖 AIFlow Assistant",
             border_style="cyan"

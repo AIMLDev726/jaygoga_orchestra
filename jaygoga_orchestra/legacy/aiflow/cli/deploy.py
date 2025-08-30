@@ -12,7 +12,6 @@ from typing import Dict, Any
 
 from .base import BaseCLICommand, CLIContext
 
-
 class DeployCommand(BaseCLICommand):
     """Command for deploying AIFlow projects."""
     

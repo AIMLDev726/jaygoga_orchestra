@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 import asyncio
 
@@ -17,12 +18,10 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from jaygoga_orchestra.v1.tools.base_tool import BaseTool
 
-
 class ToolUsageLimitExceeded(Exception):
     """Exception raised when a tool has reached its maximum usage limit."""
 
     pass
-
 
 class CrewStructuredTool:
     """A structured tool that can operate on any number of inputs.

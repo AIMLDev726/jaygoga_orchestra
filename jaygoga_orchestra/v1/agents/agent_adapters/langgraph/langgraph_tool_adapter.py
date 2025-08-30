@@ -6,7 +6,6 @@ from typing import Any, List, Optional
 from jaygoga_orchestra.v1.agents.agent_adapters.base_tool_adapter import BaseToolAdapter
 from jaygoga_orchestra.v1.tools.base_tool import BaseTool
 
-
 class LangGraphToolAdapter(BaseToolAdapter):
     """Adapts Govinda tools to LangGraph agent tool compatible format"""
 

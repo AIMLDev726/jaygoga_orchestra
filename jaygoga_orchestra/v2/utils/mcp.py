@@ -12,9 +12,7 @@ try:
 except (ImportError, ModuleNotFoundError):
     raise ImportError("`mcp` not installed. Please install using `pip install mcp`")
 
-
 from jaygoga_orchestra.v2.media import ImageArtifact
-
 
 def get_entrypoint_for_tool(tool: MCPTool, session: ClientSession):
     """

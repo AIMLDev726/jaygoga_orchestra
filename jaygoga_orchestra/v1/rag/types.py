@@ -7,7 +7,6 @@ from typing import TypeAlias, Any
 
 from typing_extensions import Required, TypedDict
 
-
 class BaseRecord(TypedDict, total=False):
     """A typed dictionary representing a document record.
 
@@ -25,12 +24,10 @@ class BaseRecord(TypedDict, total=False):
         | list[Mapping[str, str | int | float | bool]]
     )
 
-
 DenseVector: TypeAlias = list[float]
 IntVector: TypeAlias = list[int]
 
 EmbeddingFunction: TypeAlias = Callable[..., Any]
-
 
 class SearchResult(TypedDict):
     """Standard search result format for vector store queries.

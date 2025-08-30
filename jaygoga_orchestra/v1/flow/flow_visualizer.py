@@ -18,7 +18,6 @@ from jaygoga_orchestra.v1.flow.visualization_utils import (
     compute_positions,
 )
 
-
 class FlowPlot:
     """Handles the creation and rendering of flow visualization diagrams."""
 
@@ -129,7 +128,7 @@ class FlowPlot:
             try:
                 with open(f"{filename}.html", "w", encoding="utf-8") as f:
                     f.write(final_html_content)
-                console.print(f"Plot saved as {filename}.html")
+                print(f"Plot saved as {filename}.html")
             except IOError as e:
                 raise IOError(f"Failed to save flow visualization to {filename}.html: {str(e)}")
 
@@ -201,10 +200,9 @@ class FlowPlot:
                 import shutil
                 shutil.rmtree(lib_folder)
         except ValueError as e:
-            console.print(f"Error validating lib folder path: {e}")
+            print(f"Error validating lib folder path: {e}")
         except Exception as e:
-            console.print(f"Error cleaning up lib folder: {e}")
-
+            print(f"Error cleaning up lib folder: {e}")
 
 def plot_flow(flow, filename="flow_plot"):
     """

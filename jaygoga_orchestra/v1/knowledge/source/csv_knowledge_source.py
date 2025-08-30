@@ -6,7 +6,6 @@ from typing import Dict, List
 
 from jaygoga_orchestra.v1.knowledge.source.base_file_knowledge_source import BaseFileKnowledgeSource
 
-
 class CSVKnowledgeSource(BaseFileKnowledgeSource):
     """A knowledge source that stores and queries CSV file content using embeddings."""
 

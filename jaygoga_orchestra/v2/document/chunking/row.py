@@ -5,7 +5,6 @@ from typing import List
 from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.chunking.strategy import ChunkingStrategy
 
-
 class RowChunking(ChunkingStrategy):
     def __init__(self, skip_header: bool = False, clean_rows: bool = True):
         self.skip_header = skip_header

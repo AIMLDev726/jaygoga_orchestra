@@ -5,7 +5,6 @@ from typing import List
 from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.chunking.strategy import ChunkingStrategy
 
-
 class DocumentChunking(ChunkingStrategy):
     """A chunking strategy that splits text based on document structure like paragraphs and sections"""
 

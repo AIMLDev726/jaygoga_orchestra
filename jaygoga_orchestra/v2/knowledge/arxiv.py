@@ -6,7 +6,6 @@ from jaygoga_orchestra.v2.document import Document
 from jaygoga_orchestra.v2.document.reader.arxiv_reader import ArxivReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 
-
 class ArxivKnowledgeBase(AgentKnowledge):
     queries: List[str] = []
     reader: ArxivReader = ArxivReader()

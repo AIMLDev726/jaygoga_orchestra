@@ -6,7 +6,6 @@ from pathlib import Path
 
 from jaygoga_orchestra.v1.flow.path_utils import safe_path_join, validate_path_exists
 
-
 class HTMLTemplateHandler:
     """Handles HTML template processing and generation for flow visualization diagrams."""
 

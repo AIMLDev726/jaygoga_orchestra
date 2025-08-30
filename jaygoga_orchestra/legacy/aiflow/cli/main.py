@@ -20,7 +20,6 @@ from .deploy import DeployCommand
 
 console = Console()
 
-
 @click.group()
 @click.version_option(version="1.0.0")
 @click.option('--verbose', '-v', is_flag=True, help='Enable verbose output')
@@ -41,13 +40,11 @@ def aiflow(ctx, verbose: bool, debug: bool, project_root: Optional[str]):
         debug=debug
     )
 
-
 @aiflow.command()
 def interactive():
     """🎨 Start the beautiful interactive CLI interface"""
     cli = BeautifulCLI()
     asyncio.run(cli.start_interactive_session())
-
 
 @aiflow.command()
 @click.argument('message', required=False)
@@ -63,8 +60,8 @@ def chat(message: Optional[str], agent_name: str, agent_role: str):
     }
 
     if message:
-        console.print(f"[bold blue]You:[/bold blue] {message}")
-        console.print(f"[bold cyan]{agent_name}:[/bold cyan] I understand you said: '{message}'. This is a demo response!")
+        print(f"[bold blue]You:[/bold blue] {message}")
+        print(f"[bold cyan]{agent_name}:[/bold cyan] I understand you said: '{message}'. This is a demo response!")
     else:
         asyncio.run(start_conversation_mode(agent_config))
 
@@ -75,14 +72,12 @@ def create(ctx):
     command = CreateCommand()
     command.execute(ctx.obj['context'])
 
-
 @aiflow.command()
 @click.pass_context
 def manage(ctx):
     """⚙️ Manage existing projects and resources"""
     command = ManageCommand()
     command.execute(ctx.obj['context'])
-
 
 @aiflow.command()
 @click.pass_context
@@ -91,7 +86,6 @@ def train(ctx):
     command = TrainCommand()
     command.execute(ctx.obj['context'])
 
-
 @aiflow.command()
 @click.pass_context
 def evaluate(ctx):
@@ -99,14 +93,12 @@ def evaluate(ctx):
     command = EvaluateCommand()
     command.execute(ctx.obj['context'])
 
-
 @aiflow.command()
 @click.pass_context
 def deploy(ctx):
     """🚀 Deploy agents and teams"""
     command = DeployCommand()
     command.execute(ctx.obj['context'])
-
 
 @aiflow.command()
 @click.option('--config-file', type=click.Path(exists=True), help='Team configuration file')
@@ -116,17 +108,16 @@ def team(config_file: Optional[str], stream: bool, save: bool):
     """👥 Run team orchestration"""
     from rich.panel import Panel
 
-    console.print(Panel(
+    print(Panel(
         "[bold magenta]🚀 Team Orchestration[/bold magenta]\n\n"
         "Starting team execution with enhanced output...",
         border_style="magenta"
     ))
 
     # This would integrate with the actual team execution
-    console.print("[green]✅ Team execution completed![/green]")
+    print("[green]✅ Team execution completed![/green]")
     if save:
-        console.print("[cyan]📄 Results saved to: results.md[/cyan]")
-
+        print("[cyan]📄 Results saved to: results.md[/cyan]")
 
 @aiflow.command()
 def status():
@@ -145,7 +136,7 @@ def status():
     status_table.add_row("Vector DB", "✅ Connected", "In-memory database ready")
     status_table.add_row("CLI Interface", "✅ Beautiful", "Rich formatting active")
 
-    console.print(status_table)
+    print(status_table)
 
     # Quick stats
     stats_panel = Panel(
@@ -157,8 +148,7 @@ def status():
         title="📈 Statistics",
         border_style="blue"
     )
-    console.print(stats_panel)
-
+    print(stats_panel)
 
 if __name__ == '__main__':
     aiflow()

@@ -13,7 +13,6 @@ try:
 except ImportError:
     logger.error("Webex tools require the `webexpythonsdk` package. Run `pip install webexpythonsdk` to install it.")
 
-
 class WebexTools(Toolkit):
     def __init__(
         self, send_message: bool = True, list_rooms: bool = True, access_token: Optional[str] = None, **kwargs

@@ -23,7 +23,6 @@ from ..tools.mcp_adapter import MCPServerAdapter, StdioServerParameters
 
 logger = logging.getLogger(__name__)
 
-
 class TeamStatus(Enum):
     """Team execution status enumeration."""
     IDLE = "idle"
@@ -31,7 +30,6 @@ class TeamStatus(Enum):
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
-
 
 @dataclass
 class TeamMetrics:
@@ -43,7 +41,6 @@ class TeamMetrics:
     total_tokens_used: int = 0
     average_task_time: float = 0.0
     agents_used: int = 0
-
 
 class Team:
     """

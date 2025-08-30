@@ -13,7 +13,6 @@ from dataclasses import dataclass
 
 from .agent import Agent
 
-
 class TaskStatus(Enum):
     """Task execution status enumeration."""
     PENDING = "pending"
@@ -22,7 +21,6 @@ class TaskStatus(Enum):
     FAILED = "failed"
     CANCELLED = "cancelled"
 
-
 class OutputFormat(Enum):
     """Supported output formats for task results."""
     TEXT = "text"
@@ -30,7 +28,6 @@ class OutputFormat(Enum):
     MARKDOWN = "markdown"
     STRUCTURED_JSON = "structured_json"
     EXECUTIVE_SUMMARY = "executive_summary"
-
 
 @dataclass
 class TaskResult:
@@ -48,7 +45,6 @@ class TaskResult:
     def __post_init__(self):
         if self.timestamp is None:
             self.timestamp = datetime.now()
-
 
 class Task:
     """

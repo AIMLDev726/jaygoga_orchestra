@@ -23,7 +23,6 @@ class MetricCategory(enum.Enum):
     def title(self):
         return self.value.replace('_', ' ').title()
 
-
 class EvaluationScore(BaseModel):
     score: float | None = Field(
         default=5.0,
@@ -45,7 +44,6 @@ class EvaluationScore(BaseModel):
             return f"Score: N/A - {self.feedback}"
         return f"Score: {self.score:.1f}/10 - {self.feedback}"
 
-
 class BaseEvaluator(abc.ABC):
     def __init__(self, llm: BaseLLM | None = None):
         self.llm: BaseLLM | None = create_llm(llm)
@@ -65,7 +63,6 @@ class BaseEvaluator(abc.ABC):
     ) -> EvaluationScore:
         pass
 
-
 class AgentEvaluationResult(BaseModel):
     agent_id: str = Field(description="ID of the evaluated agent")
     task_id: str = Field(description="ID of the task that was executed")
@@ -74,13 +71,11 @@ class AgentEvaluationResult(BaseModel):
         description="Evaluation scores for each metric category"
     )
 
-
 class AggregationStrategy(Enum):
     SIMPLE_AVERAGE = "simple_average"  # Equal weight to all tasks
     WEIGHTED_BY_COMPLEXITY = "weighted_by_complexity"  # Weight by task complexity
     BEST_PERFORMANCE = "best_performance"  # Use best scores across tasks
     WORST_PERFORMANCE = "worst_performance"  # Use worst scores across tasks
-
 
 class AgentAggregatedEvaluationResult(BaseModel):
     agent_id: str = Field(

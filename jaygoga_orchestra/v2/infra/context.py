@@ -6,7 +6,6 @@ from pydantic import BaseModel
 
 from jaygoga_orchestra.v2.api.schemas.workspace import WorkspaceSchema
 
-
 class ContainerContext(BaseModel):
     """ContainerContext is a context object passed when creating containers."""
 

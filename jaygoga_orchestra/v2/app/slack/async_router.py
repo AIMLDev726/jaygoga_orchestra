@@ -10,7 +10,6 @@ from jaygoga_orchestra.v2.team.team import Team
 from jaygoga_orchestra.v2.tools.slack import SlackTools
 from jaygoga_orchestra.v2.utils.log import log_info
 
-
 def get_async_router(agent: Optional[Agent] = None, team: Optional[Team] = None) -> APIRouter:
     router = APIRouter()
 

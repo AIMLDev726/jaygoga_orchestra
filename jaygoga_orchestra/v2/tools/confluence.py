@@ -14,7 +14,6 @@ try:
 except (ModuleNotFoundError, ImportError):
     raise ImportError("atlassian-python-api not install . Please install using `pip install atlassian-python-api`")
 
-
 class ConfluenceTools(Toolkit):
     def __init__(
         self,

@@ -25,7 +25,6 @@ class ExecutionLog(BaseModel):
     def __getitem__(self, key: str) -> Any:
         return getattr(self, key)
 
-
 """Manages storage and retrieval of task outputs."""
 
 class TaskOutputStorageHandler:

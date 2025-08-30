@@ -6,7 +6,6 @@ import requests
 
 from jaygoga_orchestra.v2.utils.log import log_warning
 
-
 def get_location() -> Dict[str, Any]:
     """Get approximate location using IP geolocation."""
     try:

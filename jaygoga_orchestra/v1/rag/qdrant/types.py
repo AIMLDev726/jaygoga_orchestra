@@ -41,7 +41,6 @@ FilterCondition = BasicConditions | StructuralConditions | Filter
 MetadataFilterValue = bool | int | str
 MetadataFilter = dict[str, MetadataFilterValue]
 
-
 class EmbeddingFunction(Protocol):
     """Protocol for embedding functions that convert text to vectors."""
 
@@ -55,7 +54,6 @@ class EmbeddingFunction(Protocol):
             Embedding vector as list of floats or numpy array.
         """
         ...
-
 
 class QdrantEmbeddingFunctionWrapper(EmbeddingFunction):
     """Base class for Qdrant EmbeddingFunction to work with Pydantic validation."""
@@ -71,7 +69,6 @@ class QdrantEmbeddingFunctionWrapper(EmbeddingFunction):
         """
         return core_schema.any_schema()
 
-
 class AsyncEmbeddingFunction(Protocol):
     """Protocol for async embedding functions that convert text to vectors."""
 
@@ -85,7 +82,6 @@ class AsyncEmbeddingFunction(Protocol):
             Embedding vector as list of floats or numpy array.
         """
         ...
-
 
 class QdrantClientParams(TypedDict, total=False):
     """Parameters for QdrantClient initialization.
@@ -112,7 +108,6 @@ class QdrantClientParams(TypedDict, total=False):
     local_inference_batch_size: int | None
     check_compatibility: bool
 
-
 class CommonCreateFields(TypedDict, total=False):
     """Fields shared between high-level and direct create_collection params."""
 
@@ -130,7 +125,6 @@ class CommonCreateFields(TypedDict, total=False):
     init_from: InitFrom | str
     timeout: Annotated[int, "Operation timeout in seconds"]
 
-
 class QdrantCollectionCreateParams(
     BaseCollectionParams, CommonCreateFields, total=False
 ):
@@ -138,12 +132,10 @@ class QdrantCollectionCreateParams(
 
     pass
 
-
 class CreateCollectionParams(CommonCreateFields, total=False):
     """Parameters for qdrant_client.create_collection."""
 
     collection_name: str
-
 
 class PreparedSearchParams(TypedDict):
     """Type definition for prepared Qdrant search parameters."""

@@ -5,13 +5,11 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
-
 class PlaygroundEndpointCreate(BaseModel):
     """Data sent to API to create a playground endpoint"""
 
     endpoint: str
     playground_data: Optional[Dict[str, Any]] = None
-
 
 class PlaygroundEndpointSchema(BaseModel):
     """Schema for a playground endpoint returned by API"""

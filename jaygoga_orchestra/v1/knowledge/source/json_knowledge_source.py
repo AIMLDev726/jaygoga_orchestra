@@ -6,7 +6,6 @@ from typing import Any, Dict, List
 
 from jaygoga_orchestra.v1.knowledge.source.base_file_knowledge_source import BaseFileKnowledgeSource
 
-
 class JSONKnowledgeSource(BaseFileKnowledgeSource):
     """A knowledge source that stores and queries JSON file content using embeddings."""
 

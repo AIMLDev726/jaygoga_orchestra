@@ -13,7 +13,6 @@ try:
 except ImportError:
     raise ImportError("`requests` not installed. Please install using `pip install requests`.")
 
-
 class ZendeskTools(Toolkit):
     """
     A toolkit class for interacting with the Zendesk API to search articles.

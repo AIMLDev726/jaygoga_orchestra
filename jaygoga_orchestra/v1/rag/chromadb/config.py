@@ -17,7 +17,6 @@ from jaygoga_orchestra.v1.rag.chromadb.constants import (
     DEFAULT_STORAGE_PATH,
 )
 
-
 warnings.filterwarnings(
     "ignore",
     message=".*Mixing V1 models and V2 models.*",
@@ -31,7 +30,6 @@ warnings.filterwarnings(
     module=r"^chromadb(\.|$)",
 )
 
-
 def _default_settings() -> Settings:
     """Create default ChromaDB settings.
 
@@ -44,7 +42,6 @@ def _default_settings() -> Settings:
         is_persistent=True,
     )
 
-
 def _default_embedding_function() -> ChromaEmbeddingFunctionWrapper:
     """Create default ChromaDB embedding function.
 
@@ -52,7 +49,6 @@ def _default_embedding_function() -> ChromaEmbeddingFunctionWrapper:
         Default embedding function using all-MiniLM-L6-v2 via ONNX.
     """
     return cast(ChromaEmbeddingFunctionWrapper, DefaultEmbeddingFunction())
-
 
 @pyd_dataclass(frozen=True)
 class ChromaDBConfig(BaseRagConfig):

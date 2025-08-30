@@ -12,7 +12,6 @@ from jaygoga_orchestra.v1.utilities import I18N
 
 logger = logging.getLogger(__name__)
 
-
 class BaseAgentTool(BaseTool):
     """Base class for agent-related tools"""
 

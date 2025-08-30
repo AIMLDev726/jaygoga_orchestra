@@ -23,7 +23,6 @@ from rich.prompt import Prompt
 from ..core.agent import Agent
 from ..core.task import Task
 
-
 class TerminalInterface:
     """
     Real terminal interface using Rich library for beautiful displays.
@@ -197,9 +196,9 @@ class TerminalInterface:
         if self.live:
             self.live.stop()
         
-        self.console.print("\n" + "="*60)
-        self.console.print("🔔 [bold yellow]Human Intervention Available[/bold yellow]")
-        self.console.print("="*60)
+        self.print("\n" + "="*60)
+        self.print("🔔 [bold yellow]Human Intervention Available[/bold yellow]")
+        self.print("="*60)
         
         options = [
             "1. Send message to current agent",
@@ -210,7 +209,7 @@ class TerminalInterface:
         ]
         
         for option in options:
-            self.console.print(f"   {option}")
+            self.print(f"   {option}")
         
         try:
             choice = Prompt.ask("\nSelect option", choices=["1", "2", "3", "4", "5"], default="5")
@@ -222,7 +221,7 @@ class TerminalInterface:
                 
             elif choice == "2":
                 agent_names = [agent.name for agent in self.agents.values()]
-                self.console.print(f"Available agents: {', '.join(agent_names)}")
+                self.print(f"Available agents: {', '.join(agent_names)}")
                 agent_name = Prompt.ask("Enter agent name")
                 message = Prompt.ask("Enter message")
                 
@@ -465,19 +464,19 @@ class TerminalInterface:
     
     def _display_header(self):
         """Display initial header."""
-        self.console.print(f"\n🚀 [bold cyan]AIFlow Multi-Agent Orchestrator[/bold cyan]")
-        self.console.print(f"Session: [bold]{self.team_name}[/bold] | Agents: {len(self.agents)} | Tasks: {len(self.tasks)}")
-        self.console.print("─" * 60)
+        self.print(f"\n🚀 [bold cyan]AIFlow Multi-Agent Orchestrator[/bold cyan]")
+        self.print(f"Session: [bold]{self.team_name}[/bold] | Agents: {len(self.agents)} | Tasks: {len(self.tasks)}")
+        self.print("─" * 60)
     
     def _display_summary(self):
         """Display final summary."""
         runtime = (datetime.now() - self.start_time).total_seconds()
-        self.console.print(f"\n✅ [bold green]Session Complete![/bold green]")
-        self.console.print(f"Total Runtime: {runtime:.2f}s")
-        self.console.print(f"Agents: {len(self.agents)} | Tasks: {len(self.tasks)}")
+        self.print(f"\n✅ [bold green]Session Complete![/bold green]")
+        self.print(f"Total Runtime: {runtime:.2f}s")
+        self.print(f"Agents: {len(self.agents)} | Tasks: {len(self.tasks)}")
         if self.save_work_log:
-            self.console.print(f"Work log saved: {self.work_log_path}")
-        self.console.print("─" * 60)
+            self.print(f"Work log saved: {self.work_log_path}")
+        self.print("─" * 60)
     
     async def cleanup(self):
         """Cleanup interface resources."""
@@ -490,15 +489,15 @@ class TerminalInterface:
         if self.live:
             self.live.stop()
 
-        self.console.print("\n" + "="*60)
-        self.console.print("💬 [bold cyan]Agent Conversation Setup[/bold cyan]")
-        self.console.print("="*60)
+        self.print("\n" + "="*60)
+        self.print("💬 [bold cyan]Agent Conversation Setup[/bold cyan]")
+        self.print("="*60)
 
         agent_names = [agent.name for agent in self.agents.values()]
-        self.console.print(f"Available agents: {', '.join(agent_names)}")
+        self.print(f"Available agents: {', '.join(agent_names)}")
 
         # This would be extended with actual conversation setup
-        self.console.print("Agent conversation feature ready!")
+        self.print("Agent conversation feature ready!")
 
         if self.live:
             self.live.start()
@@ -508,19 +507,19 @@ class TerminalInterface:
         if self.live:
             self.live.stop()
 
-        self.console.print("\n" + "="*60)
-        self.console.print("📊 [bold cyan]Agent Outputs[/bold cyan]")
-        self.console.print("="*60)
+        self.print("\n" + "="*60)
+        self.print("📊 [bold cyan]Agent Outputs[/bold cyan]")
+        self.print("="*60)
 
         for agent_id, outputs in self.agent_outputs.items():
             agent = self.agents[agent_id]
-            self.console.print(f"\n🤖 [bold]{agent.name}[/bold]:")
+            self.print(f"\n🤖 [bold]{agent.name}[/bold]:")
 
             if outputs:
                 for i, output in enumerate(outputs[-3:], 1):  # Show last 3 outputs
-                    self.console.print(f"  {i}. {output[:100]}...")
+                    self.print(f"  {i}. {output[:100]}...")
             else:
-                self.console.print("  No outputs yet")
+                self.print("  No outputs yet")
 
         input("Press Enter to continue...")
 

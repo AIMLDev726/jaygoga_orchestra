@@ -10,7 +10,6 @@ from chromadb import PersistentClient
 from jaygoga_orchestra.v1.rag.chromadb.config import ChromaDBConfig
 from jaygoga_orchestra.v1.rag.chromadb.client import ChromaDBClient
 
-
 def create_client(config: ChromaDBConfig) -> ChromaDBClient:
     """Create a ChromaDBClient from configuration.
 

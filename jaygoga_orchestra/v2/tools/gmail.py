@@ -71,7 +71,6 @@ except ImportError:
         "Google client library for Python not found , install it using `pip install google-api-python-client google-auth-httplib2 google-auth-oauthlib`"
     )
 
-
 def authenticate(func):
     """Decorator to ensure authentication before executing a function."""
 
@@ -85,13 +84,11 @@ def authenticate(func):
 
     return wrapper
 
-
 def validate_email(email: str) -> bool:
     """Validate email format."""
     email = email.strip()
     pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
     return bool(re.match(pattern, email))
-
 
 class GmailTools(Toolkit):
     # Default scopes for Gmail API access

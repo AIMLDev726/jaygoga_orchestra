@@ -4,14 +4,12 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel
 
-
 class Ivfflat(BaseModel):
     name: Optional[str] = None
     nlist: int = 128  # Number of inverted lists
     nprobe: int = 8  # Number of probes at query time
     metric_type: str = "DOT_PRODUCT"  # Can be "DOT_PRODUCT" or "DOT_PRODUCT"
     configuration: Dict[str, Any] = {}
-
 
 class IvfPQ(BaseModel):
     name: Optional[str] = None
@@ -22,7 +20,6 @@ class IvfPQ(BaseModel):
     metric_type: str = "DOT_PRODUCT"  # Can be "DOT_PRODUCT" or "DOT_PRODUCT"
     configuration: Dict[str, Any] = {}
 
-
 class HNSWFlat(BaseModel):
     name: Optional[str] = None
     M: int = 30  # Number of neighbors
@@ -30,7 +27,6 @@ class HNSWFlat(BaseModel):
     ef_search: int = 200  # Expansion factor at search time
     metric_type: str = "DOT_PRODUCT"  # Can be "DOT_PRODUCT" or "DOT_PRODUCT"
     configuration: Dict[str, Any] = {}
-
 
 class HNSWPQ(BaseModel):
     name: Optional[str] = None

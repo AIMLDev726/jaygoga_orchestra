@@ -11,7 +11,6 @@ from jaygoga_orchestra.v2.document.reader.website_reader import WebsiteReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
 
-
 class WebsiteKnowledgeBase(AgentKnowledge):
     urls: List[str] = []
     reader: Optional[WebsiteReader] = None

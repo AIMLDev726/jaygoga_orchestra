@@ -10,7 +10,6 @@ try:
 except ImportError:
     raise ImportError("`duckdb` not installed. Please install using `pip install duckdb`.")
 
-
 class DuckDbTools(Toolkit):
     def __init__(
         self,

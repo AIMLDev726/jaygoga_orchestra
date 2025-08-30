@@ -8,7 +8,6 @@ from agents import FunctionTool, Tool
 from jaygoga_orchestra.v1.agents.agent_adapters.base_tool_adapter import BaseToolAdapter
 from jaygoga_orchestra.v1.tools import BaseTool
 
-
 class OpenAIAgentToolAdapter(BaseToolAdapter):
     """Adapter for OpenAI Assistant tools"""
 

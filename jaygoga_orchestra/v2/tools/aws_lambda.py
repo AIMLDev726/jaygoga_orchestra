@@ -9,7 +9,6 @@ try:
 except ImportError:
     raise ImportError("boto3 is required for AWSLambdaTool. Please install it using `pip install boto3`.")
 
-
 class AWSLambdaTools(Toolkit):
     name: str = "AWSLambdaTool"
     description: str = "A tool for interacting with AWS Lambda functions"

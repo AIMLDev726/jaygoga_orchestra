@@ -1,6 +1,7 @@
+from __future__ import annotations
+
 from rich.console import Console
 console = Console()
-from __future__ import annotations
 
 from pathlib import Path
 from typing import Any, ClassVar, Dict, Iterator, List, Optional, Union
@@ -14,7 +15,6 @@ from jaygoga_orchestra.v2.document.reader.pdf_reader import PDFUrlReader
 from jaygoga_orchestra.v2.document.reader.url_reader import URLReader
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_debug, log_info, logger
-
 
 class LightRagKnowledgeBase(AgentKnowledge):
     """LightRAG-based knowledge base for document processing and retrieval."""
@@ -213,7 +213,6 @@ class LightRagKnowledgeBase(AgentKnowledge):
             return False
         return True
 
-
 async def lightrag_retriever(
     query: str,
     num_documents: int = 5,
@@ -259,7 +258,6 @@ async def lightrag_retriever(
 
         logger.error(f"Full traceback: {traceback.format_exc()}")
         return None
-
 
 def _format_lightrag_response(result: Any, query: str, mode: str) -> List[Dict[str, Any]]:
     """Format LightRAG server response to expected document format."""

@@ -8,7 +8,6 @@ try:
 except ImportError:
     raise ImportError("`streamlit` library not installed. Please install using `pip install streamlit`")
 
-
 def get_username_sidebar() -> Optional[str]:
     """Sidebar component to get username"""
 
@@ -24,14 +23,12 @@ def get_username_sidebar() -> Optional[str]:
     username = st.session_state.get("username")  # type: ignore
     return username
 
-
 def reload_button_sidebar(text: str = "Reload Session", **kwargs) -> None:
     """Sidebar component to show reload button"""
 
     if st.sidebar.button(text, **kwargs):
         st.session_state.clear()
         st.rerun()
-
 
 def check_password(password_env_var: str = "APP_PASSWORD") -> bool:
     """Component to check if a password entered by the user is correct.
@@ -94,7 +91,6 @@ def check_password(password_env_var: str = "APP_PASSWORD") -> bool:
     # Password correct.
     else:
         return True
-
 
 def get_openai_key_sidebar() -> Optional[str]:
     """Sidebar component to get OpenAI API key"""

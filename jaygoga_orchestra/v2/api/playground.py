@@ -11,10 +11,9 @@ from jaygoga_orchestra.v2.api.api import api, invalid_response
 from jaygoga_orchestra.v2.api.routes import ApiRoutes
 from jaygoga_orchestra.v2.api.schemas.playground import PlaygroundEndpointCreate
 from jaygoga_orchestra.v2.cli.credentials import read_auth_token
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.constants import AGNO_API_KEY_ENV_VAR
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 def create_playground_endpoint(playground: PlaygroundEndpointCreate) -> bool:
     logger.debug("--**-- Creating Playground Endpoint")
@@ -36,7 +35,6 @@ def create_playground_endpoint(playground: PlaygroundEndpointCreate) -> bool:
         except Exception as e:
             logger.debug(f"Could not create Playground Endpoint: {e}")
     return False
-
 
 def deploy_playground_archive(name: str, tar_path: Path) -> bool:
     """Deploy a playground archive.
@@ -67,13 +65,13 @@ def deploy_playground_archive(name: str, tar_path: Path) -> bool:
     headers = {}
     token = read_auth_token()
     if token := read_auth_token():
-        headers[jaygoga_orchestra.v2_cli_settings.auth_token_header] = token
-    if jaygoga_orchestra.v2_api_key := getenv(AGNO_API_KEY_ENV_VAR):
-        headers["Authorization"] = f"Bearer {jaygoga_orchestra.v2_api_key}"
+        headers[jaygoga_orchestra_v2_cli_settings.auth_token_header] = token
+    if jaygoga_orchestra_v2_api_key := getenv(AGNO_API_KEY_ENV_VAR):
+        headers["Authorization"] = f"Bearer {jaygoga_orchestra_v2_api_key}"
 
     try:
         with (
-            HttpxClient(base_url=jaygoga_orchestra.v2_cli_settings.api_url, headers=headers) as api_client,
+            HttpxClient(base_url=jaygoga_orchestra_v2_cli_settings.api_url, headers=headers) as api_client,
             open(tar_path, "rb") as file,
         ):
             files = {"file": (tar_path.name, file, "application/gzip")}

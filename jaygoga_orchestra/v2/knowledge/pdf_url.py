@@ -7,7 +7,6 @@ from jaygoga_orchestra.v2.document.reader.pdf_reader import PDFUrlImageReader, P
 from jaygoga_orchestra.v2.knowledge.agent import AgentKnowledge
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class PDFUrlKnowledgeBase(AgentKnowledge):
     urls: Optional[Union[List[str], List[Dict[str, Union[str, Dict[str, Any]]]]]] = None
     formats: List[str] = [".pdf"]

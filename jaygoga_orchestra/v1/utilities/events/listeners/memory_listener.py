@@ -19,8 +19,8 @@ class MemoryListener(BaseEventListener):
         self.memory_retrieval_in_progress = False
         self.memory_save_in_progress = False
 
-    def setup_listeners(self, jaygoga_orchestra.v1_event_bus):
-        @jaygoga_orchestra.v1_event_bus.on(MemoryRetrievalStartedEvent)
+    def setup_listeners(self, event_bus):
+        @event_bus.on(MemoryRetrievalStartedEvent)
         def on_memory_retrieval_started(
             source, event: MemoryRetrievalStartedEvent
         ):
@@ -34,7 +34,7 @@ class MemoryListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MemoryRetrievalCompletedEvent)
+        @event_bus.on(MemoryRetrievalCompletedEvent)
         def on_memory_retrieval_completed(
             source, event: MemoryRetrievalCompletedEvent
         ):
@@ -49,7 +49,7 @@ class MemoryListener(BaseEventListener):
                 event.retrieval_time_ms
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MemoryQueryCompletedEvent)
+        @event_bus.on(MemoryQueryCompletedEvent)
         def on_memory_query_completed(source, event: MemoryQueryCompletedEvent):
             if not self.memory_retrieval_in_progress:
                 return
@@ -61,7 +61,7 @@ class MemoryListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MemoryQueryFailedEvent)
+        @event_bus.on(MemoryQueryFailedEvent)
         def on_memory_query_failed(source, event: MemoryQueryFailedEvent):
             if not self.memory_retrieval_in_progress:
                 return
@@ -73,7 +73,7 @@ class MemoryListener(BaseEventListener):
                 event.source_type,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MemorySaveStartedEvent)
+        @event_bus.on(MemorySaveStartedEvent)
         def on_memory_save_started(source, event: MemorySaveStartedEvent):
             if self.memory_save_in_progress:
                 return
@@ -85,7 +85,7 @@ class MemoryListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MemorySaveCompletedEvent)
+        @event_bus.on(MemorySaveCompletedEvent)
         def on_memory_save_completed(source, event: MemorySaveCompletedEvent):
             if not self.memory_save_in_progress:
                 return
@@ -99,7 +99,7 @@ class MemoryListener(BaseEventListener):
                 event.source_type,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MemorySaveFailedEvent)
+        @event_bus.on(MemorySaveFailedEvent)
         def on_memory_save_failed(source, event: MemorySaveFailedEvent):
             if not self.memory_save_in_progress:
                 return

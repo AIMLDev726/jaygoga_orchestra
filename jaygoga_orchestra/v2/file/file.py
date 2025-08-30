@@ -5,7 +5,6 @@ from typing import Any, List, Optional
 
 from jaygoga_orchestra.v2.utils.common import dataclass_to_dict
 
-
 @dataclass
 class File:
     name: Optional[str] = None

@@ -8,7 +8,6 @@ import httpx
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_debug, logger
 
-
 class TelegramTools(Toolkit):
     base_url = "https://api.telegram.org"
 

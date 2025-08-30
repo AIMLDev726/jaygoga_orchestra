@@ -29,7 +29,6 @@ Usage:
     pretty_exceptions_show_locals=False,
 )
 
-
 @jaygoga_orchestra.v2_cli.command(short_help="Setup your account")
 def setup(
     print_debug_log: bool = typer.Option(
@@ -46,10 +45,9 @@ def setup(
     if print_debug_log:
         set_log_level_to_debug()
 
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
 
-    initialize_jaygoga_orchestra.v2(login=True)
-
+    initialize_jaygoga_orchestra_v2(login=True)
 
 @jaygoga_orchestra.v2_cli.command(short_help="Initialize Govinda, use -r to reset")
 def init(
@@ -74,10 +72,9 @@ def init(
     if print_debug_log:
         set_log_level_to_debug()
 
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
 
-    initialize_jaygoga_orchestra.v2(reset=reset, login=login)
-
+    initialize_jaygoga_orchestra_v2(reset=reset, login=login)
 
 @jaygoga_orchestra.v2_cli.command(short_help="Reset Govinda installation")
 def reset(
@@ -95,10 +92,9 @@ def reset(
     if print_debug_log:
         set_log_level_to_debug()
 
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
 
-    initialize_jaygoga_orchestra.v2(reset=True)
-
+    initialize_jaygoga_orchestra_v2(reset=True)
 
 @jaygoga_orchestra.v2_cli.command(short_help="Ping Govinda servers")
 def ping(
@@ -122,7 +118,6 @@ def ping(
     else:
         print_info("Could not ping Govinda servers")
 
-
 @jaygoga_orchestra.v2_cli.command(short_help="Print Govinda config")
 def config(
     print_debug_log: bool = typer.Option(
@@ -138,16 +133,15 @@ def config(
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
     from jaygoga_orchestra.v2.cli.console import log_config_not_available_msg
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
     jaygoga_orchestra.v2_config.print_to_cli(show_all=True)
-
 
 @jaygoga_orchestra.v2_cli.command(short_help="Set current directory as active workspace")
 def set(
@@ -176,7 +170,6 @@ def set(
         set_log_level_to_debug()
 
     set_workspace_as_active(ws_dir_name=ws_name)
-
 
 @jaygoga_orchestra.v2_cli.command(short_help="Start resources defined in a resources.py file")
 def start(
@@ -243,12 +236,12 @@ def start(
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
     from jaygoga_orchestra.v2.cli.console import log_config_not_available_msg
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2, start_resources
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2, start_resources
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 
@@ -271,7 +264,7 @@ def start(
 
     resources_file_path: Path = Path(".").resolve().joinpath(resources_file)
     start_resources(
-        jaygoga_orchestra.v2_config=jaygoga_orchestra.v2_config,
+        jaygoga_orchestra_v2_config=jaygoga_orchestra.v2_config,
         resources_file_path=resources_file_path,
         target_env=target_env,
         target_infra=target_infra,
@@ -283,7 +276,6 @@ def start(
         force=force,
         pull=pull,
     )
-
 
 @jaygoga_orchestra.v2_cli.command(short_help="Stop resources defined in a resources.py file")
 def stop(
@@ -344,12 +336,12 @@ def stop(
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
     from jaygoga_orchestra.v2.cli.console import log_config_not_available_msg
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2, stop_resources
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2, stop_resources
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 
@@ -372,7 +364,7 @@ def stop(
 
     resources_file_path: Path = Path(".").resolve().joinpath(resources_file)
     stop_resources(
-        jaygoga_orchestra.v2_config=jaygoga_orchestra.v2_config,
+        jaygoga_orchestra_v2_config=jaygoga_orchestra.v2_config,
         resources_file_path=resources_file_path,
         target_env=target_env,
         target_infra=target_infra,
@@ -383,7 +375,6 @@ def stop(
         auto_confirm=auto_confirm,
         force=force,
     )
-
 
 @jaygoga_orchestra.v2_cli.command(short_help="Update resources defined in a resources.py file")
 def patch(
@@ -445,12 +436,12 @@ def patch(
 
     from jaygoga_orchestra.v2.cli.config import AgnoCliConfig
     from jaygoga_orchestra.v2.cli.console import log_config_not_available_msg
-    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra.v2, patch_resources
+    from jaygoga_orchestra.v2.cli.operator import initialize_jaygoga_orchestra_v2, patch_resources
 
-    jaygoga_orchestra.v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
-    if not jaygoga_orchestra.v2_config:
-        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra.v2()
-        if not jaygoga_orchestra.v2_config:
+    jaygoga_orchestra_v2_config: Optional[AgnoCliConfig] = AgnoCliConfig.from_saved_config()
+    if not jaygoga_orchestra_v2_config:
+        jaygoga_orchestra.v2_config = initialize_jaygoga_orchestra_v2()
+        if not jaygoga_orchestra_v2_config:
             log_config_not_available_msg()
             return
 
@@ -473,7 +464,7 @@ def patch(
 
     resources_file_path: Path = Path(".").resolve().joinpath(resources_file)
     patch_resources(
-        jaygoga_orchestra.v2_config=jaygoga_orchestra.v2_config,
+        jaygoga_orchestra_v2_config=jaygoga_orchestra.v2_config,
         resources_file_path=resources_file_path,
         target_env=target_env,
         target_infra=target_infra,
@@ -484,7 +475,6 @@ def patch(
         auto_confirm=auto_confirm,
         force=force,
     )
-
 
 @jaygoga_orchestra.v2_cli.command(short_help="Restart resources defined in a resources.py file")
 def restart(
@@ -568,6 +558,5 @@ def restart(
         print_debug_log=print_debug_log,
         force=force,
     )
-
 
 jaygoga_orchestra.v2_cli.add_typer(ws_cli)

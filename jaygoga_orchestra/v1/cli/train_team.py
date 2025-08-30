@@ -4,7 +4,6 @@ import subprocess
 
 import click
 
-
 def train_crew(n_iterations: int, filename: str) -> None:
     """
     Train the squad by running a command in the UV environment.

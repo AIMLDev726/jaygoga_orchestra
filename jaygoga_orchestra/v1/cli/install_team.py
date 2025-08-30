@@ -4,7 +4,6 @@ import subprocess
 
 import click
 
-
 # Be mindful about changing this.
 # on some environments we don't use this command but instead uv sync directly
 # so if you expect this to support more things you will need to replicate it there

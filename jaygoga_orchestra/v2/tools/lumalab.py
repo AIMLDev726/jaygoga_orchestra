@@ -15,15 +15,12 @@ try:
 except ImportError:
     raise ImportError("`lumaai` not installed. Please install using `pip install lumaai`")
 
-
 # Define types for keyframe structure
 class KeyframeImage(TypedDict):
     type: Literal["image"]
     url: str
 
-
 Keyframes = Dict[str, KeyframeImage]
-
 
 class LumaLabTools(Toolkit):
     def __init__(

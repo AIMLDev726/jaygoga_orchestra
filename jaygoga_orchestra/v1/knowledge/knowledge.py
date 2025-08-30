@@ -10,7 +10,6 @@ from jaygoga_orchestra.v1.knowledge.storage.knowledge_storage import KnowledgeSt
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"  # removes logging from fastembed
 
-
 class Knowledge(BaseModel):
     """
     Knowledge is a collection of sources and setup for the vector store to save and query relevant context.

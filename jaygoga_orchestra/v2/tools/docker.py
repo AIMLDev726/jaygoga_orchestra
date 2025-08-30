@@ -56,7 +56,6 @@ try:
 except ImportError:
     raise ImportError("The `docker` package is not installed. Please install it via `pip install docker`.")
 
-
 class DockerTools(Toolkit):
     def __init__(
         self,

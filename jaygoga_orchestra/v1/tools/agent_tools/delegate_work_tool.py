@@ -6,14 +6,12 @@ from pydantic import BaseModel, Field
 
 from jaygoga_orchestra.v1.tools.agent_tools.base_agent_tools import BaseAgentTool
 
-
 class DelegateWorkToolSchema(BaseModel):
     task: str = Field(..., description="The task to delegate")
     context: str = Field(..., description="The context for the task")
     coworker: str = Field(
         ..., description="The role/name of the coworker to delegate to"
     )
-
 
 class DelegateWorkTool(BaseAgentTool):
     """Tool for delegating work to coworkers"""

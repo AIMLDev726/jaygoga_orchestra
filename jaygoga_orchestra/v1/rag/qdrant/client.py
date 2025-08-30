@@ -30,7 +30,6 @@ from jaygoga_orchestra.v1.rag.qdrant.utils import (
 )
 from jaygoga_orchestra.v1.rag.types import SearchResult
 
-
 class QdrantClient(BaseClient):
     """Qdrant implementation of the BaseClient protocol.
 

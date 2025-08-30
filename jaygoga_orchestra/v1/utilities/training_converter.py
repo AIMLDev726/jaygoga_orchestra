@@ -8,7 +8,6 @@ from pydantic import BaseModel, ValidationError
 
 from jaygoga_orchestra.v1.utilities.converter import Converter, ConverterError
 
-
 class TrainingConverter(Converter):
     """
     A specialized converter for smaller LLMs (up to 7B parameters) that handles validation errors

@@ -54,7 +54,6 @@ except ImportError as e:
         "`anthropic` not installed or missing beta components. Please install with `pip install anthropic`"
     ) from e
 
-
 @dataclass
 class Claude(Model):
     """

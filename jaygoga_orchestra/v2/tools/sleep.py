@@ -5,7 +5,6 @@ import time
 from jaygoga_orchestra.v2.tools import Toolkit
 from jaygoga_orchestra.v2.utils.log import log_info
 
-
 class SleepTools(Toolkit):
     def __init__(self, **kwargs):
         tools = []

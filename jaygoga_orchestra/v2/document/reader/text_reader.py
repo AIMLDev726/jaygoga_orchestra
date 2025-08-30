@@ -9,7 +9,6 @@ from jaygoga_orchestra.v2.document.base import Document
 from jaygoga_orchestra.v2.document.reader.base import Reader
 from jaygoga_orchestra.v2.utils.log import log_info, logger
 
-
 class TextReader(Reader):
     """Reader for Text files"""
 

@@ -9,7 +9,6 @@ from rich.tree import Tree
 from rich.live import Live
 from rich.syntax import Syntax
 
-
 class ConsoleFormatter:
     current_crew_tree: Optional[Tree] = None
     current_task_branch: Optional[Tree] = None
@@ -87,7 +86,7 @@ class ConsoleFormatter:
         """Add a node to the tree with consistent styling."""
         return parent.add(Text(text, style=style))
 
-    def console.print(self, *args, **kwargs) -> None:
+    def print(self, *args, **kwargs) -> None:
         """Custom print that replaces consecutive Tree renders.
 
         * If the argument is a single ``Tree`` instance, we either start a
@@ -128,7 +127,7 @@ class ConsoleFormatter:
             self._live = None
 
         # Finally, pass through to the regular Console.print implementation
-        self.console.console.print(*args, **kwargs)
+        self.console.print(*args, **kwargs)
 
     def pause_live_updates(self) -> None:
         """Pause Live session updates to allow for human input without interference."""
@@ -149,12 +148,12 @@ class ConsoleFormatter:
         """Print a panel with consistent formatting if verbose is enabled."""
         panel = self.create_panel(content, title, style)
         if is_flow:
-            self.console.print(panel)
-            self.console.print()
+            self.print(panel)
+            self.print()
         else:
             if self.verbose:
-                self.console.print(panel)
-                self.console.print()
+                self.print(panel)
+                self.print()
 
     def update_crew_tree(
         self,
@@ -244,11 +243,11 @@ class ConsoleFormatter:
         task_branch = None
         if crew_tree:
             task_branch = crew_tree.add(task_content)
-            self.console.print(crew_tree)
+            self.print(crew_tree)
         else:
             self.print_panel(task_content, "Task Started", "yellow")
 
-        self.console.print()
+        self.print()
 
         # Set the current_task_branch attribute directly
         self.current_task_branch = task_branch
@@ -297,7 +296,7 @@ class ConsoleFormatter:
                 task_content.append("\nStatus: ", style="white")
                 task_content.append(status_text, style=f"{style} bold")
                 branch.label = task_content
-                self.console.print(crew_tree)
+                self.print(crew_tree)
                 break
 
         # Show status panel
@@ -370,8 +369,8 @@ class ConsoleFormatter:
 
         self.add_tree_node(flow_tree, "🧠 Starting Flow...", "yellow")
 
-        self.console.print(flow_tree)
-        self.console.print()
+        self.print(flow_tree)
+        self.print()
 
         self.current_flow_tree = flow_tree
         return flow_tree
@@ -418,7 +417,7 @@ class ConsoleFormatter:
             "green" if status == "completed" else "red",
             ID=flow_id,
         )
-        self.console.print(flow_tree)
+        self.print(flow_tree)
         self.print_panel(
             content, "Flow Completion", "green" if status == "completed" else "red"
         )
@@ -464,8 +463,8 @@ class ConsoleFormatter:
             f" {method_name}", style=style
         )
 
-        self.console.print(flow_tree)
-        self.console.print()
+        self.print(flow_tree)
+        self.print()
         return method_branch
 
     def get_llm_tree(self, tool_name: str):
@@ -491,7 +490,7 @@ class ConsoleFormatter:
 
         # Create and print the panel
         self.print_panel(content, "Tool Usage", "green")
-        self.console.print()
+        self.print()
 
         # Still return the tree for compatibility with existing code
         return self.get_llm_tree(tool_name)
@@ -502,8 +501,8 @@ class ConsoleFormatter:
     ):
         tree = self.get_llm_tree(tool_name)
         self.add_tree_node(tree, "✅ Tool Usage Completed", "green")
-        self.console.print(tree)
-        self.console.print()
+        self.print(tree)
+        self.print()
 
     def handle_llm_tool_usage_error(
         self,
@@ -512,8 +511,8 @@ class ConsoleFormatter:
     ):
         tree = self.get_llm_tree(tool_name)
         self.add_tree_node(tree, "❌ Tool Usage Failed", "red")
-        self.console.print(tree)
-        self.console.print()
+        self.print(tree)
+        self.print()
 
         error_content = self.create_status_content(
             "Tool Usage Failed", tool_name, "red", Error=error
@@ -564,8 +563,8 @@ class ConsoleFormatter:
         )
 
         # Print updated tree immediately
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
         return tool_branch
 
@@ -597,8 +596,8 @@ class ConsoleFormatter:
 
         # Only print if we have a valid tree and the tool node is still in it
         if isinstance(tree_to_use, Tree) and tool_branch in tree_to_use.children:
-            self.console.print(tree_to_use)
-            self.console.print()
+            self.print(tree_to_use)
+            self.print()
 
     def handle_tool_usage_error(
         self,
@@ -622,8 +621,8 @@ class ConsoleFormatter:
                 "red",
             )
             if tree_to_use:
-                self.console.print(tree_to_use)
-                self.console.print()
+                self.print(tree_to_use)
+                self.print()
 
         # Show error panel
         error_content = self.create_status_content(
@@ -665,8 +664,8 @@ class ConsoleFormatter:
             tool_branch = branch_to_use.add("")
             self.update_tree_label(tool_branch, "🧠", "Thinking...", "blue")
             self.current_tool_branch = tool_branch
-            self.console.print(tree_to_use)
-            self.console.print()
+            self.print(tree_to_use)
+            self.print()
             return tool_branch
 
         # Return the existing tool branch if it's already a thinking node
@@ -734,8 +733,8 @@ class ConsoleFormatter:
                 self.current_tool_branch = None
 
             if removed:
-                self.console.print(tree_to_use)
-                self.console.print()
+                self.print(tree_to_use)
+                self.print()
 
     def handle_llm_call_failed(
         self, tool_branch: Optional[Tree], error: str, crew_tree: Optional[Tree]
@@ -778,8 +777,8 @@ class ConsoleFormatter:
             if self.current_tool_branch is thinking_branch_to_update:
                 self.current_tool_branch = None
             if tree_to_use:
-                self.console.print(tree_to_use)
-                self.console.print()
+                self.print(tree_to_use)
+                self.print()
 
         # Show error panel
         error_content = Text()
@@ -806,9 +805,9 @@ class ConsoleFormatter:
         content.append("\nIterations: ", style="white")
         content.append(str(n_iterations), style="yellow")
 
-        self.console.print()
+        self.print()
         self.print_panel(content, "Test Execution", "blue")
-        self.console.print()
+        self.print()
 
         # Create and display the test tree
         test_label = Text()
@@ -820,8 +819,8 @@ class ConsoleFormatter:
         test_tree = Tree(test_label)
         self.add_tree_node(test_tree, "🔄 Running tests...", "yellow")
 
-        self.console.print(test_tree)
-        self.console.print()
+        self.print(test_tree)
+        self.print()
         return test_tree
 
     def handle_crew_test_completed(
@@ -846,8 +845,8 @@ class ConsoleFormatter:
                     child.label = Text("✅ Tests completed successfully", style="green")
                     break
 
-            self.console.print(flow_tree)
-            self.console.print()
+            self.print(flow_tree)
+            self.print()
 
         # Create completion panel
         completion_content = Text()
@@ -872,7 +871,7 @@ class ConsoleFormatter:
         content.append(timestamp, style="blue")
 
         self.print_panel(content, "Training Started", "blue")
-        self.console.print()
+        self.print()
 
     def handle_crew_train_completed(self, crew_name: str, timestamp: str) -> None:
         """Handle squad train completed event."""
@@ -887,7 +886,7 @@ class ConsoleFormatter:
         content.append(timestamp, style="green")
 
         self.print_panel(content, "Training Completed", "green")
-        self.console.print()
+        self.print()
 
     def handle_crew_train_failed(self, crew_name: str) -> None:
         """Handle squad train failed event."""
@@ -900,7 +899,7 @@ class ConsoleFormatter:
         failure_content.append(crew_name or "Squad", style="red")
 
         self.print_panel(failure_content, "Training Failure", "red")
-        self.console.print()
+        self.print()
 
     def handle_crew_test_failed(self, crew_name: str) -> None:
         """Handle squad test failed event."""
@@ -913,7 +912,7 @@ class ConsoleFormatter:
         failure_content.append(crew_name or "Squad", style="red")
 
         self.print_panel(failure_content, "Test Failure", "red")
-        self.console.print()
+        self.print()
 
     def create_lite_agent_branch(self, lite_agent_role: str) -> Optional[Tree]:
         """Create and initialize a lite agent branch."""
@@ -930,8 +929,8 @@ class ConsoleFormatter:
 
             lite_agent_tree = Tree(lite_agent_label)
             self.current_lite_agent_branch = lite_agent_tree
-            self.console.print(lite_agent_tree)
-            self.console.print()
+            self.print(lite_agent_tree)
+            self.print()
 
         return self.current_lite_agent_branch
 
@@ -968,8 +967,8 @@ class ConsoleFormatter:
         lite_agent_label.append(status_text, style=f"{style} bold")
         lite_agent_branch.label = lite_agent_label
 
-        self.console.print(lite_agent_branch)
-        self.console.print()
+        self.print(lite_agent_branch)
+        self.print()
 
         # Show status panel if additional fields are provided
         if fields:
@@ -1030,8 +1029,8 @@ class ConsoleFormatter:
             knowledge_branch, "🔍", "Knowledge Retrieval Started", "blue"
         )
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
         return knowledge_branch
 
     def handle_knowledge_retrieval_completed(
@@ -1062,8 +1061,8 @@ class ConsoleFormatter:
                     border_style="green",
                     padding=(1, 2),
                 )
-                self.console.print(knowledge_panel)
-                self.console.print()
+                self.print(knowledge_panel)
+                self.print()
             return None
 
         knowledge_branch_found = False
@@ -1094,7 +1093,7 @@ class ConsoleFormatter:
                 knowledge_branch, "✅", "Knowledge Retrieval Completed", "green"
             )
 
-        self.console.print(tree_to_use)
+        self.print(tree_to_use)
 
         if retrieved_knowledge:
             knowledge_text = str(retrieved_knowledge)
@@ -1107,9 +1106,9 @@ class ConsoleFormatter:
                 border_style="green",
                 padding=(1, 2),
             )
-            self.console.print(knowledge_panel)
+            self.print(knowledge_panel)
 
-        self.console.print()
+        self.print()
 
     def handle_knowledge_query_started(
         self,
@@ -1131,8 +1130,8 @@ class ConsoleFormatter:
             query_branch, "🔎", f"Query: {task_prompt[:50]}...", "yellow"
         )
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
     def handle_knowledge_query_failed(
         self,
@@ -1150,8 +1149,8 @@ class ConsoleFormatter:
         if branch_to_use and tree_to_use:
             query_branch = branch_to_use.add("")
             self.update_tree_label(query_branch, "❌", "Knowledge Query Failed", "red")
-            self.console.print(tree_to_use)
-            self.console.print()
+            self.print(tree_to_use)
+            self.print()
 
         # Show error panel
         error_content = self.create_status_content(
@@ -1177,8 +1176,8 @@ class ConsoleFormatter:
         query_branch = branch_to_use.add("")
         self.update_tree_label(query_branch, "✅", "Knowledge Query Completed", "green")
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
     def handle_knowledge_search_query_failed(
         self,
@@ -1196,8 +1195,8 @@ class ConsoleFormatter:
         if branch_to_use and tree_to_use:
             query_branch = branch_to_use.add("")
             self.update_tree_label(query_branch, "❌", "Knowledge Search Failed", "red")
-            self.console.print(tree_to_use)
-            self.console.print()
+            self.print(tree_to_use)
+            self.print()
 
         # Show error panel
         error_content = self.create_status_content(
@@ -1242,8 +1241,8 @@ class ConsoleFormatter:
         )
         self.update_tree_label(reasoning_branch, "🧠", status_text, "blue")
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
         return reasoning_branch
 
@@ -1274,7 +1273,7 @@ class ConsoleFormatter:
             self.update_tree_label(reasoning_branch, "✅", status_text, style)
 
         if tree_to_use is not None:
-            self.console.print(tree_to_use)
+            self.print(tree_to_use)
 
         # Show plan in a panel (trim very long plans)
         if plan:
@@ -1284,9 +1283,9 @@ class ConsoleFormatter:
                 border_style=style,
                 padding=(1, 2),
             )
-            self.console.print(plan_panel)
+            self.print(plan_panel)
 
-        self.console.print()
+        self.print()
 
         # Clear stored branch after completion
         self.current_reasoning_branch = None
@@ -1312,7 +1311,7 @@ class ConsoleFormatter:
             self.update_tree_label(reasoning_branch, "❌", "Reasoning Failed", "red")
 
         if tree_to_use is not None:
-            self.console.print(tree_to_use)
+            self.print(tree_to_use)
 
         # Error panel
         error_content = self.create_status_content(
@@ -1356,8 +1355,8 @@ class ConsoleFormatter:
             border_style="magenta",
             padding=(1, 2),
         )
-        self.console.print(agent_panel)
-        self.console.print()
+        self.print(agent_panel)
+        self.print()
 
     def handle_agent_logs_execution(
         self,
@@ -1450,10 +1449,10 @@ class ConsoleFormatter:
             )
 
             # Print all panels
-            self.console.print(action_panel)
-            self.console.print(input_panel)
-            self.console.print(output_panel)
-            self.console.print()
+            self.print(action_panel)
+            self.print(input_panel)
+            self.print(output_panel)
+            self.print()
 
         elif isinstance(formatted_answer, AgentFinish):
             # Create content for the finish panel
@@ -1470,8 +1469,8 @@ class ConsoleFormatter:
                 border_style="green",
                 padding=(1, 2),
             )
-            self.console.print(finish_panel)
-            self.console.print()
+            self.print(finish_panel)
+            self.print()
 
     def handle_memory_retrieval_started(
         self,
@@ -1493,8 +1492,8 @@ class ConsoleFormatter:
         memory_branch = branch_to_use.add("")
         self.update_tree_label(memory_branch, "🧠", "Memory Retrieval Started", "blue")
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
         return memory_branch
 
     def handle_memory_retrieval_completed(
@@ -1525,8 +1524,8 @@ class ConsoleFormatter:
                 border_style="green",
                 padding=(1, 2),
             )
-            self.console.print(memory_panel)
-            self.console.print()
+            self.print(memory_panel)
+            self.print()
 
         if branch_to_use is None or tree_to_use is None:
             add_panel()
@@ -1560,7 +1559,7 @@ class ConsoleFormatter:
                 memory_branch, "✅", "Memory Retrieval Completed", "green"
             )
 
-        self.console.print(tree_to_use)
+        self.print(tree_to_use)
 
         if memory_content:
             add_panel()
@@ -1652,8 +1651,8 @@ class ConsoleFormatter:
                 memory_branch, "🧠", "Memory Update Overall", "white"
             )
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
     def handle_memory_save_completed(
         self,
@@ -1682,8 +1681,8 @@ class ConsoleFormatter:
             memory_branch = tree_to_use.add("")
             memory_branch.add(content)
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
     def handle_memory_save_failed(
         self,
@@ -1711,8 +1710,8 @@ class ConsoleFormatter:
             memory_branch = branch_to_use.add("")
             memory_branch.add(content)
 
-        self.console.print(tree_to_use)
-        self.console.print()
+        self.print(tree_to_use)
+        self.print()
 
     def handle_guardrail_started(
         self,

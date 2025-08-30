@@ -28,7 +28,6 @@ from .utils import (
     is_ancestor,
 )
 
-
 def method_calls_crew(method: Any) -> bool:
     """
     Check if the method contains a call to `.squad()`.
@@ -53,7 +52,7 @@ def method_calls_crew(method: Any) -> bool:
         source = inspect.cleandoc(source)
         tree = ast.parse(source)
     except Exception as e:
-        console.print(f"Could not parse method {method.__name__}: {e}")
+        print(f"Could not parse method {method.__name__}: {e}")
         return False
 
     class CrewCallVisitor(ast.NodeVisitor):
@@ -70,7 +69,6 @@ def method_calls_crew(method: Any) -> bool:
     visitor = CrewCallVisitor()
     visitor.visit(tree)
     return visitor.found
-
 
 def add_nodes_to_network(
     net: Any,
@@ -137,7 +135,6 @@ def add_nodes_to_network(
             **node_style,
         )
 
-
 def compute_positions(
     flow: Any,
     node_levels: Dict[str, int],
@@ -177,7 +174,6 @@ def compute_positions(
             node_positions[method_name] = (x, y)
 
     return node_positions
-
 
 def add_edges(
     net: Any,
@@ -263,7 +259,7 @@ def add_edges(
                 # If it's a known router edge and the method is known, don't warn.
                 # This means the path is legitimate, just not reflected as nodes here.
                 if not (is_router_edge and method_known):
-                    console.print(
+                    print(
                         f"Warning: No node found for '{trigger}' or '{method_name}'. Skipping edge."
                     )
 
@@ -318,6 +314,6 @@ def add_edges(
                         # Same check here: known router edge and known method?
                         method_known = listener_name in flow._methods
                         if not method_known:
-                            console.print(
+                            print(
                                 f"Warning: No node found for '{router_method_name}' or '{listener_name}'. Skipping edge."
                             )

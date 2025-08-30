@@ -8,15 +8,14 @@ from httpx import Client as HttpxClient
 from httpx import Response
 
 from jaygoga_orchestra.v2.cli.credentials import read_auth_token
-from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra.v2_cli_settings
+from jaygoga_orchestra.v2.cli.settings import jaygoga_orchestra_v2_cli_settings
 from jaygoga_orchestra.v2.constants import AGNO_API_KEY_ENV_VAR
 from jaygoga_orchestra.v2.utils.log import logger
-
 
 class Api:
     def __init__(self):
         self.headers: Dict[str, str] = {
-            "user-agent": f"{jaygoga_orchestra.v2_cli_settings.app_name}/{jaygoga_orchestra.v2_cli_settings.app_version}",
+            "user-agent": f"{jaygoga_orchestra_v2_cli_settings.app_name}/{jaygoga_orchestra_v2_cli_settings.app_version}",
             "Content-Type": "application/json",
         }
         self._auth_token: Optional[str] = None
@@ -37,43 +36,41 @@ class Api:
             self._authenticated_headers = self.headers.copy()
             token = self.auth_token
             if token is not None:
-                self._authenticated_headers[jaygoga_orchestra.v2_cli_settings.auth_token_header] = token
-            jaygoga_orchestra.v2_api_key = getenv(AGNO_API_KEY_ENV_VAR)
-            if jaygoga_orchestra.v2_api_key is not None:
-                self._authenticated_headers["Authorization"] = f"Bearer {jaygoga_orchestra.v2_api_key}"
+                self._authenticated_headers[jaygoga_orchestra_v2_cli_settings.auth_token_header] = token
+            jaygoga_orchestra_v2_api_key = getenv(AGNO_API_KEY_ENV_VAR)
+            if jaygoga_orchestra_v2_api_key is not None:
+                self._authenticated_headers["Authorization"] = f"Bearer {jaygoga_orchestra_v2_api_key}"
         return self._authenticated_headers
 
     def Client(self) -> HttpxClient:
         return HttpxClient(
-            base_url=jaygoga_orchestra.v2_cli_settings.api_url,
+            base_url=jaygoga_orchestra_v2_cli_settings.api_url,
             headers=self.headers,
             timeout=60,
         )
 
     def AuthenticatedClient(self) -> HttpxClient:
         return HttpxClient(
-            base_url=jaygoga_orchestra.v2_cli_settings.api_url,
+            base_url=jaygoga_orchestra_v2_cli_settings.api_url,
             headers=self.authenticated_headers,
             timeout=60,
         )
 
     def AsyncClient(self) -> HttpxAsyncClient:
         return HttpxAsyncClient(
-            base_url=jaygoga_orchestra.v2_cli_settings.api_url,
+            base_url=jaygoga_orchestra_v2_cli_settings.api_url,
             headers=self.headers,
             timeout=60,
         )
 
     def AuthenticatedAsyncClient(self) -> HttpxAsyncClient:
         return HttpxAsyncClient(
-            base_url=jaygoga_orchestra.v2_cli_settings.api_url,
+            base_url=jaygoga_orchestra_v2_cli_settings.api_url,
             headers=self.authenticated_headers,
             timeout=60,
         )
 
-
 api = Api()
-
 
 def invalid_response(r: Response) -> bool:
     """Returns true if the response is invalid"""

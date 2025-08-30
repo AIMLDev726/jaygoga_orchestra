@@ -27,7 +27,6 @@ from jaygoga_orchestra.v1.cli.config import Settings
 
 console = Console()
 
-
 def parse_tools(tools: List[BaseTool]) -> List[CrewStructuredTool]:
     """Parse tools to be used for the task."""
     tools_list = []
@@ -40,11 +39,9 @@ def parse_tools(tools: List[BaseTool]) -> List[CrewStructuredTool]:
 
     return tools_list
 
-
 def get_tool_names(tools: Sequence[Union[CrewStructuredTool, BaseTool]]) -> str:
     """Get the names of the tools."""
     return ", ".join([t.name for t in tools])
-
 
 def render_text_description_and_args(
     tools: Sequence[Union[CrewStructuredTool, BaseTool]],
@@ -61,11 +58,9 @@ def render_text_description_and_args(
 
     return "\n".join(tool_strings)
 
-
 def has_reached_max_iterations(iterations: int, max_iterations: int) -> bool:
     """Check if the maximum number of iterations has been reached."""
     return iterations >= max_iterations
-
 
 def handle_max_iterations_exceeded(
     formatted_answer: Union[AgentAction, AgentFinish, None],
@@ -85,7 +80,7 @@ def handle_max_iterations_exceeded(
     Returns:
         The final formatted answer after exceeding max iterations.
     """
-    printer.console.print(
+    printer.print(
         content="Maximum iterations reached. Requesting final answer.",
         color="yellow",
     )
@@ -106,7 +101,7 @@ def handle_max_iterations_exceeded(
     )
 
     if answer is None or answer == "":
-        printer.console.print(
+        printer.print(
             content="Received None or empty response from LLM call.",
             color="red",
         )
@@ -116,11 +111,9 @@ def handle_max_iterations_exceeded(
     # Return the formatted answer, regardless of its type
     return formatted_answer
 
-
 def format_message_for_llm(prompt: str, role: str = "user") -> Dict[str, str]:
     prompt = prompt.rstrip()
     return {"role": role, "content": prompt}
-
 
 def format_answer(answer: str) -> Union[AgentAction, AgentFinish]:
     """Format a response from the LLM into an AgentAction or AgentFinish."""
@@ -134,14 +127,12 @@ def format_answer(answer: str) -> Union[AgentAction, AgentFinish]:
             text=answer,
         )
 
-
 def enforce_rpm_limit(
     request_within_rpm_limit: Optional[Callable[[], bool]] = None,
 ) -> None:
     """Enforce the requests per minute (RPM) limit if applicable."""
     if request_within_rpm_limit:
         request_within_rpm_limit()
-
 
 def get_llm_response(
     llm: Union[LLM, BaseLLM],
@@ -162,14 +153,13 @@ def get_llm_response(
     except Exception as e:
         raise e
     if not answer:
-        printer.console.print(
+        printer.print(
             content="Received None or empty response from LLM call.",
             color="red",
         )
         raise ValueError("Invalid response from LLM call - None or empty.")
 
     return answer
-
 
 def process_llm_response(
     answer: str, use_stop_words: bool
@@ -184,7 +174,6 @@ def process_llm_response(
                 answer = answer.split("Observation:")[0].strip()
 
     return format_answer(answer)
-
 
 def handle_agent_action_core(
     formatted_answer: AgentAction,
@@ -223,7 +212,6 @@ def handle_agent_action_core(
 
     return formatted_answer
 
-
 def handle_unknown_error(printer: Any, exception: Exception) -> None:
     """Handle unknown errors by informing the user.
 
@@ -236,15 +224,14 @@ def handle_unknown_error(printer: Any, exception: Exception) -> None:
     if "litellm" in error_message:
         return
 
-    printer.console.print(
+    printer.print(
         content="An unknown error occurred. Please check the details below.",
         color="red",
     )
-    printer.console.print(
+    printer.print(
         content=f"Error details: {error_message}",
         color="red",
     )
-
 
 def handle_output_parser_exception(
     e: OutputParserException,
@@ -275,13 +262,12 @@ def handle_output_parser_exception(
     )
 
     if iterations > log_error_after and printer:
-        printer.console.print(
+        printer.print(
             content=f"Error parsing LLM output, agent will retry: {e.error}",
             color="red",
         )
 
     return formatted_answer
-
 
 def is_context_length_exceeded(exception: Exception) -> bool:
     """Check if the exception is due to context length exceeding.
@@ -295,7 +281,6 @@ def is_context_length_exceeded(exception: Exception) -> bool:
     return LLMContextLengthExceededException(str(exception))._is_context_limit_error(
         str(exception)
     )
-
 
 def handle_context_length(
     respect_context_window: bool,
@@ -316,20 +301,19 @@ def handle_context_length(
         i18n: I18N instance for messages
     """
     if respect_context_window:
-        printer.console.print(
+        printer.print(
             content="Context length exceeded. Summarizing content to fit the model context window. Might take a while...",
             color="yellow",
         )
         summarize_messages(messages, llm, callbacks, i18n)
     else:
-        printer.console.print(
+        printer.print(
             content="Context length exceeded. Consider using smaller text or RAG tools from jaygoga_orchestra.v1_tools.",
             color="red",
         )
         raise SystemExit(
             "Context length exceeded and user opted not to summarize. Consider using smaller text or RAG tools from jaygoga_orchestra.v1_tools."
         )
-
 
 def summarize_messages(
     messages: List[Dict[str, str]],
@@ -357,7 +341,7 @@ def summarize_messages(
 
     total_groups = len(messages_groups)
     for idx, group in enumerate(messages_groups, 1):
-        Printer().console.print(
+        Printer().print(
             content=f"Summarizing {idx}/{total_groups}...",
             color="yellow",
         )
@@ -383,7 +367,6 @@ def summarize_messages(
         )
     )
 
-
 def show_agent_logs(
     printer: Printer,
     agent_role: str,
@@ -407,16 +390,16 @@ def show_agent_logs(
 
     if formatted_answer is None:
         # Start logs
-        printer.console.print(
+        printer.print(
             content=f"\033[1m\033[95m# Agent:\033[00m \033[1m\033[92m{agent_role}\033[00m"
         )
         if task_description:
-            printer.console.print(
+            printer.print(
                 content=f"\033[95m## Task:\033[00m \033[92m{task_description}\033[00m"
             )
     else:
         # Execution logs
-        printer.console.print(
+        printer.print(
             content=f"\n\n\033[1m\033[95m# Agent:\033[00m \033[1m\033[92m{agent_role}\033[00m"
         )
 
@@ -428,37 +411,35 @@ def show_agent_logs(
                 ensure_ascii=False,
             )
             if thought and thought != "":
-                printer.console.print(
+                printer.print(
                     content=f"\033[95m## Thought:\033[00m \033[92m{thought}\033[00m"
                 )
-            printer.console.print(
+            printer.print(
                 content=f"\033[95m## Using tool:\033[00m \033[92m{formatted_answer.tool}\033[00m"
             )
-            printer.console.print(
+            printer.print(
                 content=f"\033[95m## Tool Input:\033[00m \033[92m\n{formatted_json}\033[00m"
             )
-            printer.console.print(
+            printer.print(
                 content=f"\033[95m## Tool Output:\033[00m \033[92m\n{formatted_answer.result}\033[00m"
             )
         elif isinstance(formatted_answer, AgentFinish):
-            printer.console.print(
+            printer.print(
                 content=f"\033[95m## Final Answer:\033[00m \033[92m\n{formatted_answer.output}\033[00m\n\n"
             )
-
 
 def _print_current_organization():
     settings = Settings()
     if settings.org_uuid:
-        console.console.print(
+        print(
             f"Fetching agent from organization: {settings.org_name} ({settings.org_uuid})",
             style="bold blue",
         )
     else:
-        console.console.print(
+        print(
             "No organization currently set. We recommend setting one before using: `jaygoga_orchestra.v1 org switch <org_id>` command.",
             style="yellow",
         )
-
 
 def load_agent_from_repository(from_repository: str) -> Dict[str, Any]:
     attributes: Dict[str, Any] = {}

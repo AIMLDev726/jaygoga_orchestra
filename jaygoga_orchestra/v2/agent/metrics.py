@@ -6,7 +6,6 @@ from typing import Optional, Union
 from jaygoga_orchestra.v2.models.message import MessageMetrics
 from jaygoga_orchestra.v2.utils.timer import Timer
 
-
 @dataclass
 class SessionMetrics:
     input_tokens: int = 0

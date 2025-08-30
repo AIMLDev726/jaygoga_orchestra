@@ -7,7 +7,6 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel, ConfigDict, model_validator
 
-
 class MemoryRow(BaseModel):
     """Memory Row that is stored in the database"""
 

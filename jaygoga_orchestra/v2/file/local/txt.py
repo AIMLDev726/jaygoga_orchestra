@@ -6,7 +6,6 @@ from typing import Any
 from jaygoga_orchestra.v2.file import File
 from jaygoga_orchestra.v2.utils.common import dataclass_to_dict
 
-
 @dataclass
 class TextFile(File):
     path: str = ""  # type: ignore

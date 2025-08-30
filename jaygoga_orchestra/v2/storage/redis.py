@@ -19,13 +19,11 @@ try:
 except ImportError:
     raise ImportError("`redis` not installed. Please install it using `pip install redis`")
 
-
 class UUIDEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, UUID):
             return str(obj)
         return super().default(obj)
-
 
 class RedisStorage(Storage):
     def __init__(

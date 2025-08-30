@@ -5,17 +5,15 @@ from typing import List
 from pydantic import BaseModel, Field
 
 from jaygoga_orchestra.v1.utilities import Converter
-from jaygoga_orchestra.v1.utilities.events import TaskEvaluationEvent, jaygoga_orchestra.v1_event_bus
+from jaygoga_orchestra.v1.utilities.events import TaskEvaluationEvent, event_bus
 from jaygoga_orchestra.v1.utilities.pydantic_schema_parser import PydanticSchemaParser
 from jaygoga_orchestra.v1.utilities.training_converter import TrainingConverter
-
 
 class Entity(BaseModel):
     name: str = Field(description="The name of the entity.")
     type: str = Field(description="The type of the entity.")
     description: str = Field(description="Description of the entity.")
     relationships: List[str] = Field(description="Relationships of the entity.")
-
 
 class TaskEvaluation(BaseModel):
     suggestions: List[str] = Field(
@@ -28,7 +26,6 @@ class TaskEvaluation(BaseModel):
         description="Entities extracted from the task output."
     )
 
-
 class TrainingTaskEvaluation(BaseModel):
     suggestions: List[str] = Field(
         description="List of clear, actionable instructions derived from the Human Feedbacks to enhance the Agent's performance. Analyze the differences between Initial Outputs and Improved Outputs to generate specific action items for future tasks. Ensure all key and specific points from the human feedback are incorporated into these instructions."
@@ -40,14 +37,13 @@ class TrainingTaskEvaluation(BaseModel):
         description="A step by step action items to improve the next Agent based on the human-feedback and improved output."
     )
 
-
 class TaskEvaluator:
     def __init__(self, original_agent):
         self.llm = original_agent.llm
         self.original_agent = original_agent
 
     def evaluate(self, task, output) -> TaskEvaluation:
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self, TaskEvaluationEvent(evaluation_type="task_evaluation", task=task)
         )
         evaluation_query = (
@@ -86,7 +82,7 @@ class TaskEvaluator:
             - training_data (dict): The training data to be evaluated.
             - agent_id (str): The ID of the agent.
         """
-        jaygoga_orchestra.v1_event_bus.emit(
+        event_bus.emit(
             self, TaskEvaluationEvent(evaluation_type="training_data_evaluation")
         )
 

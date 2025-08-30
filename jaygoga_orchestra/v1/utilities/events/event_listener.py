@@ -6,7 +6,7 @@ from typing import Any, Dict
 from pydantic import Field, PrivateAttr
 from jaygoga_orchestra.v1.llm import LLM
 from jaygoga_orchestra.v1.task import Task
-from jaygoga_orchestra.v1.telemetry.telemetry import Telemetry
+
 from jaygoga_orchestra.v1.utilities import Logger
 from jaygoga_orchestra.v1.utilities.constants import EMITTER_COLOR
 from jaygoga_orchestra.v1.utilities.events.base_event_listener import BaseEventListener
@@ -73,10 +73,8 @@ from .reasoning_events import (
 
 from .listeners.memory_listener import MemoryListener
 
-
 class EventListener(BaseEventListener):
     _instance = None
-    _telemetry: Telemetry = PrivateAttr(default_factory=lambda: Telemetry())
     logger = Logger(verbose=True, default_color=EMITTER_COLOR)
     execution_spans: Dict[Task, Any] = Field(default_factory=dict)
     next_chunk = 0
@@ -93,8 +91,8 @@ class EventListener(BaseEventListener):
     def __init__(self):
         if not hasattr(self, "_initialized") or not self._initialized:
             super().__init__()
-            self._telemetry = Telemetry()
-            self._telemetry.set_tracer()
+            
+            pass
             self.execution_spans = {}
             self._initialized = True
             self.formatter = ConsoleFormatter(verbose=True)
@@ -103,17 +101,15 @@ class EventListener(BaseEventListener):
 
     # ----------- CREW EVENTS -----------
 
-    def setup_listeners(self, jaygoga_orchestra.v1_event_bus):
-        @jaygoga_orchestra.v1_event_bus.on(CrewKickoffStartedEvent)
+    def setup_listeners(self, event_bus):
+        @event_bus.on(CrewKickoffStartedEvent)
         def on_crew_started(source, event: CrewKickoffStartedEvent):
             self.formatter.create_crew_tree(event.crew_name or "Squad", source.id)
-            self._telemetry.crew_execution_span(source, event.inputs)
+            pass
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewKickoffCompletedEvent)
+        @event_bus.on(CrewKickoffCompletedEvent)
         def on_crew_completed(source, event: CrewKickoffCompletedEvent):
-            # Handle telemetry
             final_string_output = event.output.raw
-            self._telemetry.end_crew(source, final_string_output)
 
             self.formatter.update_crew_tree(
                 self.formatter.current_crew_tree,
@@ -123,7 +119,7 @@ class EventListener(BaseEventListener):
                 final_string_output,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewKickoffFailedEvent)
+        @event_bus.on(CrewKickoffFailedEvent)
         def on_crew_failed(source, event: CrewKickoffFailedEvent):
             self.formatter.update_crew_tree(
                 self.formatter.current_crew_tree,
@@ -132,51 +128,38 @@ class EventListener(BaseEventListener):
                 "failed",
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTrainStartedEvent)
+        @event_bus.on(CrewTrainStartedEvent)
         def on_crew_train_started(source, event: CrewTrainStartedEvent):
             self.formatter.handle_crew_train_started(
                 event.crew_name or "Squad", str(event.timestamp)
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTrainCompletedEvent)
+        @event_bus.on(CrewTrainCompletedEvent)
         def on_crew_train_completed(source, event: CrewTrainCompletedEvent):
             self.formatter.handle_crew_train_completed(
                 event.crew_name or "Squad", str(event.timestamp)
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTrainFailedEvent)
+        @event_bus.on(CrewTrainFailedEvent)
         def on_crew_train_failed(source, event: CrewTrainFailedEvent):
             self.formatter.handle_crew_train_failed(event.crew_name or "Squad")
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTestResultEvent)
+        @event_bus.on(CrewTestResultEvent)
         def on_crew_test_result(source, event: CrewTestResultEvent):
-            self._telemetry.individual_test_result_span(
-                source.squad,
-                event.quality,
-                int(event.execution_duration),
-                event.model,
-            )
+            pass
 
         # ----------- TASK EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(TaskStartedEvent)
+        @event_bus.on(TaskStartedEvent)
         def on_task_started(source, event: TaskStartedEvent):
-            span = self._telemetry.task_started(squad=source.agent.squad, task=source)
-            self.execution_spans[source] = span
             # Pass both task ID and task name (if set)
             task_name = source.name if hasattr(source, 'name') and source.name else None
             self.formatter.create_task_branch(
                 self.formatter.current_crew_tree, source.id, task_name
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(TaskCompletedEvent)
+        @event_bus.on(TaskCompletedEvent)
         def on_task_completed(source, event: TaskCompletedEvent):
-            # Handle telemetry
-            span = self.execution_spans.get(source)
-            if span:
-                self._telemetry.task_ended(span, source, source.agent.squad)
-            self.execution_spans[source] = None
-
             # Pass task name if it exists
             task_name = source.name if hasattr(source, 'name') and source.name else None
             self.formatter.update_task_status(
@@ -187,14 +170,8 @@ class EventListener(BaseEventListener):
                 task_name
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(TaskFailedEvent)
+        @event_bus.on(TaskFailedEvent)
         def on_task_failed(source, event: TaskFailedEvent):
-            span = self.execution_spans.get(source)
-            if span:
-                if source.agent and source.agent.squad:
-                    self._telemetry.task_ended(span, source, source.agent.squad)
-                self.execution_spans[source] = None
-
             # Pass task name if it exists
             task_name = source.name if hasattr(source, 'name') and source.name else None
             self.formatter.update_task_status(
@@ -207,7 +184,7 @@ class EventListener(BaseEventListener):
 
         # ----------- AGENT EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentExecutionStartedEvent)
+        @event_bus.on(AgentExecutionStartedEvent)
         def on_agent_execution_started(source, event: AgentExecutionStartedEvent):
             self.formatter.create_agent_branch(
                 self.formatter.current_task_branch,
@@ -215,7 +192,7 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentExecutionCompletedEvent)
+        @event_bus.on(AgentExecutionCompletedEvent)
         def on_agent_execution_completed(source, event: AgentExecutionCompletedEvent):
             self.formatter.update_agent_status(
                 self.formatter.current_agent_branch,
@@ -225,7 +202,7 @@ class EventListener(BaseEventListener):
 
         # ----------- LITE AGENT EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(LiteAgentExecutionStartedEvent)
+        @event_bus.on(LiteAgentExecutionStartedEvent)
         def on_lite_agent_execution_started(
             source, event: LiteAgentExecutionStartedEvent
         ):
@@ -234,7 +211,7 @@ class EventListener(BaseEventListener):
                 event.agent_info["role"], status="started", **event.agent_info
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(LiteAgentExecutionCompletedEvent)
+        @event_bus.on(LiteAgentExecutionCompletedEvent)
         def on_lite_agent_execution_completed(
             source, event: LiteAgentExecutionCompletedEvent
         ):
@@ -243,7 +220,7 @@ class EventListener(BaseEventListener):
                 event.agent_info["role"], status="completed", **event.agent_info
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(LiteAgentExecutionErrorEvent)
+        @event_bus.on(LiteAgentExecutionErrorEvent)
         def on_lite_agent_execution_error(source, event: LiteAgentExecutionErrorEvent):
             """Handle LiteAgent execution error event."""
             self.formatter.handle_lite_agent_execution(
@@ -255,25 +232,21 @@ class EventListener(BaseEventListener):
 
         # ----------- FLOW EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(FlowCreatedEvent)
+        @event_bus.on(FlowCreatedEvent)
         def on_flow_created(source, event: FlowCreatedEvent):
-            self._telemetry.flow_creation_span(event.flow_name)
             self.formatter.create_flow_tree(event.flow_name, str(source.flow_id))
 
-        @jaygoga_orchestra.v1_event_bus.on(FlowStartedEvent)
+        @event_bus.on(FlowStartedEvent)
         def on_flow_started(source, event: FlowStartedEvent):
-            self._telemetry.flow_execution_span(
-                event.flow_name, list(source._methods.keys())
-            )
             self.formatter.start_flow(event.flow_name, str(source.flow_id))
 
-        @jaygoga_orchestra.v1_event_bus.on(FlowFinishedEvent)
+        @event_bus.on(FlowFinishedEvent)
         def on_flow_finished(source, event: FlowFinishedEvent):
             self.formatter.update_flow_status(
                 self.formatter.current_flow_tree, event.flow_name, source.flow_id
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MethodExecutionStartedEvent)
+        @event_bus.on(MethodExecutionStartedEvent)
         def on_method_execution_started(source, event: MethodExecutionStartedEvent):
             self.formatter.update_method_status(
                 self.formatter.current_method_branch,
@@ -282,7 +255,7 @@ class EventListener(BaseEventListener):
                 "running",
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MethodExecutionFinishedEvent)
+        @event_bus.on(MethodExecutionFinishedEvent)
         def on_method_execution_finished(source, event: MethodExecutionFinishedEvent):
             self.formatter.update_method_status(
                 self.formatter.current_method_branch,
@@ -291,7 +264,7 @@ class EventListener(BaseEventListener):
                 "completed",
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(MethodExecutionFailedEvent)
+        @event_bus.on(MethodExecutionFailedEvent)
         def on_method_execution_failed(source, event: MethodExecutionFailedEvent):
             self.formatter.update_method_status(
                 self.formatter.current_method_branch,
@@ -302,7 +275,7 @@ class EventListener(BaseEventListener):
 
         # ----------- TOOL USAGE EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(ToolUsageStartedEvent)
+        @event_bus.on(ToolUsageStartedEvent)
         def on_tool_usage_started(source, event: ToolUsageStartedEvent):
             if isinstance(source, LLM):
                 self.formatter.handle_llm_tool_usage_started(
@@ -316,7 +289,7 @@ class EventListener(BaseEventListener):
                     self.formatter.current_crew_tree,
                 )
 
-        @jaygoga_orchestra.v1_event_bus.on(ToolUsageFinishedEvent)
+        @event_bus.on(ToolUsageFinishedEvent)
         def on_tool_usage_finished(source, event: ToolUsageFinishedEvent):
             if isinstance(source, LLM):
                 self.formatter.handle_llm_tool_usage_finished(
@@ -329,7 +302,7 @@ class EventListener(BaseEventListener):
                     self.formatter.current_crew_tree,
                 )
 
-        @jaygoga_orchestra.v1_event_bus.on(ToolUsageErrorEvent)
+        @event_bus.on(ToolUsageErrorEvent)
         def on_tool_usage_error(source, event: ToolUsageErrorEvent):
             if isinstance(source, LLM):
                 self.formatter.handle_llm_tool_usage_error(
@@ -346,7 +319,7 @@ class EventListener(BaseEventListener):
 
         # ----------- LLM EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(LLMCallStartedEvent)
+        @event_bus.on(LLMCallStartedEvent)
         def on_llm_call_started(source, event: LLMCallStartedEvent):
             # Capture the returned tool branch and update the current_tool_branch reference
             thinking_branch = self.formatter.handle_llm_call_started(
@@ -357,7 +330,7 @@ class EventListener(BaseEventListener):
             if thinking_branch is not None:
                 self.formatter.current_tool_branch = thinking_branch
 
-        @jaygoga_orchestra.v1_event_bus.on(LLMCallCompletedEvent)
+        @event_bus.on(LLMCallCompletedEvent)
         def on_llm_call_completed(source, event: LLMCallCompletedEvent):
             self.formatter.handle_llm_call_completed(
                 self.formatter.current_tool_branch,
@@ -365,7 +338,7 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(LLMCallFailedEvent)
+        @event_bus.on(LLMCallFailedEvent)
         def on_llm_call_failed(source, event: LLMCallFailedEvent):
             self.formatter.handle_llm_call_failed(
                 self.formatter.current_tool_branch,
@@ -373,7 +346,7 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(LLMStreamChunkEvent)
+        @event_bus.on(LLMStreamChunkEvent)
         def on_llm_stream_chunk(source, event: LLMStreamChunkEvent):
             self.text_stream.write(event.chunk)
 
@@ -381,12 +354,12 @@ class EventListener(BaseEventListener):
 
             # Read from the in-memory stream
             content = self.text_stream.read()
-            console.print(content, end="", flush=True)
+            print(content, end="", flush=True)
             self.next_chunk = self.text_stream.tell()
 
         # ----------- LLM GUARDRAIL EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(LLMGuardrailStartedEvent)
+        @event_bus.on(LLMGuardrailStartedEvent)
         def on_llm_guardrail_started(source, event: LLMGuardrailStartedEvent):
             guardrail_str = str(event.guardrail)
             guardrail_name = (
@@ -395,38 +368,30 @@ class EventListener(BaseEventListener):
 
             self.formatter.handle_guardrail_started(guardrail_name, event.retry_count)
 
-        @jaygoga_orchestra.v1_event_bus.on(LLMGuardrailCompletedEvent)
+        @event_bus.on(LLMGuardrailCompletedEvent)
         def on_llm_guardrail_completed(source, event: LLMGuardrailCompletedEvent):
             self.formatter.handle_guardrail_completed(
                 event.success, event.error, event.retry_count
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTestStartedEvent)
+        @event_bus.on(CrewTestStartedEvent)
         def on_crew_test_started(source, event: CrewTestStartedEvent):
-            cloned_crew = source.copy()
-            self._telemetry.test_execution_span(
-                cloned_crew,
-                event.n_iterations,
-                event.inputs,
-                event.eval_llm or "",
-            )
-
             self.formatter.handle_crew_test_started(
                 event.crew_name or "Squad", source.id, event.n_iterations
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTestCompletedEvent)
+        @event_bus.on(CrewTestCompletedEvent)
         def on_crew_test_completed(source, event: CrewTestCompletedEvent):
             self.formatter.handle_crew_test_completed(
                 self.formatter.current_flow_tree,
                 event.crew_name or "Squad",
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(CrewTestFailedEvent)
+        @event_bus.on(CrewTestFailedEvent)
         def on_crew_test_failed(source, event: CrewTestFailedEvent):
             self.formatter.handle_crew_test_failed(event.crew_name or "Squad")
 
-        @jaygoga_orchestra.v1_event_bus.on(KnowledgeRetrievalStartedEvent)
+        @event_bus.on(KnowledgeRetrievalStartedEvent)
         def on_knowledge_retrieval_started(
             source, event: KnowledgeRetrievalStartedEvent
         ):
@@ -440,7 +405,7 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(KnowledgeRetrievalCompletedEvent)
+        @event_bus.on(KnowledgeRetrievalCompletedEvent)
         def on_knowledge_retrieval_completed(
             source, event: KnowledgeRetrievalCompletedEvent
         ):
@@ -454,11 +419,11 @@ class EventListener(BaseEventListener):
                 event.retrieved_knowledge,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(KnowledgeQueryStartedEvent)
+        @event_bus.on(KnowledgeQueryStartedEvent)
         def on_knowledge_query_started(source, event: KnowledgeQueryStartedEvent):
             pass
 
-        @jaygoga_orchestra.v1_event_bus.on(KnowledgeQueryFailedEvent)
+        @event_bus.on(KnowledgeQueryFailedEvent)
         def on_knowledge_query_failed(source, event: KnowledgeQueryFailedEvent):
             self.formatter.handle_knowledge_query_failed(
                 self.formatter.current_agent_branch,
@@ -466,11 +431,11 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(KnowledgeQueryCompletedEvent)
+        @event_bus.on(KnowledgeQueryCompletedEvent)
         def on_knowledge_query_completed(source, event: KnowledgeQueryCompletedEvent):
             pass
 
-        @jaygoga_orchestra.v1_event_bus.on(KnowledgeSearchQueryFailedEvent)
+        @event_bus.on(KnowledgeSearchQueryFailedEvent)
         def on_knowledge_search_query_failed(
             source, event: KnowledgeSearchQueryFailedEvent
         ):
@@ -482,7 +447,7 @@ class EventListener(BaseEventListener):
 
         # ----------- REASONING EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentReasoningStartedEvent)
+        @event_bus.on(AgentReasoningStartedEvent)
         def on_agent_reasoning_started(source, event: AgentReasoningStartedEvent):
             self.formatter.handle_reasoning_started(
                 self.formatter.current_agent_branch,
@@ -490,7 +455,7 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentReasoningCompletedEvent)
+        @event_bus.on(AgentReasoningCompletedEvent)
         def on_agent_reasoning_completed(source, event: AgentReasoningCompletedEvent):
             self.formatter.handle_reasoning_completed(
                 event.plan,
@@ -498,7 +463,7 @@ class EventListener(BaseEventListener):
                 self.formatter.current_crew_tree,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentReasoningFailedEvent)
+        @event_bus.on(AgentReasoningFailedEvent)
         def on_agent_reasoning_failed(source, event: AgentReasoningFailedEvent):
             self.formatter.handle_reasoning_failed(
                 event.error,
@@ -507,7 +472,7 @@ class EventListener(BaseEventListener):
 
         # ----------- AGENT LOGGING EVENTS -----------
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentLogsStartedEvent)
+        @event_bus.on(AgentLogsStartedEvent)
         def on_agent_logs_started(source, event: AgentLogsStartedEvent):
             self.formatter.handle_agent_logs_started(
                 event.agent_role,
@@ -515,13 +480,12 @@ class EventListener(BaseEventListener):
                 event.verbose,
             )
 
-        @jaygoga_orchestra.v1_event_bus.on(AgentLogsExecutionEvent)
+        @event_bus.on(AgentLogsExecutionEvent)
         def on_agent_logs_execution(source, event: AgentLogsExecutionEvent):
             self.formatter.handle_agent_logs_execution(
                 event.agent_role,
                 event.formatted_answer,
                 event.verbose,
             )
-
 
 event_listener = EventListener()

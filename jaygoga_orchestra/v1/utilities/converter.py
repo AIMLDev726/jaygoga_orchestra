@@ -10,14 +10,12 @@ from jaygoga_orchestra.v1.agents.agent_builder.utilities.base_output_converter i
 from jaygoga_orchestra.v1.utilities.printer import Printer
 from jaygoga_orchestra.v1.utilities.pydantic_schema_parser import PydanticSchemaParser
 
-
 class ConverterError(Exception):
     """Error raised when Converter fails to parse the input."""
 
     def __init__(self, message: str, *args: object) -> None:
         super().__init__(message, *args)
         self.message = message
-
 
 class Converter(OutputConverter):
     """Class that converts text into either pydantic or json."""
@@ -115,7 +113,6 @@ class Converter(OutputConverter):
         )
         return parser.parse_result(result)
 
-
 def convert_to_model(
     result: str,
     output_pydantic: Optional[Type[BaseModel]],
@@ -140,12 +137,11 @@ def convert_to_model(
         )
 
     except Exception as e:
-        Printer().console.print(
+        Printer().print(
             content=f"Unexpected error during model conversion: {type(e).__name__}: {e}. Returning original result.",
             color="red",
         )
         return result
-
 
 def validate_model(
     result: str, model: Type[BaseModel], is_json_output: bool
@@ -154,7 +150,6 @@ def validate_model(
     if is_json_output:
         return exported_result.model_dump()
     return exported_result
-
 
 def handle_partial_json(
     result: str,
@@ -175,7 +170,7 @@ def handle_partial_json(
         except ValidationError:
             pass
         except Exception as e:
-            Printer().console.print(
+            Printer().print(
                 content=f"Unexpected error during partial JSON handling: {type(e).__name__}: {e}. Attempting alternative conversion method.",
                 color="red",
             )
@@ -183,7 +178,6 @@ def handle_partial_json(
     return convert_with_instructions(
         result, model, is_json_output, agent, converter_cls
     )
-
 
 def convert_with_instructions(
     result: str,
@@ -207,14 +201,13 @@ def convert_with_instructions(
     )
 
     if isinstance(exported_result, ConverterError):
-        Printer().console.print(
+        Printer().print(
             content=f"{exported_result.message} Using raw output instead.",
             color="red",
         )
         return result
 
     return exported_result
-
 
 def get_conversion_instructions(model: Type[BaseModel], llm: Any) -> str:
     instructions = "Please convert the following text into valid JSON."
@@ -231,7 +224,6 @@ def get_conversion_instructions(model: Type[BaseModel], llm: Any) -> str:
             f"The JSON must follow this format exactly:\n{model_description}"
         )
     return instructions
-
 
 def create_converter(
     agent: Optional[Any] = None,
@@ -253,7 +245,6 @@ def create_converter(
         raise Exception("No output converter found or set.")
 
     return converter
-
 
 def generate_model_description(model: Type[BaseModel]) -> str:
     """

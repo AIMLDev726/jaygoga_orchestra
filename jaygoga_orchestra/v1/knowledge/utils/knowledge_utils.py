@@ -2,7 +2,6 @@ from rich.console import Console
 console = Console()
 from typing import Any, Dict, List
 
-
 def extract_knowledge_context(knowledge_snippets: List[Dict[str, Any]]) -> str:
     """Extract knowledge from the task prompt."""
     valid_snippets = [

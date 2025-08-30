@@ -19,7 +19,6 @@ try:
 except ImportError:
     raise ImportError("`fal_client` not installed. Please install using `pip install fal-client`")
 
-
 class FalTools(Toolkit):
     def __init__(
         self,

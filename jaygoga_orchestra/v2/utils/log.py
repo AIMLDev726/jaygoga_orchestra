@@ -27,7 +27,6 @@ LOG_STYLES = {
     },
 }
 
-
 class ColoredRichHandler(RichHandler):
     def __init__(self, *args, source_type: Optional[str] = None, **kwargs):
         super().__init__(*args, **kwargs)
@@ -49,7 +48,6 @@ class ColoredRichHandler(RichHandler):
                 return Text(record.levelname, style=color)
         return super().get_level_text(record)
 
-
 class AgnoLogger(logging.Logger):
     def __init__(self, name: str, level: int = logging.NOTSET):
         super().__init__(name, level)
@@ -63,7 +61,6 @@ class AgnoLogger(logging.Logger):
         if center:
             msg = center_header(str(msg), symbol)
         super().info(msg, *args, **kwargs)
-
 
 def build_logger(logger_name: str, source_type: Optional[str] = None) -> Any:
     # Set the custom logger class as the default for this logger
@@ -96,7 +93,6 @@ def build_logger(logger_name: str, source_type: Optional[str] = None) -> Any:
     _logger.propagate = False
     return _logger
 
-
 agent_logger: AgnoLogger = build_logger(LOGGER_NAME, source_type="agent")
 team_logger: AgnoLogger = build_logger(TEAM_LOGGER_NAME, source_type="team")
 workflow_logger: AgnoLogger = build_logger(WORKFLOW_LOGGER_NAME, source_type="workflow")
@@ -106,7 +102,6 @@ logger: AgnoLogger = agent_logger
 
 debug_on: bool = False
 debug_level: Literal[1, 2] = 1
-
 
 def set_log_level_to_debug(source_type: Optional[str] = None, level: Literal[1, 2] = 1):
     if source_type is None:
@@ -121,14 +116,12 @@ def set_log_level_to_debug(source_type: Optional[str] = None, level: Literal[1, 
     global debug_level
     debug_level = level
 
-
 def set_log_level_to_info(source_type: Optional[str] = None):
     _logger = logging.getLogger(LOGGER_NAME if source_type is None else f"{LOGGER_NAME}-{source_type}")
     _logger.setLevel(logging.INFO)
 
     global debug_on
     debug_on = False
-
 
 def set_log_level_to_warning(source_type: Optional[str] = None):
     _logger = logging.getLogger(LOGGER_NAME if source_type is None else f"{LOGGER_NAME}-{source_type}")
@@ -137,14 +130,12 @@ def set_log_level_to_warning(source_type: Optional[str] = None):
     global debug_on
     debug_on = False
 
-
 def set_log_level_to_error(source_type: Optional[str] = None):
     _logger = logging.getLogger(LOGGER_NAME if source_type is None else f"{LOGGER_NAME}-{source_type}")
     _logger.setLevel(logging.ERROR)
 
     global debug_on
     debug_on = False
-
 
 def center_header(message: str, symbol: str = "*") -> str:
     try:
@@ -157,24 +148,20 @@ def center_header(message: str, symbol: str = "*") -> str:
     header = f" {message} "
     return f"{header.center(terminal_width - 20, symbol)}"
 
-
 def use_team_logger():
     """Switch the default logger to use team_logger"""
     global logger
     logger = team_logger
-
 
 def use_agent_logger():
     """Switch the default logger to use the default agent logger"""
     global logger
     logger = agent_logger
 
-
 def use_workflow_logger():
     """Switch the default logger to use workflow_logger"""
     global logger
     logger = workflow_logger
-
 
 def log_debug(msg, center: bool = False, symbol: str = "*", log_level: Literal[1, 2] = 1, *args, **kwargs):
     global logger
@@ -185,21 +172,17 @@ def log_debug(msg, center: bool = False, symbol: str = "*", log_level: Literal[1
         if debug_level >= log_level:
             logger.debug(msg, center, symbol, *args, **kwargs)
 
-
 def log_info(msg, center: bool = False, symbol: str = "*", *args, **kwargs):
     global logger
     logger.info(msg, center, symbol, *args, **kwargs)
-
 
 def log_warning(msg, *args, **kwargs):
     global logger
     logger.warning(msg, *args, **kwargs)
 
-
 def log_error(msg, *args, **kwargs):
     global logger
     logger.error(msg, *args, **kwargs)
-
 
 def log_exception(msg, *args, **kwargs):
     global logger

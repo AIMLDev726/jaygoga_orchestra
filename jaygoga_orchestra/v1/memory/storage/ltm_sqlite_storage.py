@@ -8,7 +8,6 @@ from typing import Any, Dict, List, Optional, Union
 from jaygoga_orchestra.v1.utilities import Printer
 from jaygoga_orchestra.v1.utilities.paths import db_storage_path
 
-
 class LTMSQLiteStorage:
     """
     An updated SQLite storage class for LTM data storage.
@@ -47,7 +46,7 @@ class LTMSQLiteStorage:
 
                 conn.commit()
         except sqlite3.Error as e:
-            self._printer.console.print(
+            self._printer.print(
                 content=f"MEMORY ERROR: An error occurred during database initialization: {e}",
                 color="red",
             )
@@ -72,7 +71,7 @@ class LTMSQLiteStorage:
                 )
                 conn.commit()
         except sqlite3.Error as e:
-            self._printer.console.print(
+            self._printer.print(
                 content=f"MEMORY ERROR: An error occurred while saving to LTM: {e}",
                 color="red",
             )
@@ -106,7 +105,7 @@ class LTMSQLiteStorage:
                     ]
 
         except sqlite3.Error as e:
-            self._printer.console.print(
+            self._printer.print(
                 content=f"MEMORY ERROR: An error occurred while querying LTM: {e}",
                 color="red",
             )
@@ -123,7 +122,7 @@ class LTMSQLiteStorage:
                 conn.commit()
 
         except sqlite3.Error as e:
-            self._printer.console.print(
+            self._printer.print(
                 content=f"MEMORY ERROR: An error occurred while deleting all rows in LTM: {e}",
                 color="red",
             )

@@ -12,7 +12,6 @@ try:
 except ImportError:
     raise ImportError("`jira` not installed. Please install using `pip install jira`")
 
-
 class JiraTools(Toolkit):
     def __init__(
         self,

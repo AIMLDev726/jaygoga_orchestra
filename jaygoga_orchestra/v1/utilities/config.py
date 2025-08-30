@@ -4,7 +4,6 @@ from typing import Any, Dict, Type
 
 from pydantic import BaseModel
 
-
 def process_config(
     values: Dict[str, Any], model_class: Type[BaseModel]
 ) -> Dict[str, Any]:

@@ -7,13 +7,11 @@ from pydantic import BaseModel, ConfigDict
 from jaygoga_orchestra.v2.run.response import RunResponse
 from jaygoga_orchestra.v2.utils.log import log_debug
 
-
 class WorkflowRun(BaseModel):
     input: Optional[Dict[str, Any]] = None
     response: Optional[RunResponse] = None
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
-
 
 class WorkflowMemory(BaseModel):
     runs: List[WorkflowRun] = []
