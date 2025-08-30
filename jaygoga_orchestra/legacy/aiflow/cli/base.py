@@ -252,9 +252,9 @@ class {task_name}(aiflow.Task):
             
             "project_config": '''{
   "name": "{project_name}",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AIFlow project: {project_description}",
-  "aiflow_version": "1.0.0",
+  "aiflow_version": "1.0.1",
   "python_version": ">=3.8",
   "dependencies": [
     "aiflow>=1.0.0"

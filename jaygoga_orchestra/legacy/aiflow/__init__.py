@@ -31,7 +31,7 @@ from .tools import (
 # LLM factory
 from .llm.factory import create_llm_client, get_available_models
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = "AIMLDev726"
 
 # Core exports
